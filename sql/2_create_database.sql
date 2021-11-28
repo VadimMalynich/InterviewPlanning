@@ -1,0 +1,2 @@
+CREATE DATABASE `interview_db` DEFAULT CHARACTER SET utf8;
+
