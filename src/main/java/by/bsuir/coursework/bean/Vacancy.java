@@ -18,12 +18,12 @@ public class Vacancy extends Entity {
 
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
-    @JoinColumn(name = "employment_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name = "employment_id_fk"))
+    @JoinColumn(name = "employment_id", nullable = false, foreignKey = @ForeignKey(name = "employment_id_fk"))
     private Employment employment;
 
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
-    @JoinColumn(name = "schedule_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name = "schedule_id_fk"))
+    @JoinColumn(name = "schedule_id", nullable = false, foreignKey = @ForeignKey(name = "schedule_id_fk"))
     private Schedule schedule;
 
     @Column(name = "description", nullable = false, length = 300)

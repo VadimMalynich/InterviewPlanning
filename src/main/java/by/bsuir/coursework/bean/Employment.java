@@ -1,12 +1,11 @@
 package by.bsuir.coursework.bean;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.Objects;
 
 @javax.persistence.Entity
 @Table(name = "employment", schema = "interview_db")
-public class Employment extends Entity{
+public class Employment extends Entity {
 
     @Column(name = "type", nullable = false, length = 25)
     private String type;

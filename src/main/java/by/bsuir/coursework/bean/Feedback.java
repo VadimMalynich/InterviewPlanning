@@ -1,5 +1,8 @@
 package by.bsuir.coursework.bean;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -7,11 +10,15 @@ import java.util.Objects;
 @Table(name = "feedback", schema = "interview_db")
 public class Feedback extends Entity {
 
-    @Column(name = "interview_id", nullable = false)
-    private Integer interviewId;
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    @JoinColumn(name = "interview_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name = "interview_id_fk"))
+    private Interview interview;
 
-    @Column(name = "user_id", nullable = false)
-    private Integer userId;
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name = "user_id_fk"))
+    private User users;
 
     @Column(name = "description", nullable = false, length = 500)
     private String description;
@@ -22,30 +29,20 @@ public class Feedback extends Entity {
     @Column(name = "mark", nullable = false)
     private Byte mark;
 
-    @ManyToOne
-    @JoinColumn(name = "interview_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name = "interview_id_fk"))
-    private Interview interviewByInterviewId;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name = "user_id_fk"))
-    private User usersByUserId;
-
-
-    public Integer getInterviewId() {
-        return interviewId;
+    public Interview getInterview() {
+        return interview;
     }
 
-    public void setInterviewId(Integer interviewId) {
-        this.interviewId = interviewId;
+    public void setInterview(Interview interview) {
+        this.interview = interview;
     }
 
-
-    public Integer getUserId() {
-        return userId;
+    public User getUsers() {
+        return users;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUsers(User user) {
+        this.users = user;
     }
 
     public String getDescription() {
@@ -78,41 +75,23 @@ public class Feedback extends Entity {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Feedback feedback = (Feedback) o;
-        return Objects.equals(interviewId, feedback.interviewId) && Objects.equals(userId, feedback.userId) && Objects.equals(description, feedback.description) && Objects.equals(additionalRequirements, feedback.additionalRequirements) && Objects.equals(mark, feedback.mark) && Objects.equals(interviewByInterviewId, feedback.interviewByInterviewId) && Objects.equals(usersByUserId, feedback.usersByUserId);
+        return Objects.equals(interview, feedback.interview) && Objects.equals(users, feedback.users) && Objects.equals(description, feedback.description) && Objects.equals(additionalRequirements, feedback.additionalRequirements) && Objects.equals(mark, feedback.mark);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), interviewId, userId, description, additionalRequirements, mark, interviewByInterviewId, usersByUserId);
+        return Objects.hash(super.hashCode(), interview, users, description, additionalRequirements, mark);
     }
 
     @Override
     public String toString() {
         return "Feedback{" +
                 "id=" +getId() +
-                ", interviewId=" + interviewId +
-                ", userId=" + userId +
                 ", description='" + description + '\'' +
                 ", additionalRequirements=" + additionalRequirements +
                 ", mark=" + mark +
-                ", interviewByInterviewId=" + interviewByInterviewId +
-                ", usersByUserId=" + usersByUserId +
+                ", interviewByInterviewId=" + interview +
+                ", usersByUserId=" + users +
                 '}';
-    }
-
-    public Interview getInterviewByInterviewId() {
-        return interviewByInterviewId;
-    }
-
-    public void setInterviewByInterviewId(Interview interviewByInterviewId) {
-        this.interviewByInterviewId = interviewByInterviewId;
-    }
-
-    public User getUsersByUserId() {
-        return usersByUserId;
-    }
-
-    public void setUsersByUserId(User usersByUserId) {
-        this.usersByUserId = usersByUserId;
     }
 }
