@@ -1,7 +1,6 @@
 package by.bsuir.coursework.dao;
 
 import by.bsuir.coursework.bean.User;
-import org.hibernate.Session;
 import org.hibernate.query.Query;
 
 import java.util.List;
@@ -49,7 +48,7 @@ public class UserDao extends AbstractDao<Integer, User> {
         }
     }
 
-    public User authorization(String login, Session session) throws DaoException {
+    public User authorization(String login) throws DaoException {
         try {
             Query query = session.createNativeQuery(AUTHORIZATION).addEntity(User.class);
             query.setParameter("login", login);
@@ -59,7 +58,7 @@ public class UserDao extends AbstractDao<Integer, User> {
         }
     }
 
-    public User getUser(Integer id, Session session) throws DaoException {
+    public User getUser(Integer id) throws DaoException {
         try {
             return session.find(User.class, id);
         } catch (Exception ex) {
@@ -67,7 +66,7 @@ public class UserDao extends AbstractDao<Integer, User> {
         }
     }
 
-    public String getUserPassword(String login, Session session) throws DaoException {
+    public String getUserPassword(String login) throws DaoException {
         try {
             Query query = session.createNativeQuery(GET_USER_PASSWORD);
             query.setParameter("login", login);
@@ -77,7 +76,7 @@ public class UserDao extends AbstractDao<Integer, User> {
         }
     }
 
-    public Integer getUserRole(Integer id, Session session) throws DaoException {
+    public Integer getUserRole(Integer id) throws DaoException {
         try {
             Query query = session.createNativeQuery(GET_USER_ROLE);
             query.setParameter("id", id);

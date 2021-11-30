@@ -1,7 +1,6 @@
 package by.bsuir.coursework.dao;
 
 import by.bsuir.coursework.bean.Feedback;
-import by.bsuir.coursework.bean.User;
 import org.hibernate.query.Query;
 
 import java.util.List;
@@ -14,7 +13,7 @@ public class FeedbackDao extends AbstractDao<Integer, Feedback> {
     @Override
     public List<Feedback> getAll() throws DaoException {
         try {
-            return session.createNativeQuery(GET_ALL).addEntity(User.class).list();
+            return session.createNativeQuery(GET_ALL).addEntity(Feedback.class).list();
         } catch (Exception ex) {
             throw new DaoException(ex);
         }

@@ -3,8 +3,6 @@ package by.bsuir.coursework.dao;
 import by.bsuir.coursework.bean.Entity;
 import org.hibernate.Session;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.List;
 
 /**

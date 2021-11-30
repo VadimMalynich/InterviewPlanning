@@ -1,7 +1,6 @@
 package by.bsuir.coursework.dao;
 
 import by.bsuir.coursework.bean.Interview;
-import org.hibernate.Session;
 import org.hibernate.query.Query;
 
 import java.util.List;
