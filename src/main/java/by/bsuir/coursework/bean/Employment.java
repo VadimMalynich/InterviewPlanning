@@ -1,25 +1,43 @@
 package by.bsuir.coursework.bean;
 
-import java.io.Serializable;
+import javax.persistence.*;
+import java.util.Collection;
+import java.util.Objects;
 
-public enum Employment implements Serializable {
-    FULL(1), INTERNSHIP(2), PART_TIME(3), PROJECT(4);
-    private final Integer value;
+@javax.persistence.Entity
+@Table(name = "employment", schema = "interview_db")
+public class Employment extends Entity{
 
-    Employment(Integer value) {
-        this.value = value;
+    @Column(name = "type", nullable = false, length = 25)
+    private String type;
+
+    public String getType() {
+        return type;
     }
 
-    public Integer getValue() {
-        return value;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public static Employment getByCode(Integer type) {
-        for (Employment g : Employment.values()) {
-            if (g.value.equals(type)) {
-                return g;
-            }
-        }
-        return null;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Employment that = (Employment) o;
+        return Objects.equals(type, that.type);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), type);
+    }
+
+    @Override
+    public String toString() {
+        return "Employment{" +
+                "id=" + getId() +
+                ", type='" + type + '\'' +
+                '}';
     }
 }

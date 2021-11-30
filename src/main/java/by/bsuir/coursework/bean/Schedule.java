@@ -1,25 +1,42 @@
 package by.bsuir.coursework.bean;
 
-import java.io.Serializable;
+import javax.persistence.*;
+import java.util.Objects;
 
-public enum Schedule implements Serializable {
-    FULL_DAY(1), REMOTELY(2), FLEXIBLE(3), SHIFT(4);
-    private final Integer value;
+@javax.persistence.Entity
+@Table(name = "schedule", schema = "interview_db")
+public class Schedule extends Entity {
 
-    Schedule(Integer value) {
-        this.value = value;
+    @Column(name = "timetable", nullable = false, length = 20)
+    private String timetable;
+
+    public String getTimetable() {
+        return timetable;
     }
 
-    public Integer getValue() {
-        return value;
+    public void setTimetable(String timetable) {
+        this.timetable = timetable;
     }
 
-    public static Schedule getByCode(Integer type) {
-        for (Schedule g : Schedule.values()) {
-            if (g.value.equals(type)) {
-                return g;
-            }
-        }
-        return null;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Schedule schedule = (Schedule) o;
+        return Objects.equals(timetable, schedule.timetable);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), timetable);
+    }
+
+    @Override
+    public String toString() {
+        return "Schedule{" +
+                "id=" + getId() +
+                ", timetable='" + timetable + '\'' +
+                '}';
     }
 }

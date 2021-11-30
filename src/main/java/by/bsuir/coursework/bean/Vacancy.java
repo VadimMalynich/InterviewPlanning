@@ -1,5 +1,8 @@
 package by.bsuir.coursework.bean;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -13,11 +16,13 @@ public class Vacancy extends Entity {
     @Column(name = "experience", nullable = true, length = 7)
     private String experience;
 
-    @Convert(converter = EmploymentConverter.class)
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JoinColumn(name = "employment_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name = "employment_id_fk"))
     private Employment employment;
 
-    @Convert(converter = ScheduleConverter.class)
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JoinColumn(name = "schedule_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name = "schedule_id_fk"))
     private Schedule schedule;
 
