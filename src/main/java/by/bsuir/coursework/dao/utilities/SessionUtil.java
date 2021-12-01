@@ -1,5 +1,6 @@
 package by.bsuir.coursework.dao.utilities;
 
+import by.bsuir.coursework.dao.DaoException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -35,8 +36,12 @@ public class SessionUtil {
         }
     }
 
-    public void commitTransactionSession() {
-        transaction.commit();
+    public void commitTransactionSession() throws DaoException {
+        try {
+            transaction.commit();
+        } catch (Exception e) {
+            throw new DaoException(e);
+        }
         closeSession();
     }
 

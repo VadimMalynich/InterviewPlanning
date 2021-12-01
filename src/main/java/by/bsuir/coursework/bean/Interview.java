@@ -12,11 +12,15 @@ import java.util.Objects;
 @Table(name = "interview", schema = "interview_db")
 public class Interview extends Entity {
 
-    @Column(name = "vacancy_id", nullable = false)
-    private Integer vacancyId;
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    @JoinColumn(name = "vacancy_id", referencedColumnName = "id", nullable = false,  foreignKey = @ForeignKey(name = "vacancy_id_fk"))
+    private Vacancy vacancy;
 
-    @Column(name = "user_id", nullable = false)
-    private Integer userId;
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name = "interviewer_id_fk"))
+    private User user;
 
     @Column(name = "topic", nullable = false, length = 50)
     private String topic;
@@ -38,24 +42,20 @@ public class Interview extends Entity {
     @Column(name = "happen", nullable = true)
     private Boolean happen;
 
-    private Vacancy vacancyByVacancyId;
-    private User usersByUserId;
-
-
-    public Integer getVacancyId() {
-        return vacancyId;
+    public Vacancy getVacancy() {
+        return vacancy;
     }
 
-    public void setVacancyId(Integer vacancyId) {
-        this.vacancyId = vacancyId;
+    public void setVacancy(Vacancy vacancyByVacancyId) {
+        this.vacancy = vacancyByVacancyId;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUser(User usersByUserId) {
+        this.user = usersByUserId;
     }
 
     public String getTopic() {
@@ -108,53 +108,31 @@ public class Interview extends Entity {
 
     @Override
     public boolean equals(Object o) {
+
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Interview interview = (Interview) o;
-        return Objects.equals(vacancyId, interview.vacancyId) && Objects.equals(userId, interview.userId) && Objects.equals(topic, interview.topic) && Objects.equals(date, interview.date) && Objects.equals(startTime, interview.startTime) && Objects.equals(endTime, interview.endTime) && Objects.equals(platform, interview.platform) && Objects.equals(happen, interview.happen) && Objects.equals(vacancyByVacancyId, interview.vacancyByVacancyId) && Objects.equals(usersByUserId, interview.usersByUserId);
+        return Objects.equals(vacancy, interview.vacancy) && Objects.equals(user, interview.user) && Objects.equals(topic, interview.topic) && Objects.equals(date, interview.date) && Objects.equals(startTime, interview.startTime) && Objects.equals(endTime, interview.endTime) && Objects.equals(platform, interview.platform) && Objects.equals(happen, interview.happen);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), vacancyId, userId, topic, date, startTime, endTime, platform, happen, vacancyByVacancyId, usersByUserId);
+        return Objects.hash(super.hashCode(), vacancy, user, topic, date, startTime, endTime, platform, happen);
     }
 
     @Override
     public String toString() {
         return "Interview{" +
                 "id=" + getId() +
-                ", vacancyId=" + vacancyId +
-                ", userId=" + userId +
+                ", vacancyId=" + vacancy.getId() +
+                ", userId=" + user.getId() +
                 ", topic='" + topic + '\'' +
                 ", date=" + date +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
                 ", platform=" + platform +
                 ", happen=" + happen +
-                ", vacancyByVacancyId=" + vacancyByVacancyId +
-                ", usersByUserId=" + usersByUserId +
                 '}';
     }
-
-    @ManyToOne
-    @JoinColumn(name = "vacancy_id", referencedColumnName = "id", nullable = false)
-    public Vacancy getVacancyByVacancyId() {
-        return vacancyByVacancyId;
-    }
-
-    public void setVacancyByVacancyId(Vacancy vacancyByVacancyId) {
-        this.vacancyByVacancyId = vacancyByVacancyId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    public User getUsersByUserId() {
-        return usersByUserId;
-    }
-
-    public void setUsersByUserId(User usersByUserId) {
-        this.usersByUserId = usersByUserId;
-    }
-
 }

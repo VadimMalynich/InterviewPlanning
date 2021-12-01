@@ -13,7 +13,7 @@ public class InterviewDao extends AbstractDao<Integer, Interview> {
     private static final String GET_USER_VACANCY_INTERVIEWS = "SELECT * FROM interview WHERE user_id=:user_id AND  vacancy_id=:vacancy_id ORDER BY date, start_time ASC";
     private static final String GET_INTERVIEWS_VACANCY_COUNT = "SELECT * FROM interview WHERE vacancy_id=:id";
     private static final String GET_INTERVIEWS_PLATFORM_COUNT = "SELECT * FROM interview WHERE platform_id=:id";
-    private static final String SEARCH_INTERVIEWS = "SELECT * FROM interview WHERE topic LIKE ";
+    private static final String SEARCH_INTERVIEWS = "SELECT * FROM interview WHERE topic LIKE :text";
 
     @Override
     public List<Interview> getAll() throws DaoException {
@@ -111,9 +111,10 @@ public class InterviewDao extends AbstractDao<Integer, Interview> {
         }
     }
 
-    public List<Interview> searchAds(String text) throws DaoException {
+    public List<Interview> searchInterviews(String text) throws DaoException {
         try {
-            Query query = session.createNativeQuery(SEARCH_INTERVIEWS + text).addEntity(Interview.class);
+            Query query = session.createNativeQuery(SEARCH_INTERVIEWS).addEntity(Interview.class);
+            query.setParameter("text", text);
             return query.list();
         } catch (Exception ex) {
             throw new DaoException(ex);

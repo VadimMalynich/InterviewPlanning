@@ -57,13 +57,19 @@ public class FeedbackDao extends AbstractDao<Integer, Feedback> {
         }
     }
 
-    public List<Feedback> getAllInterviewFeedbacks(Integer id) throws DaoException {
+    public Feedback getInterviewFeedback(Integer id) throws DaoException {
         try {
             Query query = session.createNativeQuery(GET_ALL_INTERVIEW_FEEDBACKS).addEntity(Feedback.class);
             query.setParameter("id", id);
-            return query.list();
+            return (Feedback) query.getSingleResult();
         } catch (Exception ex) {
             throw new DaoException(ex);
         }
+    }
+
+    public boolean isFeedback(Integer id){
+        Query query = session.createNativeQuery(GET_ALL_INTERVIEW_FEEDBACKS).addEntity(Feedback.class);
+        query.setParameter("id", id);
+        return query.list().isEmpty();
     }
 }

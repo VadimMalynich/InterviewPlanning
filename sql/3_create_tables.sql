@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `users`
 CREATE TABLE IF NOT EXISTS `platforms`
 (
     `id`   INT         NOT NULL AUTO_INCREMENT,
-    `name` VARCHAR(50) NOT NULL,
+    `name` VARCHAR(25) NOT NULL,
     PRIMARY KEY (`id`)
 )
     ENGINE = InnoDB
@@ -86,7 +86,7 @@ CREATE TABLE IF NOT EXISTS `vacancy`
 (
     `id`                      INT          NOT NULL AUTO_INCREMENT,
     `topic`                   VARCHAR(50)  NOT NULL,
-    `experience`              VARCHAR(7)  NULL     DEFAULT NULL,
+    `experience`              VARCHAR(5)  NULL     DEFAULT NULL,
     `employment_id`           INT          NOT NULL DEFAULT '1',
     `schedule_id`             INT          NOT NULL DEFAULT '1',
     `description`             VARCHAR(300) NOT NULL,

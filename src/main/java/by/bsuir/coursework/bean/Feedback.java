@@ -37,11 +37,11 @@ public class Feedback extends Entity {
         this.interview = interview;
     }
 
-    public User getUsers() {
+    public User getUser() {
         return users;
     }
 
-    public void setUsers(User user) {
+    public void setUser(User user) {
         this.users = user;
     }
 
@@ -86,12 +86,12 @@ public class Feedback extends Entity {
     @Override
     public String toString() {
         return "Feedback{" +
-                "id=" +getId() +
+                "id=" + getId() +
+                ", interviewId=" + interview.getId() +
+                ", usersId=" + users.getId() +
                 ", description='" + description + '\'' +
                 ", additionalRequirements=" + additionalRequirements +
                 ", mark=" + mark +
-                ", interviewByInterviewId=" + interview +
-                ", usersByUserId=" + users +
                 '}';
     }
 }

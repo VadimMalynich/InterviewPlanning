@@ -13,7 +13,7 @@ public class Vacancy extends Entity {
     @Column(name = "topic", nullable = false, length = 50)
     private String topic;
 
-    @Column(name = "experience", nullable = true, length = 7)
+    @Column(name = "experience", nullable = true, length = 5)
     private String experience;
 
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
