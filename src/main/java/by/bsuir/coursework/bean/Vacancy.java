@@ -35,6 +35,19 @@ public class Vacancy extends Entity {
     @Column(name = "additional_requirements", nullable = true, length = 500)
     private String additionalRequirements;
 
+    @Transient
+    private Integer interviewsCount;
+
+    public Vacancy(String topic, String experience, Integer employment, Integer schedule, String description, String requirements, String additionalRequirements) {
+        this.topic = topic;
+        this.experience = experience;
+        this.employment = new Employment(employment);
+        this.schedule = new Schedule(schedule);
+        this.description = description;
+        this.requirements = requirements;
+        this.additionalRequirements = additionalRequirements;
+    }
+
     public String getTopic() {
         return topic;
     }
@@ -89,6 +102,14 @@ public class Vacancy extends Entity {
 
     public void setSchedule(Schedule schedule) {
         this.schedule = schedule;
+    }
+
+    public Integer getInterviewsCount() {
+        return interviewsCount;
+    }
+
+    public void setInterviewsCount(Integer interviewsCount) {
+        this.interviewsCount = interviewsCount;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package by.bsuir.coursework.service;
 
 import by.bsuir.coursework.bean.Employment;
+import by.bsuir.coursework.bean.Feedback;
 import by.bsuir.coursework.bean.Schedule;
 import by.bsuir.coursework.bean.Vacancy;
 
@@ -38,6 +39,15 @@ public interface VacancyService {
      * @throws ServiceException when the error occurred on the dao layer or when validate data
      */
     void edit(Vacancy vacancy) throws ServiceException;
+
+    /**
+     * Method for get vacancy
+     *
+     * @param id vacancy id
+     * @return vacancy info
+     * @throws ServiceException when the error occurred on the dao layer or when validate data
+     */
+    Vacancy getVacancy(Integer id) throws ServiceException;
 
     /**
      * Method for search vacancies by vacancy topic

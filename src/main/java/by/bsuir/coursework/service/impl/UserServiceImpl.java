@@ -34,7 +34,7 @@ public class UserServiceImpl extends SessionUtil implements UserService {
     }
 
     @Override
-    public void registration(User user, String confirmPassword, String[] messengers) throws ServiceException {
+    public void registration(User user, String confirmPassword) throws ServiceException {
         if (user == null) {
             throw new ServiceException("Can not register user. User not exist.");
         }
@@ -81,7 +81,7 @@ public class UserServiceImpl extends SessionUtil implements UserService {
     }
 
     @Override
-    public void edit(User user, String[] messengers) throws ServiceException {
+    public void edit(User user) throws ServiceException {
         if (user == null) {
             throw new ServiceException("Can not edit user");
         }
@@ -101,12 +101,12 @@ public class UserServiceImpl extends SessionUtil implements UserService {
     }
 
     @Override
-    public void edit(User user, String[] messengers, String oldPass, String newPass) throws ServiceException {
+    public void edit(User user, String oldPass, String newPass) throws ServiceException {
         if (user == null) {
             throw new ServiceException("Can not edit user");
         }
-        validateEditUserData(user);
         validatePasswords(oldPass, newPass);
+        validateEditUserData(user);
         UserDao userDao = DaoFactory.getInstance().getUserDao();
         try {
             openTransactionSession();

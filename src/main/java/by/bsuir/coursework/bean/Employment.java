@@ -18,6 +18,13 @@ public class Employment extends Entity {
         this.type = type;
     }
 
+    public Employment() {
+    }
+
+    public Employment(Integer id) {
+        super(id);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -1,11 +1,10 @@
 package by.bsuir.coursework.service.impl;
 
 import by.bsuir.coursework.bean.Employment;
+import by.bsuir.coursework.bean.Feedback;
 import by.bsuir.coursework.bean.Schedule;
 import by.bsuir.coursework.bean.Vacancy;
-import by.bsuir.coursework.dao.DaoException;
-import by.bsuir.coursework.dao.DaoFactory;
-import by.bsuir.coursework.dao.VacancyDao;
+import by.bsuir.coursework.dao.*;
 import by.bsuir.coursework.dao.utilities.SessionUtil;
 import by.bsuir.coursework.service.ServiceException;
 import by.bsuir.coursework.service.VacancyService;
@@ -18,10 +17,15 @@ public class VacancyServiceImpl extends SessionUtil implements VacancyService {
     public List<Vacancy> getAll() throws ServiceException {
         List<Vacancy> list;
         VacancyDao vacancyDao = DaoFactory.getInstance().getVacancyDao();
+        InterviewDao interviewDao = DaoFactory.getInstance().getInterviewDao();
         try {
             openTransactionSession();
             vacancyDao.setSession(getSession());
+            interviewDao.setSession(getSession());
             list = vacancyDao.getAll();
+            for (Vacancy v : list) {
+                v.setInterviewsCount(interviewDao.getInterviewsVacancyCount(v.getId()));
+            }
             commitTransactionSession();
         } catch (DaoException e) {
             rollbackTransactionSession();
@@ -92,6 +96,27 @@ public class VacancyServiceImpl extends SessionUtil implements VacancyService {
     }
 
     @Override
+    public Vacancy getVacancy(Integer id) throws ServiceException {
+        if (id == null) {
+            throw new ServiceException("Wrong id");
+        }
+        Vacancy vacancy;
+        VacancyDao vacancyDao = DaoFactory.getInstance().getVacancyDao();
+        try {
+            openTransactionSession();
+            vacancyDao.setSession(getSession());
+            vacancy = vacancyDao.getVacancy(id);
+            commitTransactionSession();
+        } catch (DaoException | IllegalArgumentException e) {
+            rollbackTransactionSession();
+            throw new ServiceException(e);
+        } finally {
+            closeSession();
+        }
+        return vacancy;
+    }
+
+    @Override
     public List<Vacancy> searchVacancies(String text) throws ServiceException {
         if (text == null || "".equals(text)) {
             throw new ServiceException("Wrong search text");
@@ -99,10 +124,15 @@ public class VacancyServiceImpl extends SessionUtil implements VacancyService {
         List<Vacancy> list;
         text = "%" + text + "%";
         VacancyDao vacancyDao = DaoFactory.getInstance().getVacancyDao();
+        InterviewDao interviewDao = DaoFactory.getInstance().getInterviewDao();
         try {
             openTransactionSession();
             vacancyDao.setSession(getSession());
+            interviewDao.setSession(getSession());
             list = vacancyDao.searchVacancy(text);
+            for (Vacancy v : list) {
+                v.setInterviewsCount(interviewDao.getInterviewsVacancyCount(v.getId()));
+            }
             commitTransactionSession();
         } catch (DaoException e) {
             rollbackTransactionSession();
@@ -139,6 +169,9 @@ public class VacancyServiceImpl extends SessionUtil implements VacancyService {
             openTransactionSession();
             vacancyDao.setSession(getSession());
             list = vacancyDao.getSchedules();
+            for (Schedule s : list) {
+                s.setCount(vacancyDao.getSchedulesCount(s.getId()));
+            }
             commitTransactionSession();
         } catch (DaoException e) {
             rollbackTransactionSession();

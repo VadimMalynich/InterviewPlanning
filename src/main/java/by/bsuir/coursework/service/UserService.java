@@ -18,10 +18,9 @@ public interface UserService {
      *
      * @param user            all info that user entered
      * @param confirmPassword password confirmation
-     * @param messengers      users messengers
      * @throws ServiceException when the error occurred on the dao layer or when validate data
      */
-    void registration(User user, String confirmPassword, String[] messengers) throws ServiceException;
+    void registration(User user, String confirmPassword) throws ServiceException;
 
     /**
      * Method for deleting user
@@ -35,22 +34,20 @@ public interface UserService {
      * Method for validating data before edit user in database
      *
      * @param user       new info about user
-     * @param messengers messengers selected by the user
      * @throws ServiceException when the error occurred on the dao layer or when validate data
      */
-    void edit(User user, String[] messengers) throws ServiceException;
+    void edit(User user) throws ServiceException;
 
 
     /**
      * Method for validating data before edit user in database
      *
      * @param user       new info about user
-     * @param messengers messengers selected by the user
      * @param oldPass    password from the database
      * @param newPass    password for re-write password in database
      * @throws ServiceException when the error occurred on the dao layer or when validate data
      */
-    void edit(User user, String[] messengers, String oldPass, String newPass) throws ServiceException;
+    void edit(User user, String oldPass, String newPass) throws ServiceException;
 
     /**
      * Method for validating data before getting user info from database

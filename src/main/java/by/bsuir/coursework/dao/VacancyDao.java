@@ -1,16 +1,15 @@
 package by.bsuir.coursework.dao;
 
-import by.bsuir.coursework.bean.Employment;
-import by.bsuir.coursework.bean.Interview;
-import by.bsuir.coursework.bean.Schedule;
-import by.bsuir.coursework.bean.Vacancy;
+import by.bsuir.coursework.bean.*;
 import org.hibernate.query.Query;
 
 import java.util.List;
 
 public class VacancyDao extends AbstractDao<Integer, Vacancy> {
-    private static final String GET_ALL = "SELECT * FROM vacancy";
-    private static final String SEARCH_VACANCY = "SELECT * FROM interview WHERE topic LIKE :text";
+    private static final String GET_ALL = "SELECT * FROM vacancy ORDER BY id DESC";
+    private static final String GET_VACANCY = "SELECT * FROM vacancy WHERE id=:id";
+    private static final String SEARCH_VACANCY = "SELECT * FROM vacancy WHERE topic LIKE :text";
+    private static final String GET_SCHEDULES_COUNT = "SELECT * FROM vacancy WHERE schedule_id=:id";
     private static final String GET_EMPLOYMENTS = "SELECT * FROM employment";
     private static final String GET_SCHEDULES = "SELECT * FROM schedule";
 
@@ -51,11 +50,31 @@ public class VacancyDao extends AbstractDao<Integer, Vacancy> {
         }
     }
 
+    public Vacancy getVacancy(Integer id) throws DaoException {
+        try {
+            Query query = session.createNativeQuery(GET_VACANCY).addEntity(Vacancy.class);
+            query.setParameter("id", id);
+            return (Vacancy) query.getSingleResult();
+        } catch (Exception ex) {
+            throw new DaoException(ex);
+        }
+    }
+
     public List<Vacancy> searchVacancy(String text) throws DaoException {
         try {
-            Query query = session.createNativeQuery(SEARCH_VACANCY).addEntity(Interview.class);
+            Query query = session.createNativeQuery(SEARCH_VACANCY).addEntity(Vacancy.class);
             query.setParameter("text", text);
             return query.list();
+        } catch (Exception ex) {
+            throw new DaoException(ex);
+        }
+    }
+
+    public Integer getSchedulesCount(Integer id) throws DaoException {
+        try {
+            Query query = session.createNativeQuery(GET_SCHEDULES_COUNT);
+            query.setParameter("id", id);
+            return query.list().size();
         } catch (Exception ex) {
             throw new DaoException(ex);
         }

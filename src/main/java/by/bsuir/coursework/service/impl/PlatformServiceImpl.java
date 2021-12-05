@@ -3,10 +3,13 @@ package by.bsuir.coursework.service.impl;
 import by.bsuir.coursework.bean.Platforms;
 import by.bsuir.coursework.dao.DaoException;
 import by.bsuir.coursework.dao.DaoFactory;
+import by.bsuir.coursework.dao.InterviewDao;
 import by.bsuir.coursework.dao.PlatformsDao;
 import by.bsuir.coursework.dao.utilities.SessionUtil;
+import by.bsuir.coursework.service.InterviewService;
 import by.bsuir.coursework.service.PlatformService;
 import by.bsuir.coursework.service.ServiceException;
+import jdk.jfr.internal.PlatformRecorder;
 
 import java.util.List;
 
@@ -15,10 +18,15 @@ public class PlatformServiceImpl extends SessionUtil implements PlatformService 
     public List<Platforms> getAll() throws ServiceException {
         List<Platforms> list;
         PlatformsDao platformsDao = DaoFactory.getInstance().getPlatformsDao();
+        InterviewDao interviewDao = DaoFactory.getInstance().getInterviewDao();
         try {
             openTransactionSession();
             platformsDao.setSession(getSession());
+            interviewDao.setSession(getSession());
             list = platformsDao.getAll();
+            for (Platforms p : list) {
+                p.setCount(interviewDao.getInterviewsPlatformCount(p.getId()));
+            }
             commitTransactionSession();
         } catch (DaoException e) {
             rollbackTransactionSession();

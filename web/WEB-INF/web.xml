@@ -3,4 +3,75 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
+
+    <display-name>Comport</display-name>
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+    <servlet>
+        <servlet-name>MyController</servlet-name>
+        <servlet-class>by.bsuir.coursework.controller.Controller</servlet-class>
+        <init-param>
+            <description>
+                Set the file path where uploaded files should be stored in. This parameter is
+                required.
+            </description>
+            <param-name>uploadFilePath</param-name>
+            <param-value>D:/finalProject/web/resources/images/adsPhoto</param-value>
+        </init-param>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>MyController</servlet-name>
+        <url-pattern>/Controller</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>10</session-timeout>
+    </session-config>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/WEB-INF/jsp/error.jsp</location>
+    </error-page>
+
+    <filter>
+        <filter-name>EncodingFilter</filter-name>
+        <filter-class>by.bsuir.coursework.controller.filter.EncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+
+    <!--<filter>
+        <filter-name>SecurityFilter</filter-name>
+        <filter-class>by.bsuir.coursework.controller.filter.SecurityFilter</filter-class>
+    </filter>-->
+
+
+    <filter-mapping>
+        <filter-name>EncodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+<!--    <filter-mapping>-->
+<!--        <filter-name>SecurityFilter</filter-name>-->
+<!--        <url-pattern>/Controller</url-pattern>-->
+<!--    </filter-mapping>-->
+
+
+    <listener>
+        <listener-class>by.bsuir.coursework.controller.listener.ContextListener</listener-class>
+    </listener>
+    <!--    <listener>-->
+    <!--        <listener-class>by.training.finalproject.controller.listener.SessionAttributesListener</listener-class>-->
+    <!--    </listener>-->
+
+<!--    <jsp-config>-->
+<!--        <taglib>-->
+<!--            <taglib-uri>customtags</taglib-uri>-->
+<!--            <taglib-location>WEB-INF/tld/custom.tld</taglib-location>-->
+<!--        </taglib>-->
+<!--    </jsp-config>-->
+
 </web-app>
