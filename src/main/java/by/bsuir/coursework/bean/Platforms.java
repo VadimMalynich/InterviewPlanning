@@ -16,6 +16,10 @@ public class Platforms extends Entity {
     public Platforms() {
     }
 
+    public Platforms(Integer id) {
+        super(id);
+    }
+
     public Platforms(String name) {
         this.name = name;
     }

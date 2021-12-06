@@ -60,7 +60,8 @@ CREATE TABLE IF NOT EXISTS `platforms`
 (
     `id`   INT         NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(25) NOT NULL,
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`id`),
+    UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE
 )
     ENGINE = InnoDB
     AUTO_INCREMENT = 1;

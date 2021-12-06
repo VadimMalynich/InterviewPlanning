@@ -11,6 +11,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="<c:url value="/resources/images/logo/favicon.png"/>" type="image/x-icon">
+
+    <!-- Locale -->
+    <fmt:setLocale value="${sessionScope.locale}"/>
+    <fmt:setBundle basename="langs.labels" var="loc"/>
+
+    <fmt:message bundle="${loc}" key="logout.button" var="logout"/>
+    <fmt:message bundle="${loc}" key="label.platforms" var="platformsButton"/>
+    <fmt:message bundle="${loc}" key="home.button" var="home"/>
+    <fmt:message bundle="${loc}" key="edit.vacancy.button" var="editButton"/>
+
+
+    <fmt:message bundle="${loc}" key="label.experience" var="experienceLabel"/>
+    <fmt:message bundle="${loc}" key="label.interviewCount" var="interviewCountLabel"/>
+    <fmt:message bundle="${loc}" key="label.requirements" var="requirementsLabel"/>
+    <fmt:message bundle="${loc}" key="label.schedule" var="scheduleLabel"/>
+    <fmt:message bundle="${loc}" key="label.requirements.additional" var="additional"/>
+    <fmt:message bundle="${loc}" key="label.employments" var="employments"/>
+    <fmt:message bundle="${loc}" key="label.description" var="descriptionLabel"/>
+    <fmt:message bundle="${loc}" key="label.vacancy.topic" var="topicLabel"/>
+
+    <fmt:message bundle="${loc}" key="page.editVacancy" var="pageTitle"/>
+
+    <c:if test="${requestScope.message ne null}">
+        <fmt:message bundle="${loc}" key="${requestScope.message}" var="messageText"/>
+    </c:if>
+
+    <title>${sessionScope.vacancyPageInfo.topic}</title>
+
     <title>Edit vacancy</title>
 </head>
 <body>
@@ -45,7 +76,7 @@
                     <div class="main-menu main-menu-light">
                         <ul>
                             <li class="menu-btn">
-                                <a href="Controller?command=logout" class="template-btn">Выход</a>
+                                <a href="Controller?command=logout" class="template-btn">${logout}</a>
                             </li>
                         </ul>
                     </div>
@@ -57,10 +88,8 @@
                         </div>
                         <div class="main-menu main-menu-light">
                             <ul>
-                                <li class="active"><a href="Controller?command=go_to_home_page">Главная</a></li>
-                                <li class="active"><a href="about.html">Добавить объявление</a></li>
-                                <li class="active"><a href="about.html">FAQ</a></li>
-                                <li class="active"><a href="about.html">message</a></li>
+                                <li class="active"><a href="Controller?command=go_to_home_page">${home}</a></li>
+                                <li><a href="Controller?command=go_to_platforms_page">${platformsButton}</a></li>
                             </ul>
                         </div>
                     </div>
@@ -90,47 +119,47 @@
                     <br>
                     <div class="d-flex">
                         <div class="info-text">
-                            <h5>Заголовок вакансии</h5>
+                            <h5>${topicLabel}</h5>
                         </div>
                     </div>
                     <div class="d-flex">
                         <div class="info-text">
                             <p></p>
-                            <h5>Опыт работы</h5>
-                            <p></p>
-                        </div>
-                    </div>
-                    <div class="d-flex">
-                        <div class="info-text">
-                            <p></p>
-                            <h5>Тип занятости</h5>
+                            <h5>${experienceLabel}</h5>
                             <p></p>
                         </div>
                     </div>
                     <div class="d-flex">
                         <div class="info-text">
                             <p></p>
-                            <h5>График работы</h5>
+                            <h5>${employments}</h5>
                             <p></p>
                         </div>
                     </div>
                     <div class="d-flex">
                         <div class="info-text">
                             <p></p>
-                            <h5>Описание</h5>
+                            <h5>${scheduleLabel}</h5>
+                            <p></p>
+                        </div>
+                    </div>
+                    <div class="d-flex">
+                        <div class="info-text">
+                            <p></p>
+                            <h5>${descriptionLabel}</h5>
                             <p></p>
                         </div>
                     </div>
                     <div class="d-flex">
                         <div class="info-text">
                             <p></p><br><br><br><br><br>
-                            <h5>Требования</h5>
+                            <h5>${requirementsLabel}</h5>
                         </div>
                     </div>
                     <div class="d-flex">
                         <div class="info-text">
                             <br><br><br><br><br>
-                            <h5>Будет преимуществом</h5>
+                            <h5>${additional}</h5>
                         </div>
                     </div>
                 </div>
@@ -205,7 +234,7 @@
                         </div>
                         <br>
                         <br>
-                        <button type="submit" class="template-btn">Редактировать вакансию</button>
+                        <button type="submit" class="template-btn">${editButton}</button>
                     </form>
                 </div>
             </div>

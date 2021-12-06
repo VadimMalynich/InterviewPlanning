@@ -1,12 +1,14 @@
 package by.bsuir.coursework.dao;
 
 import by.bsuir.coursework.bean.Interview;
+import by.bsuir.coursework.bean.Vacancy;
 import org.hibernate.query.Query;
 
 import java.util.List;
 
 public class InterviewDao extends AbstractDao<Integer, Interview> {
     private static final String GET_FUTURE_INTERVIEWS = "SELECT * FROM interview WHERE (date = current_date() AND start_time >= current_time()) OR date > current_date() ORDER BY date, start_time ASC";
+    private static final String GET_INTERVIEW = "SELECT * FROM interview WHERE id=:id";
     private static final String GET_HAPPENED = "SELECT * FROM interview WHERE happen=1 ORDER BY date, start_time ASC";
     private static final String GET_VACANCY_INTERVIEWS = "SELECT * FROM interview WHERE vacancy_id=:id ORDER BY date, start_time ASC";
     private static final String GET_USER_INTERVIEWS = "SELECT * FROM interview WHERE user_id=:id ORDER BY date, start_time ASC";
@@ -47,6 +49,16 @@ public class InterviewDao extends AbstractDao<Integer, Interview> {
     public void edit(Interview interview) throws DaoException {
         try {
             session.update(interview);
+        } catch (Exception ex) {
+            throw new DaoException(ex);
+        }
+    }
+
+    public Interview getInterview(Integer id) throws DaoException {
+        try {
+            Query query = session.createNativeQuery(GET_INTERVIEW).addEntity(Interview.class);
+            query.setParameter("id", id);
+            return (Interview) query.getSingleResult();
         } catch (Exception ex) {
             throw new DaoException(ex);
         }

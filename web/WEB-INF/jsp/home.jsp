@@ -15,9 +15,45 @@
     <!-- Favicon -->
     <link rel="shortcut icon" href="<c:url value="/resources/images/logo/favicon.png"/>" type="image/x-icon">
 
+    <!-- Locale -->
+    <fmt:setLocale value="${sessionScope.locale}"/>
+    <fmt:setBundle basename="langs.labels" var="loc"/>
+
+    <fmt:message bundle="${loc}" key="signIn.button" var="signIn"/>
+    <fmt:message bundle="${loc}" key="signUp.button" var="signUp"/>
+    <fmt:message bundle="${loc}" key="logout.button" var="logout"/>
+    <fmt:message bundle="${loc}" key="profile.button" var="profile"/>
+    <fmt:message bundle="${loc}" key="home.button" var="home"/>
+    <fmt:message bundle="${loc}" key="interview.button" var="interviewsButton"/>
+    <fmt:message bundle="${loc}" key="users.button" var="usersButton"/>
+    <fmt:message bundle="${loc}" key="add.interview.button" var="addInterviewButton"/>
+    <fmt:message bundle="${loc}" key="add.vacancy.button" var="addVacancyButton"/>
+    <fmt:message bundle="${loc}" key="label.platforms" var="platformsButton"/>
+
+
+    <fmt:message bundle="${loc}" key="label.experience" var="platformLabel"/>
+    <fmt:message bundle="${loc}" key="label.vacancy.topic" var="topicLabel"/>
+    <fmt:message bundle="${loc}" key="label.requirements" var="materialLabel"/>
+    <fmt:message bundle="${loc}" key="label.schedule" var="scheduleLabel"/>
+    <fmt:message bundle="${loc}" key="label.description" var="descriptionLabel"/>
+    <fmt:message bundle="${loc}" key="label.employments" var="employmentsLabel"/>
+    <fmt:message bundle="${loc}" key="label.interviewCount" var="interviewCountLabel"/>
+
+    <fmt:message bundle="${loc}" key="search.input.placeholder" var="searchPlaceholder"/>
+    <fmt:message bundle="${loc}" key="vacancy.topic.input.placeholder" var="topicPlaceholder"/>
+    <fmt:message bundle="${loc}" key="vacancy.topic.input.placeholderFocus" var="topicPlaceholderFocus"/>
+    <fmt:message bundle="${loc}" key="experience.input.placeholder" var="materialPlaceholder"/>
+    <fmt:message bundle="${loc}" key="experience.input.placeholderFocus" var="materialPlaceholderFocus"/>
+    <fmt:message bundle="${loc}" key="description.textarea.placeholder" var="descriptionPlaceholder"/>
+
+    <fmt:message bundle="${loc}" key="page.home" var="pageTitle"/>
+
+    <c:if test="${requestScope.message ne null}">
+        <fmt:message bundle="${loc}" key="${requestScope.message}" var="messageText"/>
+    </c:if>
 
     <!-- Page Title -->
-    <title>Vacancies</title>
+    <title>${pageTitle}</title>
 </head>
 <body>
 <c:import url="parts/header.jsp"/>
@@ -100,12 +136,15 @@
                             <c:choose>
                                 <c:when test="${userRole eq 0}">
                                     <li><a href="Controller?command=go_to_users_page">${usersButton}</a></li>
+                                    <li><a href="Controller?command=go_to_platforms_page">${platformsButton}</a></li>
                                 </c:when>
                                 <c:when test="${userRole eq 1}">
-                                    <li><a href="Controller?command=go_to_add_vacancy_page">${addButton}</a></li>
+                                    <li><a href="Controller?command=go_to_add_vacancy_page">${addVacancyButton}</a></li>
+                                    <li><a href="Controller?command=go_to_platforms_page">${platformsButton}</a></li>
                                 </c:when>
                                 <c:when test="${userRole eq 2}">
-                                    <li><a href="Controller?command=go_to_add_interview_page">${addButton}</a></li>
+                                    <li><a href="Controller?command=go_to_add_interview_page">${addInterviewButton}</a>
+                                    </li>
                                 </c:when>
                             </c:choose>
                             <c:if test="${requestScope.message ne null}">
@@ -177,13 +216,15 @@
                                     <div class="job-text">
                                         <h4><c:out value="${vacancy.topic}"/></h4>
                                         <ul class="mt-4">
-                                            <li class="mb-3"><h5><em class="fa fa-id-card-o"></em> Опыт работы: <c:out
-                                                    value="${vacancy.experience}"/></h5></li>
-                                            <li class="mb-3"><h5><em class="fa fa-calendar"></em> График
-                                                работы: ${vacancy.schedule.timetable}</h5>
+                                            <li class="mb-3"><h5><em class="fa fa-id-card-o"></em> ${employmentsLabel}:
+                                                <c:out value="${vacancy.experience}"/></h5></li>
+                                            <li class="mb-3"><h5><em
+                                                    class="fa fa-calendar"></em> ${scheduleLabel}: ${vacancy.schedule.timetable}
+                                            </h5>
                                             </li>
-                                            <li><h5><em class="fa fa-pie-chart"></em> Количество
-                                                собеседований: ${vacancy.interviewsCount}</h5></li>
+                                            <li><h5><em
+                                                    class="fa fa-pie-chart"></em> ${interviewCountLabel}: ${vacancy.interviewsCount}
+                                            </h5></li>
                                         </ul>
                                     </div>
                                     <div class="job-btn align-self-center">
@@ -205,7 +246,7 @@
                                                         value="${vacancy.employment.type}"/></a>
                                             </c:when>
                                         </c:choose>
-                                        <a href="#" class="third-btn">интервью</a>
+                                        <a href="#" class="third-btn">${interviewsButton}</a>
                                     </div>
                                     <c:if test="${sessionScope.user.role.value eq 1}">
                                         <div class="job-btn align-top">
@@ -233,7 +274,7 @@
                         </form>
                     </div>
                     <div class="single-item mb-4">
-                        <h4 class="mb-4">График работы</h4>
+                        <h4 class="mb-4">${scheduleLabel}</h4>
                         <c:forEach var="schedule" items="${sessionScope.scheduleList}">
                             <a href="Controller?command=filter_vacancies_by_schedule&filterIdType=${schedule.id}"
                                class="sidebar-btn d-flex justify-content-between mb-3">

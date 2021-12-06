@@ -19,18 +19,15 @@
     <fmt:setBundle basename="langs.labels" var="loc"/>
 
     <fmt:message bundle="${loc}" key="logout.button" var="logout"/>
-    <fmt:message bundle="${loc}" key="assortment.button" var="assortment"/>
+    <fmt:message bundle="${loc}" key="label.platforms" var="platformsButton"/>
     <fmt:message bundle="${loc}" key="home.button" var="home"/>
     <fmt:message bundle="${loc}" key="users.button" var="usersButton"/>
 
     <fmt:message bundle="${loc}" key="label.login" var="loginLabel"/>
     <fmt:message bundle="${loc}" key="label.name" var="nameLabel"/>
-    <fmt:message bundle="${loc}" key="label.phone" var="phoneLabel"/>
     <fmt:message bundle="${loc}" key="label.role" var="roleLabel"/>
-    <fmt:message bundle="${loc}" key="label.city" var="cityLabel"/>
     <fmt:message bundle="${loc}" key="label.admin" var="adminLabel"/>
-    <fmt:message bundle="${loc}" key="label.user" var="userLabel"/>
-    <fmt:message bundle="${loc}" key="label.tableMessengers" var="messengersLabel"/>
+    <fmt:message bundle="${loc}" key="label.director" var="directorLabel"/>
 
     <fmt:message bundle="${loc}" key="message.emptyUsers" var="emptyUsers"/>
     <c:if test="${requestScope.message ne null}">
@@ -94,9 +91,8 @@
                         <div class="main-menu main-menu-light">
                             <ul>
                                 <li class="active"><a href="Controller?command=go_to_home_page">${home}</a></li>
-                                <li><a href="Controller?command=go_to_types_page">${assortment}</a></li>
+                                <li><a href="Controller?command=go_to_platforms_page">${platformsButton}</a></li>
                                 <li><a href="Controller?command=go_to_users_page">${usersButton}</a></li>
-                                <%--                                <li><a href="#">FAQ</a></li>--%>
                             </ul>
                         </div>
                     </div>
@@ -157,7 +153,7 @@
                                         <div class="visit">${adminLabel}</div>
                                     </c:when>
                                     <c:otherwise>
-                                        <div class="visit">${userLabel}</div>
+                                        <div class="visit">${directorLabel}</div>
                                     </c:otherwise>
                                 </c:choose>
                                 <div class="visit">

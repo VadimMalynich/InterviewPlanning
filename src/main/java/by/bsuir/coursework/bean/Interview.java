@@ -42,6 +42,23 @@ public class Interview extends Entity {
     @Column(name = "happen", nullable = true)
     private Boolean happen;
 
+    public Interview() {
+    }
+
+    public Interview(Integer id) {
+        super(id);
+    }
+
+    public Interview(Integer vacancyId, User user, String topic, Date date, Time startTime, Time endTime, Integer platformId) {
+        this.vacancy = new Vacancy(vacancyId);
+        this.user = user;
+        this.topic = topic;
+        this.date = date;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.platform = new Platforms(platformId);
+    }
+
     public Vacancy getVacancy() {
         return vacancy;
     }

@@ -38,10 +38,10 @@ public class EditVacancy implements Command {
             vacancyService.edit(vacancy);
             session.removeAttribute("editVacancy");
             session.removeAttribute("editVacancyId");
-            response.sendRedirect("Controller?command=go_to_home_page&message=message.addAd.complete");
+            response.sendRedirect("Controller?command=go_to_home_page&message=message.editVacancy.complete");
         } catch (ServiceException e) {
             userLogger.error(e);
-            response.sendRedirect("Controller?command=go_to_add_ad_page&message=message.add.unsuccessfully");
+            response.sendRedirect("Controller?command=go_to_add_ad_page&message=message.edit.unsuccessfully");
         }
     }
 }

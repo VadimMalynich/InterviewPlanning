@@ -11,10 +11,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Interviews</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="<c:url value="/resources/images/logo/favicon.png"/>" type="image/x-icon">
+
+    <!-- Locale -->
+    <fmt:setLocale value="${sessionScope.locale}"/>
+    <fmt:setBundle basename="langs.labels" var="loc"/>
+
+    <fmt:message bundle="${loc}" key="signIn.button" var="signIn"/>
+    <fmt:message bundle="${loc}" key="signUp.button" var="signUp"/>
+    <fmt:message bundle="${loc}" key="logout.button" var="logout"/>
+    <fmt:message bundle="${loc}" key="profile.button" var="profile"/>
+    <fmt:message bundle="${loc}" key="home.button" var="home"/>
+    <fmt:message bundle="${loc}" key="book.button" var="bookButton"/>
+    <fmt:message bundle="${loc}" key="users.button" var="usersButton"/>
+    <fmt:message bundle="${loc}" key="add.interview.button" var="addInterviewButton"/>
+    <fmt:message bundle="${loc}" key="add.vacancy.button" var="addVacancyButton"/>
+    <fmt:message bundle="${loc}" key="label.platforms" var="platformsButton"/>
+
+    <fmt:message bundle="${loc}" key="label.date" var="dateLabel"/>
+    <fmt:message bundle="${loc}" key="label.startTime" var="startLabel"/>
+    <fmt:message bundle="${loc}" key="label.endTime" var="endLabel"/>
+    <fmt:message bundle="${loc}" key="label.platform" var="platformLabel"/>
+    <fmt:message bundle="${loc}" key="label.interviewer" var="interviewerLabel"/>
+    <fmt:message bundle="${loc}" key="label.platforms" var="platformsLabel"/>
+
+    <fmt:message bundle="${loc}" key="search.input.placeholder" var="searchPlaceholder"/>
+
+    <fmt:message bundle="${loc}" key="page.home" var="pageTitle"/>
+
+    <c:if test="${requestScope.message ne null}">
+        <fmt:message bundle="${loc}" key="${requestScope.message}" var="messageText"/>
+    </c:if>
+
+    <!-- Page Title -->
+    <title>${pageTitle}</title>
 </head>
 <body>
 <c:import url="parts/header.jsp"/>
+<c:set var="userRole" value="${sessionScope.user.role.value}" scope="page"/>
 
 <!-- Preloader Starts -->
 <div class="preloader">
@@ -29,10 +65,11 @@
             <div class="row">
                 <div class="col-lg-2">
                     <div class="logo-area">
-                        <a href="index.html"><img src="assets/images/logo.png" alt="logo"></a>
+                        <a href="Controller?command=go_to_home_page">
+                            <img src="<c:url value="/resources/images/logo.png"/>" alt="logo">
+                        </a>
                     </div>
                 </div>
-
                 <div class="col-lg-10">
                     <div class="custom-navbar">
                         <span></span>
@@ -41,14 +78,46 @@
                     </div>
                     <div class="main-menu">
                         <ul>
-                            <li class="menu-btn">
-                                <a href="#" class="login">Профиль</a>
-                                <a href="#" class="template-btn">Выход</a>
+                            <li>
+                                <a href="Controller?command=ru_RU">
+                                    <img src="<c:url value="/resources/images/elements/flag_russia.png"/> " height="30"
+                                         width="40" alt="RU">
+                                </a>
                             </li>
+                            <li>
+                                <a href="Controller?command=en_US">
+                                    <img src="<c:url value="/resources/images/elements/flag_usa.png"/> " height="30"
+                                         width="40" alt="EN">
+                                </a>
+                            </li>
+                            <c:choose>
+                                <c:when test="${sessionScope.user eq null}">
+                                    <li class="menu-btn">
+                                        <a href="Controller?command=go_to_sign_in_page"
+                                           class="template-btn">${signIn}</a>
+                                    </li>
+                                    <li>
+                                        <a href="Controller?command=go_to_sign_up_page"
+                                           class="template-btn">${signUp}</a>
+                                    </li>
+                                </c:when>
+                                <c:when test="${userRole eq 0 or userRole eq 1}">
+                                    <a href="Controller?command=logout" class="template-btn">${logout}</a>
+                                </c:when>
+                                <c:when test="${userRole eq 2}">
+                                    <li class="menu-btn">
+                                        <a href="Controller?command=go_to_user_profile_page"
+                                           class="login">${profile}</a>
+                                    </li>
+                                    <li>
+                                        <a href="Controller?command=logout" class="template-btn">${logout}</a>
+                                    </li>
+                                </c:when>
+                            </c:choose>
                         </ul>
                     </div>
                 </div>
-                <div class="col-lg-7">
+                <div class="col-lg-6">
                     <div class="custom-navbar">
                         <span></span>
                         <span></span>
@@ -56,9 +125,26 @@
                     </div>
                     <div class="main-menu">
                         <ul>
-                            <li class="active"><a href="index.html">home</a></li>
-                            <li class="active"><a href="contact-us.html">add ad</a></li>
-                            <li><a href="contact-us.html">contact</a></li>
+                            <li class="active"><a href="Controller?command=go_to_home_page">${home}</a></li>
+                            <c:choose>
+                                <c:when test="${userRole eq 0}">
+                                    <li><a href="Controller?command=go_to_users_page">${usersButton}</a></li>
+                                    <li><a href="Controller?command=go_to_platforms_page">${platformsButton}</a></li>
+                                </c:when>
+                                <c:when test="${userRole eq 1}">
+                                    <li><a href="Controller?command=go_to_add_vacancy_page">${addVacancyButton}</a></li>
+                                    <li><a href="Controller?command=go_to_platforms_page">${platformsButton}</a></li>
+                                </c:when>
+                                <c:when test="${userRole eq 2}">
+                                    <li><a href="Controller?command=go_to_add_interview_page">${addInterviewButton}</a>
+                                    </li>
+                                </c:when>
+                            </c:choose>
+                            <c:if test="${requestScope.message ne null}">
+                                <li>
+                                    <c:out value="${messageText}"/>
+                                </li>
+                            </c:if>
                         </ul>
                     </div>
                 </div>
@@ -75,28 +161,35 @@
             <div class="col-lg-8">
                 <div class="main-content">
                     <div class="single-content1">
-                        <div class="single-job mb-4 d-lg-flex justify-content-between">
-                            <div class="job-text">
-                                <h4>Topic</h4>
-                                <ul class="mt-4">
-                                    <li class="mb-3"><h5><em class="fa fa-user"></em> Вакансия</h5></li>
-                                    <li class="mb-3"><h5><em class="fa fa-user-secret"></em> Интервьюер(или логин или
-                                        имя)</h5></li>
-                                    <li class="mb-3"><h5><em class="fa fa-calendar"></em> Дата</h5></li>
-                                    <li class="mb-3"><h5><em class="fa fa-hourglass-start"></em> Начало</h5></li>
-                                    <li class="mb-3"><h5><em class="fa fa-hourglass-end"></em> Конец</h5></li>
-                                    <li><h5><em class="fa fa-video-camera"></em> Платформа</h5></li>
-                                </ul>
+                        <c:forEach var="interview" items="${sessionScope.interviewsList}">
+                            <div class="single-job mb-4 d-lg-flex justify-content-between">
+                                <div class="job-text">
+                                    <h4>${interview.topic}</h4>
+                                    <ul class="mt-4">
+                                        <li class="mb-3"><h5><em class="fa fa-user"></em> ${interview.vacancy.topic}
+                                        </h5></li>
+                                        <li class="mb-3"><h5><em
+                                                class="fa fa-user-secret"></em> ${interviewerLabel}: ${interview.user.name}
+                                        </h5></li>
+                                        <li class="mb-3"><h5><em class="fa fa-calendar"></em> ${dateLabel}:
+                                            <fmt:formatDate value="${interview.date}" type="date"/></h5></li>
+                                        <li class="mb-3"><h5><em
+                                                class="fa fa-hourglass-start"></em> ${startLabel}: ${interview.startTime}
+                                        </h5></li>
+                                        <li class="mb-3"><h5><em
+                                                class="fa fa-hourglass-end"></em> ${endLabel}: ${interview.endTime}</h5>
+                                        </li>
+                                        <li><h5><em
+                                                class="fa fa-video-camera"></em> ${platformLabel}: ${interview.platform.name}
+                                        </h5></li>
+                                    </ul>
+                                </div>
+                                <div class="job-btn align-self-center">
+                                    <button type="button" class="third-btn">${bookButton}</button>
+                                </div>
                             </div>
-                            <div class="job-btn align-self-center">
-                                <button type="button" class="third-btn">забронировать</button>
-                            </div>
-                            <div class="job-btn align-top">
-                                <a href="#" style="color: #0b2e13"><em class="fa fa-edit fa-2x"></em></a>
-                                <a href="#" style="color: #0b2e13"><em class="fa fa-close fa-2x"></em></a>
-                            </div>
-                        </div>
-                    </div>
+                        </c:forEach>
+                    </div
                 </div>
             </div>
             <div class="col-lg-4">
@@ -111,23 +204,14 @@
                         </form>
                     </div>
                     <div class="single-item mb-4">
-                        <h4 class="mb-4">job by location</h4>
-                        <a href="#" class="sidebar-btn d-flex justify-content-between mb-3">
-                            <span>New York</span>
-                            <span class="text-right">25 job</span>
-                        </a>
-                        <a href="#" class="sidebar-btn d-flex justify-content-between mb-3">
-                            <span>California</span>
-                            <span class="text-right">25 job</span>
-                        </a>
-                        <a href="#" class="sidebar-btn d-flex justify-content-between mb-3">
-                            <span>Swizerland</span>
-                            <span class="text-right">25 job</span>
-                        </a>
-                        <a href="#" class="sidebar-btn d-flex justify-content-between mb-3">
-                            <span>Canada</span>
-                            <span class="text-right">25 job</span>
-                        </a>
+                        <h4 class="mb-4">${platformsLabel}</h4>
+                        <c:forEach var="platform" items="${sessionScope.platformsList}">
+                            <a href="Controller?command=filter_interviews&filterIdType=${platform.id}"
+                               class="sidebar-btn d-flex justify-content-between mb-3">
+                                <span><c:out value="${platform.name}"/></span>
+                                <span class="text-right"><c:out value="${platform.count}"/></span>
+                            </a>
+                        </c:forEach>
                     </div>
                 </div>
             </div>

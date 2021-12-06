@@ -11,7 +11,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Add vacancy</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="<c:url value="/resources/images/logo/favicon.png"/>" type="image/x-icon">
+
+    <!-- Locale -->
+    <fmt:setLocale value="${sessionScope.locale}"/>
+    <fmt:setBundle basename="langs.labels" var="loc"/>
+
+    <fmt:message bundle="${loc}" key="logout.button" var="logout"/>
+    <fmt:message bundle="${loc}" key="label.platforms" var="platformsButton"/>
+    <fmt:message bundle="${loc}" key="home.button" var="home"/>
+    <fmt:message bundle="${loc}" key="add.vacancy.button" var="addVacancyButton"/>
+
+    <fmt:message bundle="${loc}" key="label.experience" var="experienceLabel"/>
+    <fmt:message bundle="${loc}" key="label.vacancy.topic" var="topicLabel"/>
+    <fmt:message bundle="${loc}" key="label.requirements" var="requirementsLabel"/>
+    <fmt:message bundle="${loc}" key="label.schedule" var="scheduleLabel"/>
+    <fmt:message bundle="${loc}" key="label.requirements.additional" var="additional"/>
+    <fmt:message bundle="${loc}" key="label.employments" var="employments"/>
+    <fmt:message bundle="${loc}" key="label.description" var="descriptionLabel"/>
+
+    <fmt:message bundle="${loc}" key="vacancy.topic.input.placeholder" var="topicPlaceholder"/>
+    <fmt:message bundle="${loc}" key="vacancy.topic.input.placeholderFocus" var="topicPlaceholderFocus"/>
+    <fmt:message bundle="${loc}" key="experience.input.placeholder" var="experiencePlaceholder"/>
+    <fmt:message bundle="${loc}" key="description.textarea.placeholder" var="descriptionPlaceholder"/>
+    <fmt:message bundle="${loc}" key="requirements.textarea.placeholder" var="requirementsPlaceholder"/>
+    <fmt:message bundle="${loc}" key="addrequirements.textarea.placeholder" var="addRequirementsPlaceholder"/>
+
+    <fmt:message bundle="${loc}" key="page.addVacancy" var="pageTitle"/>
+
+    <c:if test="${requestScope.message ne null}">
+        <fmt:message bundle="${loc}" key="${requestScope.message}" var="messageText"/>
+    </c:if>
+
+    <title>${pageTitle}</title>
 </head>
 <body>
 <c:import url="parts/header.jsp"/>
@@ -43,7 +77,7 @@
                     <div class="main-menu main-menu-light">
                         <ul>
                             <li class="menu-btn">
-                                <a href="Controller?command=logout" class="template-btn">Выход</a>
+                                <a href="Controller?command=logout" class="template-btn">${logout}</a>
                             </li>
                         </ul>
                     </div>
@@ -55,10 +89,8 @@
                         </div>
                         <div class="main-menu main-menu-light">
                             <ul>
-                                <li class="active"><a href="Controller?command=go_to_home_page">Главная</a></li>
-                                <li class="active"><a href="about.html">Добавить объявление</a></li>
-                                <li class="active"><a href="about.html">FAQ</a></li>
-                                <li class="active"><a href="about.html">message</a></li>
+                                <li class="active"><a href="Controller?command=go_to_home_page">${home}</a></li>
+                                <li><a href="Controller?command=go_to_platforms_page">${platformsButton}</a></li>
                             </ul>
                         </div>
                     </div>
@@ -69,7 +101,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-6 offset-md-3">
-                        <h2>Добавление вакансии</h2>
+                        <h2>${pageTitle}</h2>
                     </div>
                 </div>
             </div>
@@ -88,47 +120,47 @@
                     <br>
                     <div class="d-flex">
                         <div class="info-text">
-                            <h5>Заголовок вакансии</h5>
+                            <h5>${topicLabel}</h5>
                         </div>
                     </div>
                     <div class="d-flex">
                         <div class="info-text">
                             <p></p>
-                            <h5>Опыт работы</h5>
-                            <p></p>
-                        </div>
-                    </div>
-                    <div class="d-flex">
-                        <div class="info-text">
-                            <p></p>
-                            <h5>Тип занятости</h5>
+                            <h5>${experienceLabel}</h5>
                             <p></p>
                         </div>
                     </div>
                     <div class="d-flex">
                         <div class="info-text">
                             <p></p>
-                            <h5>График работы</h5>
+                            <h5>${employments}</h5>
                             <p></p>
                         </div>
                     </div>
                     <div class="d-flex">
                         <div class="info-text">
                             <p></p>
-                            <h5>Описание</h5>
+                            <h5>${scheduleLabel}</h5>
+                            <p></p>
+                        </div>
+                    </div>
+                    <div class="d-flex">
+                        <div class="info-text">
+                            <p></p>
+                            <h5>${descriptionLabel}</h5>
                             <p></p>
                         </div>
                     </div>
                     <div class="d-flex">
                         <div class="info-text">
                             <p></p><br><br><br><br><br>
-                            <h5>Требования</h5>
+                            <h5>${requirementsLabel}</h5>
                         </div>
                     </div>
                     <div class="d-flex">
                         <div class="info-text">
                             <br><br><br><br><br>
-                            <h5>Будет преимуществом</h5>
+                            <h5>${additional}</h5>
                         </div>
                     </div>
                 </div>
@@ -136,14 +168,14 @@
                     <form action="Controller" method="post">
                         <input type="hidden" name="command" value="add_vacancy"/>
                         <div class="mt-10">
-                            <input type="text" name="addTopic" maxlength="50" placeholder="Заголовок вакансии"
-                                   onfocus="this.placeholder = 'Главный инженер'"
-                                   onblur="this.placeholder = 'Заголовок вакансии'" required class="single-input">
+                            <input type="text" name="addTopic" maxlength="50" placeholder="${topicPlaceholder}"
+                                   onfocus="this.placeholder = '${topicPlaceholderFocus}'"
+                                   onblur="this.placeholder = '${topicPlaceholder}'" required class="single-input">
                         </div>
                         <div class="mt-10">
                             <input pattern="^\d{1,2}([-]\d{1,2})?$" class="single-input"
-                                   type="text" name="addExperience" placeholder="Опыт работы"
-                                   onfocus="this.placeholder = '1-3'" onblur="this.placeholder = 'Опыт работы'">
+                                   type="text" name="addExperience" placeholder="${experiencePlaceholder}"
+                                   onfocus="this.placeholder = '1-3'" onblur="this.placeholder = '${experiencePlaceholder}'">
                         </div>
                         <div class="input-group-icon mt-10">
                             <div class="icon"><i class="fa fa-gg" aria-hidden="true"></i></div>
@@ -167,22 +199,22 @@
                         </div>
                         <div class="mt-10">
                             <textarea name="addDescription" class="single-textarea" maxlength="300"
-                                      placeholder="Описание" onfocus="this.placeholder = ''"
-                                      onblur="this.placeholder = 'Описание'" required></textarea>
+                                      placeholder="${descriptionPlaceholder}" onfocus="this.placeholder = ''"
+                                      onblur="this.placeholder = '${descriptionPlaceholder}'" required></textarea>
                         </div>
                         <div class="mt-10">
                             <textarea name="addRequirements" class="single-textarea" maxlength="500"
-                                      placeholder="Требования" onfocus="this.placeholder = ''"
-                                      onblur="this.placeholder = 'Требования'" required></textarea>
+                                      placeholder="${requirementsPlaceholder}" onfocus="this.placeholder = ''"
+                                      onblur="this.placeholder = '${requirementsPlaceholder}'" required></textarea>
                         </div>
                         <div class="mt-10">
                             <textarea name="addAdditional" class="single-textarea" maxlength="500"
-                                      placeholder="Описание" onfocus="this.placeholder = ''"
-                                      onblur="this.placeholder = 'Дополнительные знания/навыки'"></textarea>
+                                      placeholder="${addRequirementsPlaceholder}" onfocus="this.placeholder = ''"
+                                      onblur="this.placeholder = '${addRequirementsPlaceholder}'"></textarea>
                         </div>
                         <br>
                         <br>
-                        <button type="submit" class="template-btn">Добавить вакансию</button>
+                        <button type="submit" class="template-btn">${addVacancyButton}</button>
                     </form>
                 </div>
             </div>

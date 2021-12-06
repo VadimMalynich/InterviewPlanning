@@ -22,8 +22,25 @@ public class CommandProvider {
         commands.put(CommandName.LOGOUT, new Logout());
         commands.put(CommandName.GO_TO_USERS_PAGE, new GoToUsersPage());
         commands.put(CommandName.DELETE_USER, new DeleteUser());
-        commands.put(CommandName.GO_TO_EDIT_USER_PAGE, new GoToEditUserPage());
         commands.put(CommandName.EDIT_USER, new EditUser());
+        commands.put(CommandName.GO_TO_EDIT_USER_PAGE, new GoToEditUserPage());
+        commands.put(CommandName.GO_TO_HOME_PAGE, new GoToHomePage());
+        commands.put(CommandName.GO_TO_VACANCY_PAGE, new GoToVacancyPage());
+        commands.put(CommandName.GO_TO_ADD_VACANCY_PAGE, new GoToAddVacancyPage());
+        commands.put(CommandName.ADD_VACANCY, new AddVacancy());
+        commands.put(CommandName.GO_TO_EDIT_VACANCY_PAGE, new GoToEditVacancyPage());
+        commands.put(CommandName.EDIT_VACANCY, new EditVacancy());
+        commands.put(CommandName.DELETE_VACANCY, new DeleteVacancy());
+        commands.put(CommandName.GO_TO_INTERVIEWS_PAGE, new GoToInterviewsPage());
+        commands.put(CommandName.GO_TO_EDIT_INTERVIEW_PAGE, new GoToEditInterviewPage());
+        commands.put(CommandName.GO_TO_ADD_INTERVIEW_PAGE, new GoToAddInterviewPage());
+        commands.put(CommandName.EDIT_INTERVIEW, new EditInterview());
+        commands.put(CommandName.ADD_INTERVIEW, new AddInterview());
+        commands.put(CommandName.DELETE_INTERVIEW, new DeleteInterview());
+        commands.put(CommandName.GO_TO_PLATFORMS_PAGE, new GoToPlatformsPage());
+        commands.put(CommandName.ADD_PLATFORM, new AddPlatform());
+        commands.put(CommandName.DELETE_PLATFORM, new DeletePlatform());
+        commands.put(CommandName.EDIT_PLATFORM, new EditPlatform());
         commands.put(CommandName.WRONG_REQUEST, new WrongRequest());
     }
 

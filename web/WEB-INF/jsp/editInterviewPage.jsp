@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: Vadim
-  Date: 04.12.2021
-  Time: 20:43
+  Date: 06.12.2021
+  Time: 22:44
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -23,6 +23,7 @@
     <fmt:message bundle="${loc}" key="logout.button" var="logout"/>
     <fmt:message bundle="${loc}" key="profile.button" var="profile"/>
     <fmt:message bundle="${loc}" key="home.button" var="home"/>
+    <fmt:message bundle="${loc}" key="edit.interview.button" var="editInterviewButton"/>
     <fmt:message bundle="${loc}" key="add.interview.button" var="addInterviewButton"/>
 
     <fmt:message bundle="${loc}" key="label.interview.topic" var="interviewTopic"/>
@@ -35,7 +36,7 @@
     <fmt:message bundle="${loc}" key="interview.topic.input.placeholder" var="topicPlaceholder"/>
     <fmt:message bundle="${loc}" key="interview.topic.input.placeholderFocus" var="topicPlaceholderFocus"/>
 
-    <fmt:message bundle="${loc}" key="page.addInterview" var="pageTitle"/>
+    <fmt:message bundle="${loc}" key="page.editInterview" var="pageTitle"/>
 
     <c:if test="${requestScope.message ne null}">
         <fmt:message bundle="${loc}" key="${requestScope.message}" var="messageText"/>
@@ -46,6 +47,7 @@
 </head>
 <body>
 <c:import url="parts/header.jsp"/>
+<c:set var="interview" scope="page" value="${sessionScope.editInterview}"/>
 
 <!-- Preloader Starts -->
 <div class="preloader">
@@ -153,36 +155,43 @@
                     <form action="Controller" method="post">
                         <input type="hidden" name="command" value="add_interview"/>
                         <div class="mt-10">
-                            <input type="text" name="addTopic" maxlength="50" placeholder="${topicPlaceholder}"
-                                   onfocus="this.placeholder = '${topicPlaceholderFocus}'"
-                                   onblur="this.placeholder = '${topicPlaceholder}'" required class="single-input">
+                            <input type="text" name="editTopic" maxlength="50" placeholder="${interview.topic}"
+                                   onfocus="this.placeholder = '${interview.topic}'"
+                                   onblur="this.placeholder = '${interview.topic}'" required class="single-input">
                         </div>
                         <div class="mt-10">
-                            <input type="date" name="addDate" required
+                            <input type="date" name="editDate" value="${interview.date}" required
                                    class="single-input">
                         </div>
                         <div class="input-group-icon mt-10">
                             <div class="icon"><i class="fa fa-hourglass-start" aria-hidden="true"></i></div>
-                            <input type="time" name="addStartTime" required
+                            <input type="time" name="editStartTime" value="${interview.startTime}" required
                                    class="single-input">
                         </div>
                         <div class="input-group-icon mt-10">
                             <div class="icon"><i class="fa fa-hourglass-end" aria-hidden="true"></i></div>
-                            <input type="time" name="addEndTime" class="single-input">
+                            <input type="time" name="editEndTime" value="${interview.endTime}" class="single-input">
                         </div>
                         <div class="input-group-icon mt-10">
                             <div class="icon"><i class="fa fa-gg" aria-hidden="true"></i></div>
                             <div class="form-select" id="default-select2">
-                                <select name="addPlatform">
+                                <select name="editPlatform">
                                     <c:forEach var="platform" items="${sessionScope.platformsList}">
-                                        <option name="${platform.id}">${platform.name}</option>
+                                        <c:choose>
+                                            <c:when test="${platform.id==interview.platform.id}">
+                                                <option value="${platform.id}" selected>${platform.name}</option>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <option value="${platform.id}">${platform.name}</option>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </c:forEach>
                                 </select>
                             </div>
                         </div>
                         <br>
                         <br>
-                        <button type="submit" class="template-btn">${addInterviewButton}</button>
+                        <button type="submit" class="template-btn">${editInterviewButton}</button>
                     </form>
                 </div>
             </div>

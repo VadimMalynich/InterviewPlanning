@@ -21,7 +21,7 @@ public class GoToVacancyPage implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        session.setAttribute("page", "Controller?command=go_to_ad_page&adIdInfo=" + request.getParameter("adIdInfo"));
+        session.setAttribute("page", "Controller?command=go_to_vacancy_page&adIdInfo=" + request.getParameter("adIdInfo"));
         if (request.getParameter("message") != null) {
             request.setAttribute("message", request.getParameter("message"));
         }
@@ -32,7 +32,7 @@ public class GoToVacancyPage implements Command {
         try {
             Vacancy vacancy = vacancyService.getVacancy(integer);
             if (vacancy == null) {
-                response.sendRedirect("Controller?command=go_to_home_page&message=message.error.openAd");
+                response.sendRedirect("Controller?command=go_to_home_page&message=message.error.openVacancy");
             } else {
                 session.setAttribute("vacancyPageInfo", vacancy);
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/vacancyPage.jsp");

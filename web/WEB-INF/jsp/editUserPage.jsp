@@ -18,13 +18,16 @@
     <fmt:setLocale value="${sessionScope.locale}"/>
     <fmt:setBundle basename="langs.labels" var="loc"/>
 
-    <fmt:message bundle="${loc}" key="add.ad.button" var="addButton"/>
     <fmt:message bundle="${loc}" key="logout.button" var="logout"/>
     <fmt:message bundle="${loc}" key="profile.button" var="profile"/>
     <fmt:message bundle="${loc}" key="assortment.button" var="assortment"/>
     <fmt:message bundle="${loc}" key="users.button" var="usersButton"/>
     <fmt:message bundle="${loc}" key="home.button" var="home"/>
     <fmt:message bundle="${loc}" key="edit.button" var="editButton"/>
+    <fmt:message bundle="${loc}" key="users.button" var="usersButton"/>
+    <fmt:message bundle="${loc}" key="add.interview.button" var="addInterviewButton"/>
+    <fmt:message bundle="${loc}" key="add.vacancy.button" var="addVacancyButton"/>
+    <fmt:message bundle="${loc}" key="label.platforms" var="platformsButton"/>
 
     <fmt:message bundle="${loc}" key="label.login" var="login"/>
     <fmt:message bundle="${loc}" key="label.newPassword" var="newPassword"/>
@@ -38,7 +41,8 @@
 
     <fmt:message bundle="${loc}" key="label.role" var="role"/>
     <fmt:message bundle="${loc}" key="label.admin" var="adminLabel"/>
-    <fmt:message bundle="${loc}" key="label.user" var="userLabel"/>
+    <fmt:message bundle="${loc}" key="label.director" var="directorLabel"/>
+    <fmt:message bundle="${loc}" key="label.interviewer" var="interviewerLabel"/>
 
     <fmt:message bundle="${loc}" key="page.editUser" var="pageTitle"/>
 
@@ -51,7 +55,7 @@
 </head>
 <body>
 <c:import url="parts/header.jsp"/>
-
+<c:set var="userRole" value="${sessionScope.user.role.value}" scope="page"/>
 <!-- Preloader Starts -->
 <div class="preloader">
     <div class="spinner"></div>
@@ -91,10 +95,10 @@
                                 </a>
                             </li>
                             <c:choose>
-                                <c:when test="${sessionScope.user.role.value eq 0}">
+                                <c:when test="${userRole eq 0 or userRole eq 1}">
                                     <a href="Controller?command=logout" class="template-btn">${logout}</a>
                                 </c:when>
-                                <c:when test="${sessionScope.user.role.value eq 1}">
+                                <c:when test="${userRole eq 2}">
                                     <li class="menu-btn">
                                         <a href="Controller?command=go_to_user_profile_page"
                                            class="login">${profile}</a>
@@ -117,14 +121,17 @@
                         <ul>
                             <li class="active"><a href="Controller?command=go_to_home_page">${home}</a></li>
                             <c:choose>
-                                <c:when test="${sessionScope.user.role.value eq 0}">
-                                    <li><a href="Controller?command=go_to_types_page">${assortment}</a></li>
+                                <c:when test="${userRole eq 0}">
                                     <li><a href="Controller?command=go_to_users_page">${usersButton}</a></li>
-<%--                                    <li><a href="#">FAQ</a></li>--%>
+                                    <li><a href="Controller?command=go_to_platforms_page">${platformsButton}</a></li>
                                 </c:when>
-                                <c:when test="${sessionScope.user.role.value eq 1}">
-                                    <li><a href="Controller?command=go_to_add_ad_page">${addButton}</a></li>
-<%--                                    <li><a href="#">FAQ</a></li>--%>
+                                <c:when test="${userRole eq 1}">
+                                    <li><a href="Controller?command=go_to_add_vacancy_page">${addVacancyButton}</a></li>
+                                    <li><a href="Controller?command=go_to_platforms_page">${platformsButton}</a></li>
+                                </c:when>
+                                <c:when test="${userRole eq 2}">
+                                    <li><a href="Controller?command=go_to_add_interview_page">${addInterviewButton}</a>
+                                    </li>
                                 </c:when>
                             </c:choose>
                             <c:if test="${requestScope.message ne null}">
@@ -215,7 +222,7 @@
                                    onblur="this.placeholder = '${sessionScope.editUser.name}'" required
                                    class="single-input">
                         </div>
-                        <c:if test="${sessionScope.user.role.value eq 0}">
+                        <c:if test="${userRole eq 0}">
                             <c:choose>
                                 <c:when test="${sessionScope.editUser.role.value eq 0}">
                                     <div class="input-group-icon mt-10">
@@ -227,13 +234,28 @@
                                         </div>
                                     </div>
                                 </c:when>
-                                <c:when test="${sessionScope.editUser.role.value eq 1}">
+                                <c:when test="${sessionScope.editUser.role.value eq 1 or sessionScope.editUser.role.value eq 2}">
                                     <div class="input-group-icon mt-10">
                                         <div class="icon"><i class="fa fa-user" aria-hidden="true"></i></div>
                                         <div class="form-select">
                                             <select name="editRole" class="nice-select list">
                                                 <option value="0">${adminLabel}</option>
-                                                <option value="1" selected>${userLabel}</option>
+                                                <c:choose>
+                                                    <c:when test="${sessionScope.editUser.role.value eq 1}">
+                                                        <option value="1" selected>${directorLabel}</option>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <option value="1">${directorLabel}</option>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="${sessionScope.editUser.role.value eq 2}">
+                                                        <option value="2" selected>${interviewerLabel}</option>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <option value="2">${interviewerLabel}</option>
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </select>
                                         </div>
                                     </div>
