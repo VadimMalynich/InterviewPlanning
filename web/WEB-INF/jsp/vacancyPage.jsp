@@ -9,7 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%--<%@ taglib prefix="ctg" uri="customtags" %>--%>
+<%@ taglib prefix="ctg" uri="customtags" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -168,9 +168,8 @@
                             <div class="job-text">
                                 <h4><c:out value="${vacancy.topic}"/></h4>
                                 <ul class="mt-4">
-                                    <li class="mb-3"><h5><em class="fa fa-address-card-o"></em> <c:out
-                                            value=" ${experienceLabel}: ${vacancy.experience}"/></h5>
-                                    </li>
+                                    <ctg:experience-label experience="${vacancy.experience}"
+                                                          bundle="${sessionScope.locale}"/>
                                     <li class="mb-3"><h5><em class="fa fa-calendar"></em> <c:out
                                             value=" ${scheduleLabel}: ${vacancy.schedule.timetable}"/></h5></li>
                                     <li><h5><em

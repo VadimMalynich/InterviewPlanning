@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%--<%@ taglib prefix="ctg" uri="customtags" %>--%>
+<%@ taglib prefix="ctg" uri="customtags" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,7 +31,7 @@
     <fmt:message bundle="${loc}" key="label.platforms" var="platformsButton"/>
     <fmt:message bundle="${loc}" key="add.vacancy.button" var="addVacancyButton"/>
 
-    <fmt:message bundle="${loc}" key="label.experience" var="platformLabel"/>
+    <fmt:message bundle="${loc}" key="label.experience" var="experienceLabel"/>
     <fmt:message bundle="${loc}" key="label.vacancy.topic" var="topicLabel"/>
     <fmt:message bundle="${loc}" key="label.requirements" var="materialLabel"/>
     <fmt:message bundle="${loc}" key="label.schedule" var="scheduleLabel"/>
@@ -229,9 +229,8 @@
                                             <div class="job-text">
                                                 <h4><c:out value="${vacancy.topic}"/></h4>
                                                 <ul class="mt-4">
-                                                    <li class="mb-3"><h5><em
-                                                            class="fa fa-vcard"></em> ${employmentsLabel}:
-                                                        <c:out value="${vacancy.experience}"/></h5></li>
+                                                    <ctg:experience-label experience="${vacancy.experience}"
+                                                                          bundle="${sessionScope.locale}"/>
                                                     <li class="mb-3"><h5><em
                                                             class="fa fa-calendar"></em> ${scheduleLabel}: ${vacancy.schedule.timetable}
                                                     </h5>
@@ -338,9 +337,8 @@
                                             <div class="job-text">
                                                 <h4><c:out value="${vacancy.topic}"/></h4>
                                                 <ul class="mt-4">
-                                                    <li class="mb-3"><h5><em
-                                                            class="fa fa-address-card-o"></em> ${employmentsLabel}:
-                                                        <c:out value="${vacancy.experience}"/></h5></li>
+                                                    <ctg:experience-label experience="${vacancy.experience}"
+                                                                          bundle="${sessionScope.locale}"/>
                                                     <li class="mb-3"><h5><em
                                                             class="fa fa-calendar"></em> ${scheduleLabel}: ${vacancy.schedule.timetable}
                                                     </h5>
@@ -447,9 +445,8 @@
                                             <div class="job-text">
                                                 <h4><c:out value="${vacancy.topic}"/></h4>
                                                 <ul class="mt-4">
-                                                    <li class="mb-3"><h5><em
-                                                            class="fa fa-address-card-o"></em> ${employmentsLabel}:
-                                                        <c:out value="${vacancy.experience}"/></h5></li>
+                                                    <ctg:experience-label experience="${vacancy.experience}"
+                                                                          bundle="${sessionScope.locale}"/>
                                                     <li class="mb-3"><h5><em
                                                             class="fa fa-calendar"></em> ${scheduleLabel}: ${vacancy.schedule.timetable}
                                                     </h5>
@@ -556,9 +553,8 @@
                                             <div class="job-text">
                                                 <h4><c:out value="${vacancy.topic}"/></h4>
                                                 <ul class="mt-4">
-                                                    <li class="mb-3"><h5><em
-                                                            class="fa fa-address-card-o"></em> ${employmentsLabel}:
-                                                        <c:out value="${vacancy.experience}"/></h5></li>
+                                                    <ctg:experience-label experience="${vacancy.experience}"
+                                                                          bundle="${sessionScope.locale}"/>
                                                     <li class="mb-3"><h5><em
                                                             class="fa fa-calendar"></em> ${scheduleLabel}: ${vacancy.schedule.timetable}
                                                     </h5>
