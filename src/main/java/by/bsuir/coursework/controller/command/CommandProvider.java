@@ -47,6 +47,12 @@ public class CommandProvider {
         commands.put(CommandName.SEARCH_INTERVIEWS, new SearchInterviews());
         commands.put(CommandName.FILTER_INTERVIEWS, new FilterInterviews());
         commands.put(CommandName.GO_TO_PROFILE_PAGE, new GoToProfilePage());
+        commands.put(CommandName.GO_TO_FEEDBACKS_PAGE, new GoToFeedbacksPage());
+        commands.put(CommandName.GO_TO_INTERVIEWER_FEEDBACKS_PAGE, new GoToInterviewerFeedbacksPage());
+        commands.put(CommandName.GO_TO_ADD_FEEDBACK_PAGE, new GoToAddFeedbackPage());
+        commands.put(CommandName.ADD_FEEDBACK, new AddFeedback());
+        commands.put(CommandName.GO_TO_EDIT_FEEDBACK_PAGE, new GoToEditFeedbackPage());
+        commands.put(CommandName.EDIT_FEEDBACK, new EditFeedback());
         commands.put(CommandName.WRONG_REQUEST, new WrongRequest());
     }
 

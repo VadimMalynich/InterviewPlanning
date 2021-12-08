@@ -30,8 +30,9 @@
     <fmt:message bundle="${loc}" key="users.button" var="usersButton"/>
     <fmt:message bundle="${loc}" key="add.interview.button" var="addInterviewButton"/>
     <fmt:message bundle="${loc}" key="add.vacancy.button" var="addVacancyButton"/>
-    <fmt:message bundle="${loc}" key="label.platforms" var="platformsButton"/>
+    <fmt:message bundle="${loc}" key="feedback.button" var="feedbackButton"/>
 
+    <fmt:message bundle="${loc}" key="label.platforms" var="platformsButton"/>
     <fmt:message bundle="${loc}" key="label.experience" var="experienceLabel"/>
     <fmt:message bundle="${loc}" key="label.interviewCount" var="interviewCountLabel"/>
     <fmt:message bundle="${loc}" key="label.requirements" var="requirementsLabel"/>
@@ -124,7 +125,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-7">
                     <div class="custom-navbar">
                         <span></span>
                         <span></span>
@@ -141,6 +142,10 @@
                                 <c:when test="${userRole eq 1}">
                                     <li><a href="Controller?command=go_to_platforms_page">${platformsButton}</a></li>
                                     <li><a href="Controller?command=go_to_add_vacancy_page">${addVacancyButton}</a></li>
+                                    <li><a href="Controller?command=go_to_feedbacks_page">${feedbackButton}</a></li>
+                                </c:when>
+                                <c:when test="${userRole eq 2}">
+                                    <li><a href="Controller?command=go_to_interviewer_feedbacks_page">${feedbackButton}</a></li>
                                 </c:when>
                             </c:choose>
                             <c:if test="${requestScope.message ne null}">

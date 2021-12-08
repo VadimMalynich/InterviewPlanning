@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: Vadim
-  Date: 06.12.2021
-  Time: 22:44
+  Date: 08.12.2021
+  Time: 20:58
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -23,21 +23,19 @@
     <fmt:message bundle="${loc}" key="logout.button" var="logout"/>
     <fmt:message bundle="${loc}" key="profile.button" var="profile"/>
     <fmt:message bundle="${loc}" key="home.button" var="home"/>
-    <fmt:message bundle="${loc}" key="edit.interview.button" var="editInterviewButton"/>
     <fmt:message bundle="${loc}" key="add.interview.button" var="addInterviewButton"/>
     <fmt:message bundle="${loc}" key="feedback.button" var="feedbackButton"/>
+    <fmt:message bundle="${loc}" key="edit.feedback.button" var="editFeedbackButton"/>
 
-    <fmt:message bundle="${loc}" key="label.interview.topic" var="interviewTopic"/>
-    <fmt:message bundle="${loc}" key="label.date" var="dateLabel"/>
-    <fmt:message bundle="${loc}" key="label.startTime" var="startLabel"/>
-    <fmt:message bundle="${loc}" key="label.endTime" var="endLabel"/>
-    <fmt:message bundle="${loc}" key="label.platform" var="platformLabel"/>
-    <fmt:message bundle="${loc}" key="label.interviewer" var="interviewerLabel"/>
+    <fmt:message bundle="${loc}" key="label.review" var="reviewLabel"/>
+    <fmt:message bundle="${loc}" key="label.mark" var="markLabel"/>
+    <fmt:message bundle="${loc}" key="label.requirements.additional" var="additional"/>
+    <fmt:message bundle="${loc}" key="addrequirements.textarea.placeholder" var="placeholder"/>
 
-    <fmt:message bundle="${loc}" key="interview.topic.input.placeholder" var="topicPlaceholder"/>
-    <fmt:message bundle="${loc}" key="interview.topic.input.placeholderFocus" var="topicPlaceholderFocus"/>
+    <fmt:message bundle="${loc}" key="page.editFeedback" var="pageTitle"/>
 
-    <fmt:message bundle="${loc}" key="page.editInterview" var="pageTitle"/>
+    <fmt:message bundle="${loc}" key="message.meetAdd" var="respond"/>
+    <fmt:message bundle="${loc}" key="message.not.meetAdd" var="notRespond"/>
 
     <c:if test="${requestScope.message ne null}">
         <fmt:message bundle="${loc}" key="${requestScope.message}" var="messageText"/>
@@ -48,7 +46,6 @@
 </head>
 <body>
 <c:import url="parts/header.jsp"/>
-<c:set var="interview" scope="page" value="${sessionScope.editInterview}"/>
 
 <!-- Preloader Starts -->
 <div class="preloader">
@@ -145,80 +142,83 @@
                     <br>
                     <div class="d-flex">
                         <div class="info-text">
-                            <h5>${interviewTopic}</h5>
+                            <h5>${reviewLabel}</h5>
                         </div>
                     </div>
                     <div class="d-flex">
                         <div class="info-text">
+                            <br><br><br><br><br>
                             <p></p>
-                            <h5>${dateLabel}</h5>
-                            <p></p>
+                            <h5>${markLabel}</h5>
                         </div>
                     </div>
                     <div class="d-flex">
                         <div class="info-text">
-                            <p></p>
-                            <h5>${startLabel}</h5>
-                            <p></p>
-                        </div>
-                    </div>
-                    <div class="d-flex">
-                        <div class="info-text">
-                            <p></p>
-                            <h5>${endLabel}</h5>
-                            <p></p>
-                        </div>
-                    </div>
-                    <div class="d-flex">
-                        <div class="info-text">
-                            <p></p>
-                            <h5>${platformLabel}</h5>
+                            <br>
+                            <h5>${additional}</h5>
                             <p></p>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-8">
                     <form action="Controller" method="post">
-                        <input type="hidden" name="command" value="edit_interview"/>
+                        <input type="hidden" name="command" value="edit_feedback"/>
                         <div class="mt-10">
-                            <input type="text" name="editTopic" maxlength="50" placeholder="${interview.topic}"
-                                   onfocus="this.placeholder = '${interview.topic}'" value="${interview.topic}"
-                                   onblur="this.placeholder = '${interview.topic}'" required class="single-input">
+                            <textarea name="editReview" class="single-textarea" maxlength="500"
+                                      placeholder="${sessionScope.editFeedback.description}"
+                                      onfocus="this.placeholder = '${sessionScope.editFeedback.description}'"
+                                      onblur="this.placeholder = '${sessionScope.editFeedback.description}'"
+                                      required><c:out value="${sessionScope.editFeedback.description}"/></textarea>
                         </div>
-                        <div class="mt-10">
-                            <input type="date" name="editDate" value="${interview.date}" required
+                        <div class="input-group-icon mt-10">
+                            <div class="icon"><i class="fa fa-info" aria-hidden="true"></i></div>
+                            <input type="number" name="editMark" min="1" max="10"
+                                   value="${sessionScope.editFeedback.mark}" required placeholder="${markLabel}"
                                    class="single-input">
                         </div>
-                        <div class="input-group-icon mt-10">
-                            <div class="icon"><i class="fa fa-hourglass-start" aria-hidden="true"></i></div>
-                            <input type="time" name="editStartTime" value="${interview.startTime}" required min="08:00"
-                                   max="22:00" class="single-input">
-                        </div>
-                        <div class="input-group-icon mt-10">
-                            <div class="icon"><i class="fa fa-hourglass-end" aria-hidden="true"></i></div>
-                            <input type="time" name="editEndTime" value="${interview.endTime}" required min="08:30"
-                                   max="23:00" class="single-input">
-                        </div>
-                        <div class="input-group-icon mt-10">
-                            <div class="icon"><i class="fa fa-gg" aria-hidden="true"></i></div>
-                            <div class="form-select" id="default-select2">
-                                <select name="editPlatform">
-                                    <c:forEach var="platform" items="${sessionScope.platformsList}">
-                                        <c:choose>
-                                            <c:when test="${platform.id==interview.platform.id}">
-                                                <option value="${platform.id}" selected>${platform.name}</option>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <option value="${platform.id}">${platform.name}</option>
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </c:forEach>
-                                </select>
+                        <div class="mt-10">
+                            <div class="col-lg-9 col-md-1 mt-sm-3 element-wrap">
+                                <div class="single-element-widget">
+                                    <div class="switch-wrap d-flex justify-content-between">
+                                        <p>${notRespond}</p>
+                                        <div class="primary-radio">
+                                            <c:choose>
+                                                <c:when test="${sessionScope.editFeedback.additionalRequirements}">
+                                                    <input type="radio" id="radio1" name="editRespond" value="false">
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <input type="radio" id="radio1" name="editRespond" value="false"
+                                                           checked>
+                                                </c:otherwise>
+                                            </c:choose>
+                                            <label for="radio1"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-9 col-md-1 mt-sm-3 element-wrap">
+                                <div class="single-element-widget">
+                                    <div class="switch-wrap d-flex justify-content-between">
+                                        <p>${respond}</p>
+                                        <div class="primary-radio">
+                                            <c:choose>
+                                                <c:when test="${sessionScope.editFeedback.additionalRequirements}">
+                                                    <input type="radio" id="radio2" name="editRespond" value="true"
+                                                           checked>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <input type="radio" id="radio2" name="editRespond" value="true">
+                                                </c:otherwise>
+                                            </c:choose>
+                                            <label for="radio2"></label>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <br>
                         <br>
-                        <button type="submit" class="template-btn">${editInterviewButton}</button>
+                        <button type="submit" class="template-btn">${editFeedbackButton}</button>
                     </form>
                 </div>
             </div>

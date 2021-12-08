@@ -1,6 +1,7 @@
 package by.bsuir.coursework.service.impl;
 
 import by.bsuir.coursework.bean.User;
+import by.bsuir.coursework.bean.UserRole;
 import by.bsuir.coursework.dao.DaoException;
 import by.bsuir.coursework.dao.DaoFactory;
 import by.bsuir.coursework.dao.UserDao;
@@ -42,6 +43,7 @@ public class UserServiceImpl extends SessionUtil implements UserService {
             throw new ServiceException("Passwords don't match");
         }
         validateUserData(user);
+        user.setRole(UserRole.INTERVIEWER);
         UserDao userDao = DaoFactory.getInstance().getUserDao();
         try {
             openTransactionSession();

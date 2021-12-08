@@ -159,6 +159,7 @@ CREATE TABLE IF NOT EXISTS `feedback`
     `mark`                    BIT(10)      NOT NULL,
     PRIMARY KEY (`id`),
     INDEX `interview_id_fk_idx` (`interview_id` ASC) VISIBLE,
+    UNIQUE INDEX `interview_id_UNIQUE` (`interview_id` ASC) VISIBLE,
     INDEX `user_id_fk_idx` (`user_id` ASC) VISIBLE,
     CONSTRAINT `interview_id_fk`
         FOREIGN KEY (`interview_id`)
@@ -168,6 +169,7 @@ CREATE TABLE IF NOT EXISTS `feedback`
             REFERENCES `users` (`id`)
             ON DELETE CASCADE
             ON UPDATE CASCADE
+
 )
     ENGINE = InnoDB
     AUTO_INCREMENT = 1;

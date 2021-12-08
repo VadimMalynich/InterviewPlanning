@@ -29,6 +29,7 @@
     <fmt:message bundle="${loc}" key="add.interview.button" var="addInterviewButton"/>
     <fmt:message bundle="${loc}" key="add.vacancy.button" var="addVacancyButton"/>
     <fmt:message bundle="${loc}" key="label.platforms" var="platformsButton"/>
+    <fmt:message bundle="${loc}" key="feedback.button" var="feedbackButton"/>
 
     <fmt:message bundle="${loc}" key="label.date" var="dateLabel"/>
     <fmt:message bundle="${loc}" key="label.startTime" var="startLabel"/>
@@ -38,6 +39,8 @@
     <fmt:message bundle="${loc}" key="label.welcome" var="welcome">
         <fmt:param value="${sessionScope.user.name}"/>
     </fmt:message>
+    <fmt:message bundle="${loc}" key="label.userInterviews" var="userInterviews"/>
+    <fmt:message bundle="${loc}" key="label.vacancy" var="vacancyLabel"/>
 
     <fmt:message bundle="${loc}" key="searchInterview.input.placeholder" var="searchPlaceholder"/>
 
@@ -114,6 +117,8 @@
                         <div class="main-menu main-menu-light">
                             <ul>
                                 <li class="active"><a href="Controller?command=go_to_home_page">${home}</a></li>
+                                <li><a href="Controller?command=go_to_interviewer_feedbacks_page">${feedbackButton}</a>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -164,6 +169,9 @@
 <%--                        <a href="Controller?command=go_to_add_interview_page"--%>
 <%--                           class="template-btn">${addInterviewButton}</a>--%>
                     </c:when>
+                    <c:when test="${sessionScope.interviewsList ne null}">
+                        <h2>${userInterviews}</h2>
+                    </c:when>
                 </c:choose>
             </div>
         </div>
@@ -186,7 +194,7 @@
                                             <h4>${interview.topic}</h4>
                                             <ul class="mt-4">
                                                 <li class="mb-3"><h5><em
-                                                        class="fa fa-user"></em> ${interview.vacancy.topic}
+                                                        class="fa fa-user"></em> ${vacancyLabel}: ${interview.vacancy.topic}
                                                 </h5></li>
                                                 <li class="mb-3"><h5><em
                                                         class="fa fa-user-secret"></em> ${interviewerLabel}: ${interview.user.name}

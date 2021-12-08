@@ -1,9 +1,11 @@
 package by.bsuir.coursework.service.impl;
 
 import by.bsuir.coursework.bean.Feedback;
+import by.bsuir.coursework.bean.Interview;
 import by.bsuir.coursework.dao.DaoException;
 import by.bsuir.coursework.dao.DaoFactory;
 import by.bsuir.coursework.dao.FeedbackDao;
+import by.bsuir.coursework.dao.InterviewDao;
 import by.bsuir.coursework.dao.utilities.SessionUtil;
 import by.bsuir.coursework.service.FeedbackService;
 import by.bsuir.coursework.service.ServiceException;
@@ -56,9 +58,14 @@ public class FeedbackServiceImpl extends SessionUtil implements FeedbackService 
         }
         validateAddData(feedback);
         FeedbackDao feedbackDao = DaoFactory.getInstance().getFeedbackDao();
+        InterviewDao interviewDao = DaoFactory.getInstance().getInterviewDao();
         try {
             openTransactionSession();
             feedbackDao.setSession(getSession());
+            interviewDao.setSession(getSession());
+            Interview interview = interviewDao.getInterview(feedback.getInterview().getId());
+            interview.setHappen(true);
+            interviewDao.edit(interview);
             feedbackDao.add(feedback);
             commitTransactionSession();
         } catch (DaoException e) {
@@ -150,7 +157,7 @@ public class FeedbackServiceImpl extends SessionUtil implements FeedbackService 
         if (!FeedbackValidator.validateText(feedback.getDescription())) {
             throw new ServiceException("Wrong description");
         }
-        if (!FeedbackValidator.validateMark(feedback.getMark())) {
+        if (FeedbackValidator.validateMark(feedback.getMark())) {
             throw new ServiceException("Wrong mark");
         }
     }

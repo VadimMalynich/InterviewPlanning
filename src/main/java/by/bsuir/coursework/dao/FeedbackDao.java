@@ -8,7 +8,7 @@ import java.util.List;
 public class FeedbackDao extends AbstractDao<Integer, Feedback> {
     private static final String GET_ALL = "SELECT * FROM feedback";
     private static final String GET_ALL_USER_FEEDBACKS = "SELECT * FROM feedback WHERE user_id=:id";
-    private static final String GET_ALL_INTERVIEW_FEEDBACKS = "SELECT * FROM feedback WHERE interview_id=:id";
+    private static final String GET_INTERVIEW_FEEDBACK = "SELECT * FROM feedback WHERE interview_id=:id";
 
     @Override
     public List<Feedback> getAll() throws DaoException {
@@ -59,7 +59,7 @@ public class FeedbackDao extends AbstractDao<Integer, Feedback> {
 
     public Feedback getInterviewFeedback(Integer id) throws DaoException {
         try {
-            Query query = session.createNativeQuery(GET_ALL_INTERVIEW_FEEDBACKS).addEntity(Feedback.class);
+            Query query = session.createNativeQuery(GET_INTERVIEW_FEEDBACK).addEntity(Feedback.class);
             query.setParameter("id", id);
             return (Feedback) query.getSingleResult();
         } catch (Exception ex) {
@@ -68,7 +68,7 @@ public class FeedbackDao extends AbstractDao<Integer, Feedback> {
     }
 
     public boolean isFeedback(Integer id){
-        Query query = session.createNativeQuery(GET_ALL_INTERVIEW_FEEDBACKS).addEntity(Feedback.class);
+        Query query = session.createNativeQuery(GET_INTERVIEW_FEEDBACK).addEntity(Feedback.class);
         query.setParameter("id", id);
         return query.list().isEmpty();
     }

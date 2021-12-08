@@ -38,6 +38,14 @@ public interface InterviewService {
     void edit(Interview interview) throws ServiceException;
 
     /**
+     * Method for getting all user past interviews
+     *
+     * @return {@code List<Interview>} with info that lies in database
+     * @throws ServiceException when the error occurred on the dao layer
+     */
+    List<Interview> getPastUserInterviews(Integer id) throws ServiceException;
+
+    /**
      * Method for get interview
      *
      * @param id interview id

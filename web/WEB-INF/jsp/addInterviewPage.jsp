@@ -24,6 +24,7 @@
     <fmt:message bundle="${loc}" key="profile.button" var="profile"/>
     <fmt:message bundle="${loc}" key="home.button" var="home"/>
     <fmt:message bundle="${loc}" key="add.interview.button" var="addInterviewButton"/>
+    <fmt:message bundle="${loc}" key="feedback.button" var="feedbackButton"/>
 
     <fmt:message bundle="${loc}" key="label.interview.topic" var="interviewTopic"/>
     <fmt:message bundle="${loc}" key="label.date" var="dateLabel"/>
@@ -99,8 +100,9 @@
                         </div>
                         <div class="main-menu main-menu-light">
                             <ul>
-                                <li class="active">
-                                    <a href="Controller?command=go_to_home_page">${home}</a></li>
+                                <li class="active"><a href="Controller?command=go_to_home_page">${home}</a></li>
+                                <li><a href="Controller?command=go_to_interviewer_feedbacks_page">${feedbackButton}</a>
+                                </li>
                             </ul>
                         </div>
                     </div>

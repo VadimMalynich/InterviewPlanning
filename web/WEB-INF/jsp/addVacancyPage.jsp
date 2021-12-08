@@ -23,6 +23,7 @@
     <fmt:message bundle="${loc}" key="label.platforms" var="platformsButton"/>
     <fmt:message bundle="${loc}" key="home.button" var="home"/>
     <fmt:message bundle="${loc}" key="add.vacancy.button" var="addVacancyButton"/>
+    <fmt:message bundle="${loc}" key="feedback.button" var="feedbackButton"/>
 
     <fmt:message bundle="${loc}" key="label.experience" var="experienceLabel"/>
     <fmt:message bundle="${loc}" key="label.vacancy.topic" var="topicLabel"/>
@@ -104,6 +105,7 @@
                                 <li class="active"><a href="Controller?command=go_to_home_page">${home}</a></li>
                                 <li><a href="Controller?command=go_to_platforms_page">${platformsButton}</a></li>
                                 <li><a href="Controller?command=go_to_add_vacancy_page">${addVacancyButton}</a></li>
+                                <li><a href="Controller?command=go_to_feedbacks_page">${feedbackButton}</a></li>
                             </ul>
                         </div>
                     </div>

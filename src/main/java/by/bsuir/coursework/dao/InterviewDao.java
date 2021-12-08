@@ -8,6 +8,7 @@ import java.util.List;
 
 public class InterviewDao extends AbstractDao<Integer, Interview> {
     private static final String GET_FUTURE_INTERVIEWS = "SELECT * FROM interview WHERE (date = current_date() AND start_time >= current_time()) OR date > current_date() ORDER BY date, start_time ASC";
+    private static final String GET_PAST_USER_INTERVIEWS = "SELECT * FROM interview WHERE user_id=:id AND ((date = current_date() AND start_time < current_time()) OR date < current_date()) ORDER BY date, start_time ASC";
     private static final String GET_INTERVIEW = "SELECT * FROM interview WHERE id=:id";
     private static final String GET_HAPPENED = "SELECT * FROM interview WHERE happen=1 ORDER BY date, start_time ASC";
     private static final String GET_VACANCY_INTERVIEWS = "SELECT * FROM interview WHERE vacancy_id=:id AND ((date = current_date() AND start_time >= current_time()) OR date > current_date()) ORDER BY date, start_time ASC";
@@ -68,6 +69,16 @@ public class InterviewDao extends AbstractDao<Integer, Interview> {
     public List<Interview> getHappened() throws DaoException {
         try {
             return session.createNativeQuery(GET_HAPPENED).addEntity(Interview.class).list();
+        } catch (Exception ex) {
+            throw new DaoException(ex);
+        }
+    }
+
+    public List<Interview> getPastUserInterviews(Integer id) throws DaoException {
+        try {
+            Query query = session.createNativeQuery(GET_PAST_USER_INTERVIEWS).addEntity(Interview.class);
+            query.setParameter("id", id);
+            return query.list();
         } catch (Exception ex) {
             throw new DaoException(ex);
         }

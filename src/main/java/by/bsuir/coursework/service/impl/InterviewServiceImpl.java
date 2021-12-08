@@ -98,6 +98,27 @@ public class InterviewServiceImpl extends SessionUtil implements InterviewServic
     }
 
     @Override
+    public List<Interview> getPastUserInterviews(Integer id) throws ServiceException {
+        if (id == null) {
+            throw new ServiceException(WRONG_ID);
+        }
+        List<Interview> list;
+        InterviewDao interviewDao = DaoFactory.getInstance().getInterviewDao();
+        try {
+            openTransactionSession();
+            interviewDao.setSession(getSession());
+            list = interviewDao.getPastUserInterviews(id);
+            commitTransactionSession();
+        } catch (DaoException e) {
+            rollbackTransactionSession();
+            throw new ServiceException(e);
+        } finally {
+            closeSession();
+        }
+        return list;
+    }
+
+    @Override
     public Interview getInterview(Integer id) throws ServiceException {
         if (id == null) {
             throw new ServiceException(WRONG_ID);

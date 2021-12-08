@@ -23,7 +23,8 @@
   <link type="text/css" media="all" href="<c:url value="/resources/error/css/style.css"/>" rel="stylesheet" />
   <!-- Responsive CSS -->
   <link type="text/css" media="all" href="<c:url value="/resources/error/css/respons.css"/>" rel="stylesheet" />
-  <link rel="shortcut icon" href="<c:url value="/resources/error/favicon.ico"/>" />
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="<c:url value="/resources/images/logo/favicon.png"/>" type="image/x-icon">
   <!-- Google Fonts -->
   <link href='https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700,800,900' rel='stylesheet' type='text/css'>
 

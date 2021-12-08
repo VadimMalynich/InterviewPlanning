@@ -23,6 +23,7 @@
     <fmt:message bundle="${loc}" key="home.button" var="home"/>
     <fmt:message bundle="${loc}" key="users.button" var="usersButton"/>
     <fmt:message bundle="${loc}" key="add.vacancy.button" var="addVacancyButton"/>
+    <fmt:message bundle="${loc}" key="feedback.button" var="feedbackButton"/>
 
     <fmt:message bundle="${loc}" key="label.platforms" var="platformsLabel"/>
     <fmt:message bundle="${loc}" key="label.platform" var="platformLabel"/>
@@ -97,6 +98,7 @@
                                     </c:when>
                                     <c:when test="${sessionScope.user.role.value eq 1}">
                                         <li><a href="Controller?command=go_to_add_vacancy_page">${addVacancyButton}</a></li>
+                                        <li><a href="Controller?command=go_to_feedbacks_page">${feedbackButton}</a></li>
                                     </c:when>
                                 </c:choose>
                             </ul>

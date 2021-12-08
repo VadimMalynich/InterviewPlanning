@@ -18,7 +18,7 @@ public class Feedback extends Entity {
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name = "user_id_fk"))
-    private User users;
+    private User user;
 
     @Column(name = "description", nullable = false, length = 500)
     private String description;
@@ -32,6 +32,23 @@ public class Feedback extends Entity {
     public Feedback() {
     }
 
+    public Feedback(Integer interviewId, User user, String description, Boolean additionalRequirements, Byte mark) {
+        this.interview = new Interview(interviewId);
+        this.user = user;
+        this.description = description;
+        this.additionalRequirements = additionalRequirements;
+        this.mark = mark;
+    }
+
+    public Feedback(Integer id, Interview interview, User user, String description, Boolean additionalRequirements, Byte mark) {
+        super(id);
+        this.interview = interview;
+        this.user = user;
+        this.description = description;
+        this.additionalRequirements = additionalRequirements;
+        this.mark = mark;
+    }
+
     public Interview getInterview() {
         return interview;
     }
@@ -41,11 +58,11 @@ public class Feedback extends Entity {
     }
 
     public User getUser() {
-        return users;
+        return user;
     }
 
     public void setUser(User user) {
-        this.users = user;
+        this.user = user;
     }
 
     public String getDescription() {
@@ -78,12 +95,12 @@ public class Feedback extends Entity {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Feedback feedback = (Feedback) o;
-        return Objects.equals(interview, feedback.interview) && Objects.equals(users, feedback.users) && Objects.equals(description, feedback.description) && Objects.equals(additionalRequirements, feedback.additionalRequirements) && Objects.equals(mark, feedback.mark);
+        return Objects.equals(interview, feedback.interview) && Objects.equals(user, feedback.user) && Objects.equals(description, feedback.description) && Objects.equals(additionalRequirements, feedback.additionalRequirements) && Objects.equals(mark, feedback.mark);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), interview, users, description, additionalRequirements, mark);
+        return Objects.hash(super.hashCode(), interview, user, description, additionalRequirements, mark);
     }
 
     @Override
@@ -91,7 +108,7 @@ public class Feedback extends Entity {
         return "Feedback{" +
                 "id=" + getId() +
                 ", interviewId=" + interview.getId() +
-                ", usersId=" + users.getId() +
+                ", usersId=" + user.getId() +
                 ", description='" + description + '\'' +
                 ", additionalRequirements=" + additionalRequirements +
                 ", mark=" + mark +
