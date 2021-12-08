@@ -1,7 +1,6 @@
 package by.bsuir.coursework.service.impl;
 
 import by.bsuir.coursework.bean.Employment;
-import by.bsuir.coursework.bean.Feedback;
 import by.bsuir.coursework.bean.Schedule;
 import by.bsuir.coursework.bean.Vacancy;
 import by.bsuir.coursework.dao.*;

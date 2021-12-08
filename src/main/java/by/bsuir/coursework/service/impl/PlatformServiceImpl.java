@@ -6,10 +6,8 @@ import by.bsuir.coursework.dao.DaoFactory;
 import by.bsuir.coursework.dao.InterviewDao;
 import by.bsuir.coursework.dao.PlatformsDao;
 import by.bsuir.coursework.dao.utilities.SessionUtil;
-import by.bsuir.coursework.service.InterviewService;
 import by.bsuir.coursework.service.PlatformService;
 import by.bsuir.coursework.service.ServiceException;
-import jdk.jfr.internal.PlatformRecorder;
 
 import java.util.List;
 

@@ -23,7 +23,6 @@
     <fmt:message bundle="${loc}" key="logout.button" var="logout"/>
     <fmt:message bundle="${loc}" key="profile.button" var="profile"/>
     <fmt:message bundle="${loc}" key="home.button" var="home"/>
-    <fmt:message bundle="${loc}" key="add.interview.button" var="addInterviewButton"/>
     <fmt:message bundle="${loc}" key="feedback.button" var="feedbackButton"/>
     <fmt:message bundle="${loc}" key="edit.feedback.button" var="editFeedbackButton"/>
 

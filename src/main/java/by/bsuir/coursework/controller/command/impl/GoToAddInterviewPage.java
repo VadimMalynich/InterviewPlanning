@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class GoToAddInterviewPage implements Command {
-    private static final Logger userLogger = LogManager.getLogger(EditVacancy.class);
+    private static final Logger userLogger = LogManager.getLogger(GoToAddInterviewPage.class);
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

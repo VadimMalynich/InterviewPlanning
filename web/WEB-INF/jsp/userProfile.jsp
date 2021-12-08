@@ -19,15 +19,10 @@
     <fmt:setLocale value="${sessionScope.locale}"/>
     <fmt:setBundle basename="langs.labels" var="loc"/>
 
-    <fmt:message bundle="${loc}" key="signIn.button" var="signIn"/>
-    <fmt:message bundle="${loc}" key="signUp.button" var="signUp"/>
     <fmt:message bundle="${loc}" key="logout.button" var="logout"/>
     <fmt:message bundle="${loc}" key="profile.button" var="profile"/>
     <fmt:message bundle="${loc}" key="home.button" var="home"/>
-    <fmt:message bundle="${loc}" key="book.button" var="bookButton"/>
-    <fmt:message bundle="${loc}" key="users.button" var="usersButton"/>
     <fmt:message bundle="${loc}" key="add.interview.button" var="addInterviewButton"/>
-    <fmt:message bundle="${loc}" key="add.vacancy.button" var="addVacancyButton"/>
     <fmt:message bundle="${loc}" key="label.platforms" var="platformsButton"/>
     <fmt:message bundle="${loc}" key="feedback.button" var="feedbackButton"/>
 

@@ -2,7 +2,6 @@ package by.bsuir.coursework.controller.command.impl;
 
 import by.bsuir.coursework.bean.Interview;
 import by.bsuir.coursework.bean.Platforms;
-import by.bsuir.coursework.bean.Vacancy;
 import by.bsuir.coursework.controller.command.Command;
 import by.bsuir.coursework.service.*;
 import org.apache.logging.log4j.LogManager;

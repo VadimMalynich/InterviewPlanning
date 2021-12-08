@@ -24,7 +24,6 @@
     <fmt:message bundle="${loc}" key="profile.button" var="profile"/>
     <fmt:message bundle="${loc}" key="home.button" var="home"/>
     <fmt:message bundle="${loc}" key="edit.interview.button" var="editInterviewButton"/>
-    <fmt:message bundle="${loc}" key="add.interview.button" var="addInterviewButton"/>
     <fmt:message bundle="${loc}" key="feedback.button" var="feedbackButton"/>
 
     <fmt:message bundle="${loc}" key="label.interview.topic" var="interviewTopic"/>
@@ -32,10 +31,6 @@
     <fmt:message bundle="${loc}" key="label.startTime" var="startLabel"/>
     <fmt:message bundle="${loc}" key="label.endTime" var="endLabel"/>
     <fmt:message bundle="${loc}" key="label.platform" var="platformLabel"/>
-    <fmt:message bundle="${loc}" key="label.interviewer" var="interviewerLabel"/>
-
-    <fmt:message bundle="${loc}" key="interview.topic.input.placeholder" var="topicPlaceholder"/>
-    <fmt:message bundle="${loc}" key="interview.topic.input.placeholderFocus" var="topicPlaceholderFocus"/>
 
     <fmt:message bundle="${loc}" key="page.editInterview" var="pageTitle"/>
 

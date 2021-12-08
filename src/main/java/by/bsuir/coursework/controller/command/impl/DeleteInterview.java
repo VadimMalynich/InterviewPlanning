@@ -4,7 +4,6 @@ import by.bsuir.coursework.controller.command.Command;
 import by.bsuir.coursework.service.InterviewService;
 import by.bsuir.coursework.service.ServiceException;
 import by.bsuir.coursework.service.ServiceProvider;
-import by.bsuir.coursework.service.VacancyService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

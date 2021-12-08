@@ -31,7 +31,6 @@
     <fmt:message bundle="${loc}" key="label.startTime" var="startLabel"/>
     <fmt:message bundle="${loc}" key="label.endTime" var="endLabel"/>
     <fmt:message bundle="${loc}" key="label.platform" var="platformLabel"/>
-    <fmt:message bundle="${loc}" key="label.interviewer" var="interviewerLabel"/>
 
     <fmt:message bundle="${loc}" key="interview.topic.input.placeholder" var="topicPlaceholder"/>
     <fmt:message bundle="${loc}" key="interview.topic.input.placeholderFocus" var="topicPlaceholderFocus"/>

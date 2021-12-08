@@ -9,7 +9,7 @@
         </Property>
     </Properties>
     <Appenders>
-        <File name="TxtFile" fileName="logs/applicationLog.log" bufferedIO="true">
+        <File name="TxtFile" fileName="logs/interviewsApp.log" bufferedIO="true">
             <PatternLayout pattern="${patternfull}"/>
         </File>
         <Console name="Console" target="SYSTEM_OUT">
@@ -22,16 +22,164 @@
         </Root>
 
         <!-- Log everything in hibernate -->
-        <Logger name="org.hibernate" level="debug" additivity="false">
-            <AppenderRef ref="Console" />
+        <Logger name="org.hibernate" level="error" additivity="false">
+            <AppenderRef ref="Console"/>
         </Logger>
 
         <!-- Log all SQL statements -->
-        <Logger name="org.hibernate.SQL" level="debug" additivity="false">
-            <AppenderRef ref="Console" />
+        <Logger name="org.hibernate.SQL" level="error" additivity="false">
+            <AppenderRef ref="Console"/>
         </Logger>
 
         <Logger name="by.bsuir.coursework.dao.utilities.HibernateUtil" level="all"
+                additivity="true">
+            <AppenderRef ref="TxtFile"/>
+        </Logger>
+
+        <Logger name="by.bsuir.coursework.service.tag.ExperienceLabel" level="all"
+                additivity="true">
+            <AppenderRef ref="TxtFile"/>
+        </Logger>
+
+        <Logger name="by.bsuir.coursework.controller.listener.SessionAttributesListener" level="all"
+                additivity="true">
+            <AppenderRef ref="TxtFile"/>
+        </Logger>
+
+        <Logger name="by.bsuir.coursework.controller.command.CommandProvider" level="all"
+                additivity="true">
+            <AppenderRef ref="TxtFile"/>
+        </Logger>
+
+        <Logger name="by.bsuir.coursework.controller.command.impl.AddFeedback" level="all"
+                additivity="true">
+            <AppenderRef ref="TxtFile"/>
+        </Logger>
+        <Logger name="by.bsuir.coursework.controller.command.impl.AddInterview" level="all"
+                additivity="true">
+            <AppenderRef ref="TxtFile"/>
+        </Logger>
+        <Logger name="by.bsuir.coursework.controller.command.impl.AddPlatform" level="all"
+                additivity="true">
+            <AppenderRef ref="TxtFile"/>
+        </Logger>
+        <Logger name="by.bsuir.coursework.controller.command.impl.AddVacancy" level="all"
+                additivity="true">
+            <AppenderRef ref="TxtFile"/>
+        </Logger>
+        <Logger name="by.bsuir.coursework.controller.command.impl.DeleteInterview" level="all"
+                additivity="true">
+            <AppenderRef ref="TxtFile"/>
+        </Logger>
+        <Logger name="by.bsuir.coursework.controller.command.impl.DeletePlatform" level="all"
+                additivity="true">
+            <AppenderRef ref="TxtFile"/>
+        </Logger>
+        <Logger name="by.bsuir.coursework.controller.command.impl.DeleteUser" level="all"
+                additivity="true">
+            <AppenderRef ref="TxtFile"/>
+        </Logger>
+        <Logger name="by.bsuir.coursework.controller.command.impl.DeleteVacancy" level="all"
+                additivity="true">
+            <AppenderRef ref="TxtFile"/>
+        </Logger>
+        <Logger name="by.bsuir.coursework.controller.command.impl.EditFeedback" level="all"
+                additivity="true">
+            <AppenderRef ref="TxtFile"/>
+        </Logger>
+        <Logger name="by.bsuir.coursework.controller.command.impl.EditInterview" level="all"
+                additivity="true">
+            <AppenderRef ref="TxtFile"/>
+        </Logger>
+        <Logger name="by.bsuir.coursework.controller.command.impl.EditPlatform" level="all"
+                additivity="true">
+            <AppenderRef ref="TxtFile"/>
+        </Logger>
+        <Logger name="by.bsuir.coursework.controller.command.impl.EditUser" level="all"
+                additivity="true">
+            <AppenderRef ref="TxtFile"/>
+        </Logger>
+        <Logger name="by.bsuir.coursework.controller.command.impl.EditVacancy" level="all"
+                additivity="true">
+            <AppenderRef ref="TxtFile"/>
+        </Logger>
+        <Logger name="by.bsuir.coursework.controller.command.impl.FilterInterviews" level="all"
+                additivity="true">
+            <AppenderRef ref="TxtFile"/>
+        </Logger>
+        <Logger name="by.bsuir.coursework.controller.command.impl.FilterVacanciesByEmployment" level="all"
+                additivity="true">
+            <AppenderRef ref="TxtFile"/>
+        </Logger>
+        <Logger name="by.bsuir.coursework.controller.command.impl.FilterVacanciesBySchedule" level="all"
+                additivity="true">
+            <AppenderRef ref="TxtFile"/>
+        </Logger>
+        <Logger name="by.bsuir.coursework.controller.command.impl.GoToAddInterviewPage" level="all"
+                additivity="true">
+            <AppenderRef ref="TxtFile"/>
+        </Logger>
+        <Logger name="by.bsuir.coursework.controller.command.impl.GoToEditFeedbackPage" level="all"
+                additivity="true">
+            <AppenderRef ref="TxtFile"/>
+        </Logger>
+        <Logger name="by.bsuir.coursework.controller.command.impl.GoToEditInterviewPage" level="all"
+                additivity="true">
+            <AppenderRef ref="TxtFile"/>
+        </Logger>
+        <Logger name="by.bsuir.coursework.controller.command.impl.GoToEditUserPage" level="all"
+                additivity="true">
+            <AppenderRef ref="TxtFile"/>
+        </Logger>
+        <Logger name="by.bsuir.coursework.controller.command.impl.GoToEditVacancyPage" level="all"
+                additivity="true">
+            <AppenderRef ref="TxtFile"/>
+        </Logger>
+        <Logger name="by.bsuir.coursework.controller.command.impl.GoToFeedbacksPage" level="all"
+                additivity="true">
+            <AppenderRef ref="TxtFile"/>
+        </Logger>
+        <Logger name="by.bsuir.coursework.controller.command.impl.GoToHomePage" level="all"
+                additivity="true">
+            <AppenderRef ref="TxtFile"/>
+        </Logger>
+        <Logger name="by.bsuir.coursework.controller.command.impl.GoToInterviewerFeedbacksPage" level="all"
+                additivity="true">
+            <AppenderRef ref="TxtFile"/>
+        </Logger>
+        <Logger name="by.bsuir.coursework.controller.command.impl.GoToInterviewsPage" level="all"
+                additivity="true">
+            <AppenderRef ref="TxtFile"/>
+        </Logger>
+        <Logger name="by.bsuir.coursework.controller.command.impl.GoToPlatformsPage" level="all"
+                additivity="true">
+            <AppenderRef ref="TxtFile"/>
+        </Logger>
+        <Logger name="by.bsuir.coursework.controller.command.impl.GoToProfilePage" level="all"
+                additivity="true">
+            <AppenderRef ref="TxtFile"/>
+        </Logger>
+        <Logger name="by.bsuir.coursework.controller.command.impl.GoToUsersPage" level="all"
+                additivity="true">
+            <AppenderRef ref="TxtFile"/>
+        </Logger>
+        <Logger name="by.bsuir.coursework.controller.command.impl.GoToVacancyPage" level="all"
+                additivity="true">
+            <AppenderRef ref="TxtFile"/>
+        </Logger>
+        <Logger name="by.bsuir.coursework.controller.command.impl.SearchInterviews" level="all"
+                additivity="true">
+            <AppenderRef ref="TxtFile"/>
+        </Logger>
+        <Logger name="by.bsuir.coursework.controller.command.impl.SearchVacancies" level="all"
+                additivity="true">
+            <AppenderRef ref="TxtFile"/>
+        </Logger>
+        <Logger name="by.bsuir.coursework.controller.command.impl.SignIn" level="all"
+                additivity="true">
+            <AppenderRef ref="TxtFile"/>
+        </Logger>
+        <Logger name="by.bsuir.coursework.controller.command.impl.SignUp" level="all"
                 additivity="true">
             <AppenderRef ref="TxtFile"/>
         </Logger>

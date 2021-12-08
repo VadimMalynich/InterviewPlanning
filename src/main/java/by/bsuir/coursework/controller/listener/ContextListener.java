@@ -8,7 +8,6 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 public class ContextListener implements ServletContextListener {
-    private static final Logger userLogger = LogManager.getLogger(ContextListener.class);
 
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {

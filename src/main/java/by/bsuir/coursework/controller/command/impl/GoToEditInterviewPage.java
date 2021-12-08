@@ -2,8 +2,6 @@ package by.bsuir.coursework.controller.command.impl;
 
 import by.bsuir.coursework.bean.Interview;
 import by.bsuir.coursework.bean.Platforms;
-import by.bsuir.coursework.bean.User;
-import by.bsuir.coursework.bean.Vacancy;
 import by.bsuir.coursework.controller.command.Command;
 import by.bsuir.coursework.service.*;
 import org.apache.logging.log4j.LogManager;
@@ -18,7 +16,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class GoToEditInterviewPage implements Command {
-    private static final Logger userLogger = LogManager.getLogger(GoToEditVacancyPage.class);
+    private static final Logger userLogger = LogManager.getLogger(GoToEditInterviewPage.class);
     private static final String EDIT_INTERVIEW_ID = "editInterviewId";
 
     @Override

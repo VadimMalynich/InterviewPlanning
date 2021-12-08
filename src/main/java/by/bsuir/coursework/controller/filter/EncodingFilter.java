@@ -6,6 +6,7 @@ import java.io.IOException;
 public class EncodingFilter implements Filter {
     private String code;
 
+    @Override
     public void init(FilterConfig fConfig) throws ServletException {
         code = fConfig.getInitParameter("encoding");
     }
@@ -20,6 +21,7 @@ public class EncodingFilter implements Filter {
         chain.doFilter(request, response);
     }
 
+    @Override
     public void destroy() {
         code = null;
     }

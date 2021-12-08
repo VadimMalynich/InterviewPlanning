@@ -26,7 +26,6 @@
     <fmt:message bundle="${loc}" key="home.button" var="home"/>
     <fmt:message bundle="${loc}" key="book.button" var="bookButton"/>
     <fmt:message bundle="${loc}" key="users.button" var="usersButton"/>
-    <fmt:message bundle="${loc}" key="add.interview.button" var="addInterviewButton"/>
     <fmt:message bundle="${loc}" key="add.vacancy.button" var="addVacancyButton"/>
     <fmt:message bundle="${loc}" key="feedback.button" var="feedbackButton"/>
 
@@ -38,21 +37,11 @@
     <fmt:message bundle="${loc}" key="label.interviewer" var="interviewerLabel"/>
     <fmt:message bundle="${loc}" key="label.vacancy" var="vacancyLabel"/>
 
-    <fmt:message bundle="${loc}" key="searchInterview.input.placeholder" var="searchPlaceholder"/>
-
     <fmt:message bundle="${loc}" key="page.home" var="pageTitle"/>
 
-    <fmt:message bundle="${loc}" key="message.searchResults" var="searchResults">
-        <fmt:param value="${sessionScope.searchInterview}"/>
-    </fmt:message>
-    <fmt:message bundle="${loc}" key="message.platform" var="platformMessage">
-        <fmt:param value="${sessionScope.filterPlatform}"/>
-    </fmt:message>
     <c:if test="${requestScope.message ne null}">
         <fmt:message bundle="${loc}" key="${requestScope.message}" var="messageText"/>
     </c:if>
-    <fmt:message bundle="${loc}" key="message.emptyInterviews" var="emptyInterviews"/>
-    <fmt:message bundle="${loc}" key="message.emptyInterviews.continue" var="emptyInterviewsContinue"/>
 
     <!-- Page Title -->
     <title>${pageTitle}</title>

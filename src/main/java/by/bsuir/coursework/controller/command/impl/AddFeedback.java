@@ -1,11 +1,9 @@
 package by.bsuir.coursework.controller.command.impl;
 
 import by.bsuir.coursework.bean.Feedback;
-import by.bsuir.coursework.bean.Interview;
 import by.bsuir.coursework.bean.User;
 import by.bsuir.coursework.controller.command.Command;
 import by.bsuir.coursework.service.FeedbackService;
-import by.bsuir.coursework.service.InterviewService;
 import by.bsuir.coursework.service.ServiceException;
 import by.bsuir.coursework.service.ServiceProvider;
 import org.apache.logging.log4j.LogManager;

@@ -19,15 +19,8 @@
     <fmt:setLocale value="${sessionScope.locale}"/>
     <fmt:setBundle basename="langs.labels" var="loc"/>
 
-    <fmt:message bundle="${loc}" key="signIn.button" var="signIn"/>
-    <fmt:message bundle="${loc}" key="signUp.button" var="signUp"/>
     <fmt:message bundle="${loc}" key="logout.button" var="logout"/>
-    <fmt:message bundle="${loc}" key="profile.button" var="profile"/>
     <fmt:message bundle="${loc}" key="home.button" var="home"/>
-    <fmt:message bundle="${loc}" key="interview.button" var="interviewsButton"/>
-    <fmt:message bundle="${loc}" key="users.button" var="usersButton"/>
-    <fmt:message bundle="${loc}" key="add.interview.button" var="addInterviewButton"/>
-    <fmt:message bundle="${loc}" key="add.vacancy.button" var="addVacancyButton"/>
     <fmt:message bundle="${loc}" key="label.platforms" var="platformsButton"/>
     <fmt:message bundle="${loc}" key="add.vacancy.button" var="addVacancyButton"/>
 
@@ -152,10 +145,15 @@
                                 <div class="job-text">
                                     <h4>${vacancyLabel}: ${feedback.interview.vacancy.topic}</h4>
                                     <ul class="mt-4">
-                                        <li class="mb-3"><h5><em class="fa fa-user-secret"></em> ${interviewerLabel}: ${feedback.user.name}</h5></li>
-                                        <li class="mb-3"><h5><em class="fa fa-book"></em> ${reviewLabel}: ${feedback.description}</h5></li>
+                                        <li class="mb-3"><h5><em
+                                                class="fa fa-user-secret"></em> ${interviewerLabel}: ${feedback.user.name}
+                                        </h5></li>
+                                        <li class="mb-3"><h5><em
+                                                class="fa fa-book"></em> ${reviewLabel}: ${feedback.description}</h5>
+                                        </li>
 
-                                        <li class="mb-3"><h5><em class="fa fa-info"></em> ${markLabel}: ${feedback.mark}</h5></li>
+                                        <li class="mb-3"><h5><em class="fa fa-info"></em> ${markLabel}: ${feedback.mark}
+                                        </h5></li>
                                     </ul>
                                 </div>
                                 <div class="job-btn align-self-center">

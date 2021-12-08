@@ -19,16 +19,9 @@
     <fmt:setLocale value="${sessionScope.locale}"/>
     <fmt:setBundle basename="langs.labels" var="loc"/>
 
-    <fmt:message bundle="${loc}" key="signIn.button" var="signIn"/>
-    <fmt:message bundle="${loc}" key="signUp.button" var="signUp"/>
     <fmt:message bundle="${loc}" key="logout.button" var="logout"/>
     <fmt:message bundle="${loc}" key="profile.button" var="profile"/>
     <fmt:message bundle="${loc}" key="home.button" var="home"/>
-    <fmt:message bundle="${loc}" key="book.button" var="bookButton"/>
-    <fmt:message bundle="${loc}" key="users.button" var="usersButton"/>
-    <fmt:message bundle="${loc}" key="add.interview.button" var="addInterviewButton"/>
-    <fmt:message bundle="${loc}" key="add.vacancy.button" var="addVacancyButton"/>
-    <fmt:message bundle="${loc}" key="label.platforms" var="platformsButton"/>
     <fmt:message bundle="${loc}" key="feedback.button" var="feedbackButton"/>
 
     <fmt:message bundle="${loc}" key="label.date" var="dateLabel"/>
@@ -36,21 +29,9 @@
     <fmt:message bundle="${loc}" key="label.endTime" var="endLabel"/>
     <fmt:message bundle="${loc}" key="label.platform" var="platformLabel"/>
     <fmt:message bundle="${loc}" key="label.interviewer" var="interviewerLabel"/>
-    <fmt:message bundle="${loc}" key="label.welcome" var="welcome">
-        <fmt:param value="${sessionScope.user.name}"/>
-    </fmt:message>
     <fmt:message bundle="${loc}" key="label.pastInterviews" var="userInterviews"/>
     <fmt:message bundle="${loc}" key="label.vacancy" var="vacancyLabel"/>
-
-    <fmt:message bundle="${loc}" key="searchInterview.input.placeholder" var="searchPlaceholder"/>
-
-
-    <fmt:message bundle="${loc}" key="message.searchResults" var="searchResults">
-        <fmt:param value="${sessionScope.searchInterview}"/>
-    </fmt:message>
-    <fmt:message bundle="${loc}" key="message.platform" var="platformMessage">
-        <fmt:param value="${sessionScope.filterPlatform}"/>
-    </fmt:message>
+>
     <c:if test="${requestScope.message ne null}">
         <fmt:message bundle="${loc}" key="${requestScope.message}" var="messageText"/>
     </c:if>

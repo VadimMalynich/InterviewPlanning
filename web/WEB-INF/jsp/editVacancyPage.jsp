@@ -27,7 +27,6 @@
     <fmt:message bundle="${loc}" key="feedback.button" var="feedbackButton"/>
 
     <fmt:message bundle="${loc}" key="label.experience" var="experienceLabel"/>
-    <fmt:message bundle="${loc}" key="label.interviewCount" var="interviewCountLabel"/>
     <fmt:message bundle="${loc}" key="label.requirements" var="requirementsLabel"/>
     <fmt:message bundle="${loc}" key="label.schedule" var="scheduleLabel"/>
     <fmt:message bundle="${loc}" key="label.requirements.additional" var="additional"/>

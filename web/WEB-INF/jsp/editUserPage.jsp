@@ -20,8 +20,6 @@
 
     <fmt:message bundle="${loc}" key="logout.button" var="logout"/>
     <fmt:message bundle="${loc}" key="profile.button" var="profile"/>
-    <fmt:message bundle="${loc}" key="assortment.button" var="assortment"/>
-    <fmt:message bundle="${loc}" key="users.button" var="usersButton"/>
     <fmt:message bundle="${loc}" key="home.button" var="home"/>
     <fmt:message bundle="${loc}" key="edit.button" var="editButton"/>
     <fmt:message bundle="${loc}" key="users.button" var="usersButton"/>

@@ -5,8 +5,6 @@ import org.apache.logging.log4j.Logger;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import java.io.File;
-
 public class HibernateUtil {
     private static final Logger userLogger = LogManager.getLogger(HibernateUtil.class);
     private static final SessionFactory SESSION_FACTORY = buildSessionFactory();

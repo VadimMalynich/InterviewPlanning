@@ -28,27 +28,16 @@
     <fmt:message bundle="${loc}" key="home.button" var="home"/>
     <fmt:message bundle="${loc}" key="interview.button" var="interviewButton"/>
     <fmt:message bundle="${loc}" key="users.button" var="usersButton"/>
-    <fmt:message bundle="${loc}" key="add.interview.button" var="addInterviewButton"/>
     <fmt:message bundle="${loc}" key="add.vacancy.button" var="addVacancyButton"/>
     <fmt:message bundle="${loc}" key="feedback.button" var="feedbackButton"/>
 
     <fmt:message bundle="${loc}" key="label.platforms" var="platformsButton"/>
-    <fmt:message bundle="${loc}" key="label.experience" var="experienceLabel"/>
     <fmt:message bundle="${loc}" key="label.interviewCount" var="interviewCountLabel"/>
     <fmt:message bundle="${loc}" key="label.requirements" var="requirementsLabel"/>
     <fmt:message bundle="${loc}" key="label.schedule" var="scheduleLabel"/>
     <fmt:message bundle="${loc}" key="label.requirements.additional" var="additional"/>
     <fmt:message bundle="${loc}" key="label.employments" var="employments"/>
     <fmt:message bundle="${loc}" key="label.description" var="descriptionLabel"/>
-
-    <fmt:message bundle="${loc}" key="vacancy.topic.input.placeholder" var="topicPlaceholder"/>
-    <fmt:message bundle="${loc}" key="vacancy.topic.input.placeholderFocus" var="topicPlaceholderFocus"/>
-    <fmt:message bundle="${loc}" key="experience.input.placeholder" var="experiencePlaceholder"/>
-    <fmt:message bundle="${loc}" key="description.textarea.placeholder" var="descriptionPlaceholder"/>
-    <fmt:message bundle="${loc}" key="requirements.textarea.placeholder" var="requirementsPlaceholder"/>
-    <fmt:message bundle="${loc}" key="addrequirements.textarea.placeholder" var="addRequirementsPlaceholder"/>
-
-    <fmt:message bundle="${loc}" key="page.addVacancy" var="pageTitle"/>
 
     <c:if test="${requestScope.message ne null}">
         <fmt:message bundle="${loc}" key="${requestScope.message}" var="messageText"/>

@@ -31,27 +31,17 @@
     <fmt:message bundle="${loc}" key="feedback.button" var="feedbackButton"/>
 
     <fmt:message bundle="${loc}" key="label.platforms" var="platformsButton"/>
-    <fmt:message bundle="${loc}" key="label.experience" var="experienceLabel"/>
-    <fmt:message bundle="${loc}" key="label.vacancy.topic" var="topicLabel"/>
-    <fmt:message bundle="${loc}" key="label.requirements" var="materialLabel"/>
     <fmt:message bundle="${loc}" key="label.schedule" var="scheduleLabel"/>
-    <fmt:message bundle="${loc}" key="label.description" var="descriptionLabel"/>
-    <fmt:message bundle="${loc}" key="label.employments" var="employmentsLabel"/>
     <fmt:message bundle="${loc}" key="label.interviewCount" var="interviewCountLabel"/>
 
     <fmt:message bundle="${loc}" key="searchVacancy.input.placeholder" var="searchPlaceholder"/>
-    <fmt:message bundle="${loc}" key="vacancy.topic.input.placeholder" var="topicPlaceholder"/>
-    <fmt:message bundle="${loc}" key="vacancy.topic.input.placeholderFocus" var="topicPlaceholderFocus"/>
-    <fmt:message bundle="${loc}" key="experience.input.placeholder" var="materialPlaceholder"/>
-    <fmt:message bundle="${loc}" key="experience.input.placeholderFocus" var="materialPlaceholderFocus"/>
-    <fmt:message bundle="${loc}" key="description.textarea.placeholder" var="descriptionPlaceholder"/>
 
     <fmt:message bundle="${loc}" key="page.home" var="pageTitle"/>
 
     <fmt:message bundle="${loc}" key="message.searchResults" var="searchResults">
         <fmt:param value="${sessionScope.searchVacancy}"/>
     </fmt:message>
-    <fmt:message bundle="${loc}" key="message.shedule" var="platformMessage">
+    <fmt:message bundle="${loc}" key="message.schedule" var="platformMessage">
         <fmt:param value="${sessionScope.filterSchedule}"/>
     </fmt:message>
     <fmt:message bundle="${loc}" key="message.employment" var="employmentMessage">
@@ -155,7 +145,9 @@
                                     <li><a href="Controller?command=go_to_feedbacks_page">${feedbackButton}</a></li>
                                 </c:when>
                                 <c:when test="${userRole eq 2}">
-                                    <li><a href="Controller?command=go_to_interviewer_feedbacks_page">${feedbackButton}</a></li>
+                                    <li>
+                                        <a href="Controller?command=go_to_interviewer_feedbacks_page">${feedbackButton}</a>
+                                    </li>
                                 </c:when>
                             </c:choose>
                             <c:if test="${requestScope.message ne null}">
