@@ -28,6 +28,7 @@
     <fmt:message bundle="${loc}" key="label.role" var="roleLabel"/>
     <fmt:message bundle="${loc}" key="label.admin" var="adminLabel"/>
     <fmt:message bundle="${loc}" key="label.director" var="directorLabel"/>
+    <fmt:message bundle="${loc}" key="label.interviewer" var="interviewerLabel"/>
 
     <fmt:message bundle="${loc}" key="message.emptyUsers" var="emptyUsers"/>
     <c:if test="${requestScope.message ne null}">
@@ -67,13 +68,13 @@
                         <ul>
                             <li>
                                 <a href="Controller?command=ru_RU">
-                                    <img src="<c:url value="/resources/images/elements/flag_russia.png"/> " height="30"
+                                    <img src="<c:url value="/resources/images/elements/flag_russia.png"/>" height="30"
                                          width="40" alt="RU">
                                 </a>
                             </li>
                             <li>
                                 <a href="Controller?command=en_US">
-                                    <img src="<c:url value="/resources/images/elements/flag_usa.png"/> " height="30"
+                                    <img src="<c:url value="/resources/images/elements/flag_usa.png"/>" height="30"
                                          width="40" alt="EN">
                                 </a>
                             </li>
@@ -152,8 +153,11 @@
                                     <c:when test="${user.role.value eq 0}">
                                         <div class="visit">${adminLabel}</div>
                                     </c:when>
-                                    <c:otherwise>
+                                    <c:when test="${user.role.value eq 1}">
                                         <div class="visit">${directorLabel}</div>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div class="visit">${interviewerLabel}</div>
                                     </c:otherwise>
                                 </c:choose>
                                 <div class="visit">

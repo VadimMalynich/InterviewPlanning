@@ -27,7 +27,7 @@ public interface VacancyService {
     /**
      * Method for checking vacancy info which vacancy entered, and if data will be correct add vacancy into database
      *
-     * @param vacancy            all info that user entered about vacancy
+     * @param vacancy all info that user entered about vacancy
      * @throws ServiceException when the error occurred on the dao layer or when validate data
      */
     void add(Vacancy vacancy) throws ServiceException;
@@ -35,7 +35,7 @@ public interface VacancyService {
     /**
      * Method for validating data before edit vacancy in database
      *
-     * @param vacancy       new info about vacancy
+     * @param vacancy new info about vacancy
      * @throws ServiceException when the error occurred on the dao layer or when validate data
      */
     void edit(Vacancy vacancy) throws ServiceException;
@@ -57,6 +57,24 @@ public interface VacancyService {
      * @throws ServiceException when the error occurred on the dao layer
      */
     List<Vacancy> searchVacancies(String text) throws ServiceException;
+
+    /**
+     * Method for filter vacancies by schedules
+     *
+     * @param id id of schedule
+     * @return {@code List<Vacancy>} with vacancies that satisfy the condition
+     * @throws ServiceException when the error occurred on the dao layer
+     */
+    List<Vacancy> filterBySchedule(Integer id) throws ServiceException;
+
+    /**
+     * Method for filter vacancies by employments
+     *
+     * @param id id of employment
+     * @return {@code List<Vacancy>} with vacancies that satisfy the condition
+     * @throws ServiceException when the error occurred on the dao layer
+     */
+    List<Vacancy> filterByEmployments(Integer id) throws ServiceException;
 
     /**
      * Method for get all employments

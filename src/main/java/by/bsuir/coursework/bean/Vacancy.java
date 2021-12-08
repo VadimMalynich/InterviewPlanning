@@ -38,11 +38,25 @@ public class Vacancy extends Entity {
     @Transient
     private Integer interviewsCount;
 
+    public Vacancy() {
+    }
+
     public Vacancy(Integer id) {
         super(id);
     }
 
     public Vacancy(String topic, String experience, Integer employment, Integer schedule, String description, String requirements, String additionalRequirements) {
+        this.topic = topic;
+        this.experience = experience;
+        this.employment = new Employment(employment);
+        this.schedule = new Schedule(schedule);
+        this.description = description;
+        this.requirements = requirements;
+        this.additionalRequirements = additionalRequirements;
+    }
+
+    public Vacancy(Integer id, String topic, String experience, Integer employment, Integer schedule, String description, String requirements, String additionalRequirements) {
+        super(id);
         this.topic = topic;
         this.experience = experience;
         this.employment = new Employment(employment);

@@ -41,6 +41,12 @@ public class CommandProvider {
         commands.put(CommandName.ADD_PLATFORM, new AddPlatform());
         commands.put(CommandName.DELETE_PLATFORM, new DeletePlatform());
         commands.put(CommandName.EDIT_PLATFORM, new EditPlatform());
+        commands.put(CommandName.SEARCH_VACANCIES, new SearchVacancies());
+        commands.put(CommandName.FILTER_VACANCIES_BY_EMPLOYMENT, new FilterVacanciesByEmployment());
+        commands.put(CommandName.FILTER_VACANCIES_BY_SCHEDULE, new FilterVacanciesBySchedule());
+        commands.put(CommandName.SEARCH_INTERVIEWS, new SearchInterviews());
+        commands.put(CommandName.FILTER_INTERVIEWS, new FilterInterviews());
+        commands.put(CommandName.GO_TO_PROFILE_PAGE, new GoToProfilePage());
         commands.put(CommandName.WRONG_REQUEST, new WrongRequest());
     }
 

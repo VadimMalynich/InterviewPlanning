@@ -84,13 +84,13 @@
                             </c:if>
                             <li>
                                 <a href="Controller?command=ru_RU">
-                                    <img src="<c:url value="/resources/images/elements/flag_russia.png"/> " height="30"
+                                    <img src="<c:url value="/resources/images/elements/flag_russia.png"/>" height="30"
                                          width="40" alt="RU">
                                 </a>
                             </li>
                             <li>
                                 <a href="Controller?command=en_US">
-                                    <img src="<c:url value="/resources/images/elements/flag_usa.png"/> " height="30"
+                                    <img src="<c:url value="/resources/images/elements/flag_usa.png"/>" height="30"
                                          width="40" alt="EN">
                                 </a>
                             </li>

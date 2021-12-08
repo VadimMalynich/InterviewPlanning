@@ -18,30 +18,26 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
-public class GoToHomePage implements Command {
-    private static final Logger userLogger = LogManager.getLogger(GoToHomePage.class);
+public class SearchVacancies implements Command {
+    private static final Logger userLogger = LogManager.getLogger(SearchVacancies.class);
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        session.setAttribute("page", "Controller?command=go_to_home_page");
-        if (request.getParameter("message") != null) {
-            request.setAttribute("message", request.getParameter("message"));
-        }
-        if (request.getParameter("locale") != null) {
-            session.setAttribute("locale", request.getParameter("locale"));
-        }
+        session.setAttribute("page", "Controller?command=search_vacancies");
+        String searchRequest = request.getParameter("searchVacancies");
+
         VacancyService vacancyService = ServiceProvider.getInstance().getVacancyService();
 
         try {
-            List<Vacancy> vacancies = vacancyService.getAll();
+            List<Vacancy> searchVacanciesList = vacancyService.searchVacancies(searchRequest);
             List<Schedule> scheduleList = vacancyService.getSchedules();
             List<Employment> employmentList = vacancyService.getEmployments();
-            session.setAttribute("vacanciesList", vacancies);
+            session.setAttribute("searchVacanciesList", searchVacanciesList);
             session.setAttribute("scheduleList", scheduleList);
             session.setAttribute("employmentList", employmentList);
-            session.removeAttribute("searchVacanciesList");
-            session.removeAttribute("searchVacancy");
+            session.setAttribute("searchVacancy", searchRequest);
+            session.removeAttribute("vacanciesList");
             session.removeAttribute("filterByEmploymentList");
             session.removeAttribute("filterByScheduleList");
             session.removeAttribute("filterSchedule");
@@ -50,7 +46,8 @@ public class GoToHomePage implements Command {
             userLogger.error(e);
         }
 
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/home.jsp");
+        RequestDispatcher requestDispatcher;
+        requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/home.jsp");
         requestDispatcher.forward(request, response);
     }
 }

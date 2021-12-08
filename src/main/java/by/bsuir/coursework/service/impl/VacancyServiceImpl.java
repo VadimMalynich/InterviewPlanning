@@ -144,6 +144,58 @@ public class VacancyServiceImpl extends SessionUtil implements VacancyService {
     }
 
     @Override
+    public List<Vacancy> filterBySchedule(Integer id) throws ServiceException {
+        if (id == null) {
+            throw new ServiceException("Wrong id for filter vacancies by schedule");
+        }
+        List<Vacancy> list;
+        VacancyDao vacancyDao = DaoFactory.getInstance().getVacancyDao();
+        InterviewDao interviewDao = DaoFactory.getInstance().getInterviewDao();
+        try {
+            openTransactionSession();
+            vacancyDao.setSession(getSession());
+            interviewDao.setSession(getSession());
+            list = vacancyDao.filterBySchedule(id);
+            for (Vacancy v : list) {
+                v.setInterviewsCount(interviewDao.getInterviewsVacancyCount(v.getId()));
+            }
+            commitTransactionSession();
+        } catch (DaoException e) {
+            rollbackTransactionSession();
+            throw new ServiceException(e);
+        } finally {
+            closeSession();
+        }
+        return list;
+    }
+
+    @Override
+    public List<Vacancy> filterByEmployments(Integer id) throws ServiceException {
+        if (id == null) {
+            throw new ServiceException("Wrong id for filter vacancies by employment");
+        }
+        List<Vacancy> list;
+        VacancyDao vacancyDao = DaoFactory.getInstance().getVacancyDao();
+        InterviewDao interviewDao = DaoFactory.getInstance().getInterviewDao();
+        try {
+            openTransactionSession();
+            vacancyDao.setSession(getSession());
+            interviewDao.setSession(getSession());
+            list = vacancyDao.filterByEmployments(id);
+            for (Vacancy v : list) {
+                v.setInterviewsCount(interviewDao.getInterviewsVacancyCount(v.getId()));
+            }
+            commitTransactionSession();
+        } catch (DaoException e) {
+            rollbackTransactionSession();
+            throw new ServiceException(e);
+        } finally {
+            closeSession();
+        }
+        return list;
+    }
+
+    @Override
     public List<Employment> getEmployments() throws ServiceException {
         List<Employment> list;
         VacancyDao vacancyDao = DaoFactory.getInstance().getVacancyDao();
@@ -186,6 +238,9 @@ public class VacancyServiceImpl extends SessionUtil implements VacancyService {
         if (!VacancyValidator.validateTopic(vacancy.getTopic())) {
             throw new ServiceException("Wrong topic");
         }
+        if("".equals(vacancy.getExperience())){
+            vacancy.setExperience(null);
+        }
         if (!VacancyValidator.validateExperience(vacancy.getExperience())) {
             throw new ServiceException("Wrong experience");
         }
@@ -194,6 +249,9 @@ public class VacancyServiceImpl extends SessionUtil implements VacancyService {
         }
         if (!VacancyValidator.validateRequirements(vacancy.getRequirements())) {
             throw new ServiceException("Wrong requirements");
+        }
+        if("".equals(vacancy.getAdditionalRequirements())){
+            vacancy.setAdditionalRequirements(null);
         }
         if (!VacancyValidator.validateAdditionalRequirements(vacancy.getAdditionalRequirements())) {
             throw new ServiceException("Wrong additional requirements");

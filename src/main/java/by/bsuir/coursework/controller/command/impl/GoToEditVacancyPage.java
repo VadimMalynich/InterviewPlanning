@@ -43,7 +43,7 @@ public class GoToEditVacancyPage implements Command {
             requestDispatcher.forward(request, response);
         } catch (ServiceException e) {
             userLogger.error(e);
-            response.sendRedirect("Controller?command=go_to_user_profile_page&message=message.error.server");
+            response.sendRedirect("Controller?command=go_to_profile_page&message=message.error.server");
         }
     }
 }

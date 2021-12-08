@@ -10,12 +10,13 @@ public class InterviewDao extends AbstractDao<Integer, Interview> {
     private static final String GET_FUTURE_INTERVIEWS = "SELECT * FROM interview WHERE (date = current_date() AND start_time >= current_time()) OR date > current_date() ORDER BY date, start_time ASC";
     private static final String GET_INTERVIEW = "SELECT * FROM interview WHERE id=:id";
     private static final String GET_HAPPENED = "SELECT * FROM interview WHERE happen=1 ORDER BY date, start_time ASC";
-    private static final String GET_VACANCY_INTERVIEWS = "SELECT * FROM interview WHERE vacancy_id=:id ORDER BY date, start_time ASC";
-    private static final String GET_USER_INTERVIEWS = "SELECT * FROM interview WHERE user_id=:id ORDER BY date, start_time ASC";
+    private static final String GET_VACANCY_INTERVIEWS = "SELECT * FROM interview WHERE vacancy_id=:id AND ((date = current_date() AND start_time >= current_time()) OR date > current_date()) ORDER BY date, start_time ASC";
+    private static final String GET_USER_INTERVIEWS = "SELECT * FROM interview WHERE user_id=:id AND ((date = current_date() AND start_time >= current_time()) OR date > current_date()) ORDER BY date, start_time ASC";
     private static final String GET_USER_VACANCY_INTERVIEWS = "SELECT * FROM interview WHERE user_id=:user_id AND  vacancy_id=:vacancy_id ORDER BY date, start_time ASC";
-    private static final String GET_INTERVIEWS_VACANCY_COUNT = "SELECT * FROM interview WHERE vacancy_id=:id";
-    private static final String GET_INTERVIEWS_PLATFORM_COUNT = "SELECT * FROM interview WHERE platform_id=:id";
-    private static final String SEARCH_INTERVIEWS = "SELECT * FROM interview WHERE topic LIKE :text";
+    private static final String GET_INTERVIEWS_VACANCY_COUNT = "SELECT * FROM interview WHERE vacancy_id=:id AND ((date = current_date() AND start_time >= current_time()) OR date > current_date())";
+    private static final String GET_INTERVIEWS_PLATFORM_COUNT = "SELECT * FROM interview WHERE platform_id=:id AND ((date = current_date() AND start_time >= current_time()) OR date > current_date())";
+    private static final String SEARCH_INTERVIEWS = "SELECT * FROM interview WHERE topic LIKE :text AND user_id=:user_id AND ((date = current_date() AND start_time >= current_time()) OR date > current_date())";
+    private static final String FILTER_INTERVIEWS = "SELECT * FROM interview WHERE platform_id=:id AND user_id=:user_id AND ((date = current_date() AND start_time >= current_time()) OR date > current_date())";
 
     @Override
     public List<Interview> getAll() throws DaoException {
@@ -123,10 +124,22 @@ public class InterviewDao extends AbstractDao<Integer, Interview> {
         }
     }
 
-    public List<Interview> searchInterviews(String text) throws DaoException {
+    public List<Interview> searchInterviews(String text, Integer userId) throws DaoException {
         try {
             Query query = session.createNativeQuery(SEARCH_INTERVIEWS).addEntity(Interview.class);
             query.setParameter("text", text);
+            query.setParameter("user_id", userId);
+            return query.list();
+        } catch (Exception ex) {
+            throw new DaoException(ex);
+        }
+    }
+
+    public List<Interview> filterInterviews(Integer platformId, Integer userId) throws DaoException {
+        try {
+            Query query = session.createNativeQuery(FILTER_INTERVIEWS);
+            query.setParameter("id", platformId);
+            query.setParameter("user_id", userId);
             return query.list();
         } catch (Exception ex) {
             throw new DaoException(ex);

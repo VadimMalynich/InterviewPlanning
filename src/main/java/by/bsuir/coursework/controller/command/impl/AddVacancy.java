@@ -38,7 +38,7 @@ public class AddVacancy implements Command {
             response.sendRedirect("Controller?command=go_to_home_page&message=message.addVacancy.complete");
         } catch (ServiceException e) {
             userLogger.error(e);
-            response.sendRedirect("Controller?command=go_to_add_ad_page&message=message.add.unsuccessfully");
+            response.sendRedirect("Controller?command=go_to_add_vacancy_page&message=message.add.unsuccessfully");
         }
     }
 }

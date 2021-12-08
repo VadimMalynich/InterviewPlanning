@@ -27,13 +27,21 @@ public class EditInterview implements Command {
 
         String editTopic = request.getParameter("editTopic");
         Date editDate = Date.valueOf(request.getParameter("editDate"));
-        Time editStartTime = Time.valueOf(request.getParameter("editStartTime"));
-        Time editEndTime = Time.valueOf(request.getParameter("editEndTime"));
+        String tempTime = request.getParameter("editStartTime");
+        if (tempTime.lastIndexOf(":") == 2) {
+            tempTime += ":00";
+        }
+        Time editStartTime = Time.valueOf(tempTime);
+        tempTime = request.getParameter("editEndTime");
+        if (tempTime.lastIndexOf(":") == 2) {
+            tempTime += ":00";
+        }
+        Time editEndTime = Time.valueOf(tempTime);
         Integer editPlatform = Integer.valueOf(request.getParameter("editPlatform"));
         Interview prevInterview = (Interview) session.getAttribute("editInterview");
 
-        Interview interview = new Interview(prevInterview.getVacancy().getId(), prevInterview.getUser(), editTopic,
-                editDate, editStartTime, editEndTime, editPlatform);
+        Interview interview = new Interview(prevInterview.getId(), prevInterview.getVacancy().getId(),
+                prevInterview.getUser(), editTopic, editDate, editStartTime, editEndTime, editPlatform);
 
         InterviewService interviewService = ServiceProvider.getInstance().getInterviewService();
 
@@ -41,10 +49,10 @@ public class EditInterview implements Command {
             interviewService.edit(interview);
             session.removeAttribute("editInterview");
             session.removeAttribute("editInterviewId");
-            response.sendRedirect("Controller?command=go_to_interviews_page&message=message.editInterview.complete");
+            response.sendRedirect("Controller?command=go_to_profile_page&message=message.editInterview.complete");
         } catch (ServiceException e) {
             userLogger.error(e);
-            response.sendRedirect("Controller?command=go_to_add_ad_page&message=message.edit.unsuccessfully");
+            response.sendRedirect("Controller?command=go_to_edit_interview_page&message=message.edit.unsuccessfully");
         }
     }
 }

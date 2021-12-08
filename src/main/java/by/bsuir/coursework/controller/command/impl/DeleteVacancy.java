@@ -22,10 +22,10 @@ public class DeleteVacancy implements Command {
 
         Integer integer = Integer.valueOf(request.getParameter("deleteVacancyId"));
 
-        InterviewService interviewService = ServiceProvider.getInstance().getInterviewService();
+        VacancyService vacancyService = ServiceProvider.getInstance().getVacancyService();
 
         try {
-            interviewService.delete(integer);
+            vacancyService.delete(integer);
             response.sendRedirect("Controller?command=go_to_home_page&message=message.deleteVacancy.complete");
         } catch (ServiceException e) {
             userLogger.error(e);

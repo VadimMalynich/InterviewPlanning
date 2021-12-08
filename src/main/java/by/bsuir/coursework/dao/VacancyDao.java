@@ -6,9 +6,11 @@ import org.hibernate.query.Query;
 import java.util.List;
 
 public class VacancyDao extends AbstractDao<Integer, Vacancy> {
-    private static final String GET_ALL = "SELECT * FROM vacancy ORDER BY id DESC";
+    private static final String GET_ALL = "SELECT * FROM interview_db.vacancy ORDER BY id DESC";
     private static final String GET_VACANCY = "SELECT * FROM vacancy WHERE id=:id";
     private static final String SEARCH_VACANCY = "SELECT * FROM vacancy WHERE topic LIKE :text";
+    private static final String FILTER_BY_SCHEDULE = "SELECT * FROM vacancy WHERE schedule_id=:id";
+    private static final String FILTER_BY_EMPLOYMENTS = "SELECT * FROM vacancy WHERE employment_id=:id";
     private static final String GET_SCHEDULES_COUNT = "SELECT * FROM vacancy WHERE schedule_id=:id";
     private static final String GET_EMPLOYMENTS = "SELECT * FROM employment";
     private static final String GET_SCHEDULES = "SELECT * FROM schedule";
@@ -64,6 +66,26 @@ public class VacancyDao extends AbstractDao<Integer, Vacancy> {
         try {
             Query query = session.createNativeQuery(SEARCH_VACANCY).addEntity(Vacancy.class);
             query.setParameter("text", text);
+            return query.list();
+        } catch (Exception ex) {
+            throw new DaoException(ex);
+        }
+    }
+
+    public List<Vacancy> filterBySchedule(Integer id) throws DaoException {
+        try {
+            Query query = session.createNativeQuery(FILTER_BY_SCHEDULE).addEntity(Vacancy.class);
+            query.setParameter("id", id);
+            return query.list();
+        } catch (Exception ex) {
+            throw new DaoException(ex);
+        }
+    }
+
+    public List<Vacancy> filterByEmployments(Integer id) throws DaoException {
+        try {
+            Query query = session.createNativeQuery(FILTER_BY_EMPLOYMENTS).addEntity(Vacancy.class);
+            query.setParameter("id", id);
             return query.list();
         } catch (Exception ex) {
             throw new DaoException(ex);

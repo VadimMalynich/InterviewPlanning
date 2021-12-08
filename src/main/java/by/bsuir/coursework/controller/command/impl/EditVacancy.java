@@ -28,8 +28,9 @@ public class EditVacancy implements Command {
         String editDescription = request.getParameter("editDescription");
         String editRequirements = request.getParameter("editRequirements");
         String editAdditional = request.getParameter("editAdditional");
+        Integer vacancyId = (Integer) session.getAttribute("editVacancyId");
 
-        Vacancy vacancy = new Vacancy(editTopic, editExperience, editEmployment, editSchedule, editDescription,
+        Vacancy vacancy = new Vacancy(vacancyId ,editTopic, editExperience, editEmployment, editSchedule, editDescription,
                 editRequirements, editAdditional);
 
         VacancyService vacancyService = ServiceProvider.getInstance().getVacancyService();
@@ -41,7 +42,7 @@ public class EditVacancy implements Command {
             response.sendRedirect("Controller?command=go_to_home_page&message=message.editVacancy.complete");
         } catch (ServiceException e) {
             userLogger.error(e);
-            response.sendRedirect("Controller?command=go_to_add_ad_page&message=message.edit.unsuccessfully");
+            response.sendRedirect("Controller?command=go_to_edit_vacancy_page&message=message.edit.unsuccessfully");
         }
     }
 }

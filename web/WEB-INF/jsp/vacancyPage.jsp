@@ -87,13 +87,13 @@
                         <ul>
                             <li>
                                 <a href="Controller?command=ru_RU">
-                                    <img src="<c:url value="/resources/images/elements/flag_russia.png"/> " height="30"
+                                    <img src="<c:url value="/resources/images/elements/flag_russia.png"/>" height="30"
                                          width="40" alt="RU">
                                 </a>
                             </li>
                             <li>
                                 <a href="Controller?command=en_US">
-                                    <img src="<c:url value="/resources/images/elements/flag_usa.png"/> " height="30"
+                                    <img src="<c:url value="/resources/images/elements/flag_usa.png"/>" height="30"
                                          width="40" alt="EN">
                                 </a>
                             </li>
@@ -113,7 +113,7 @@
                                 </c:when>
                                 <c:when test="${userRole eq 2}">
                                     <li class="menu-btn">
-                                        <a href="Controller?command=go_to_user_profile_page"
+                                        <a href="Controller?command=go_to_profile_page"
                                            class="login">${profile}</a>
                                     </li>
                                     <li>
@@ -135,16 +135,12 @@
                             <li class="active"><a href="Controller?command=go_to_home_page">${home}</a></li>
                             <c:choose>
                                 <c:when test="${userRole eq 0}">
-                                    <li><a href="Controller?command=go_to_users_page">${usersButton}</a></li>
                                     <li><a href="Controller?command=go_to_platforms_page">${platformsButton}</a></li>
+                                    <li><a href="Controller?command=go_to_users_page">${usersButton}</a></li>
                                 </c:when>
                                 <c:when test="${userRole eq 1}">
-                                    <li><a href="Controller?command=go_to_add_vacancy_page">${addVacancyButton}</a></li>
                                     <li><a href="Controller?command=go_to_platforms_page">${platformsButton}</a></li>
-                                </c:when>
-                                <c:when test="${userRole eq 2}">
-                                    <li><a href="Controller?command=go_to_add_interview_page">${addInterviewButton}</a>
-                                    </li>
+                                    <li><a href="Controller?command=go_to_add_vacancy_page">${addVacancyButton}</a></li>
                                 </c:when>
                             </c:choose>
                             <c:if test="${requestScope.message ne null}">
@@ -172,7 +168,7 @@
                             <div class="job-text">
                                 <h4><c:out value="${vacancy.topic}"/></h4>
                                 <ul class="mt-4">
-                                    <li class="mb-3"><h5><em class="fa fa-id-card-o"></em> <c:out
+                                    <li class="mb-3"><h5><em class="fa fa-address-card-o"></em> <c:out
                                             value=" ${experienceLabel}: ${vacancy.experience}"/></h5>
                                     </li>
                                     <li class="mb-3"><h5><em class="fa fa-calendar"></em> <c:out
@@ -221,14 +217,16 @@
                         <h4>${employments}</h4>
                         <span><c:out value="${vacancy.employment.type}"/></span>
                     </div>
-                    <div class="single-content7 py-4">
-                        <h4>${additional}</h4>
-                        <ul class="mt-3">
-                            <c:forEach var="addReq" items="${fn:split(vacancy.additionalRequirements, '.') }">
-                                <li class="mb-2"><c:out value="${addReq}"/></li>
-                            </c:forEach>
-                        </ul>
-                    </div>
+                    <c:if test="${vacancy.additionalRequirements ne null}">
+                        <div class="single-content7 py-4">
+                            <h4>${additional}</h4>
+                            <ul class="mt-3">
+                                <c:forEach var="addReq" items="${fn:split(vacancy.additionalRequirements, '.') }">
+                                    <li class="mb-2"><c:out value="${addReq}"/></li>
+                                </c:forEach>
+                            </ul>
+                        </div>
+                    </c:if>
                 </div>
             </div>
         </div>

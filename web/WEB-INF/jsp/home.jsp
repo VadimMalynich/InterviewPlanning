@@ -29,7 +29,7 @@
     <fmt:message bundle="${loc}" key="add.interview.button" var="addInterviewButton"/>
     <fmt:message bundle="${loc}" key="add.vacancy.button" var="addVacancyButton"/>
     <fmt:message bundle="${loc}" key="label.platforms" var="platformsButton"/>
-
+    <fmt:message bundle="${loc}" key="add.vacancy.button" var="addVacancyButton"/>
 
     <fmt:message bundle="${loc}" key="label.experience" var="platformLabel"/>
     <fmt:message bundle="${loc}" key="label.vacancy.topic" var="topicLabel"/>
@@ -39,7 +39,7 @@
     <fmt:message bundle="${loc}" key="label.employments" var="employmentsLabel"/>
     <fmt:message bundle="${loc}" key="label.interviewCount" var="interviewCountLabel"/>
 
-    <fmt:message bundle="${loc}" key="search.input.placeholder" var="searchPlaceholder"/>
+    <fmt:message bundle="${loc}" key="searchVacancy.input.placeholder" var="searchPlaceholder"/>
     <fmt:message bundle="${loc}" key="vacancy.topic.input.placeholder" var="topicPlaceholder"/>
     <fmt:message bundle="${loc}" key="vacancy.topic.input.placeholderFocus" var="topicPlaceholderFocus"/>
     <fmt:message bundle="${loc}" key="experience.input.placeholder" var="materialPlaceholder"/>
@@ -47,6 +47,18 @@
     <fmt:message bundle="${loc}" key="description.textarea.placeholder" var="descriptionPlaceholder"/>
 
     <fmt:message bundle="${loc}" key="page.home" var="pageTitle"/>
+
+    <fmt:message bundle="${loc}" key="message.searchResults" var="searchResults">
+        <fmt:param value="${sessionScope.searchVacancy}"/>
+    </fmt:message>
+    <fmt:message bundle="${loc}" key="message.shedule" var="platformMessage">
+        <fmt:param value="${sessionScope.filterSchedule}"/>
+    </fmt:message>
+    <fmt:message bundle="${loc}" key="message.employment" var="employmentMessage">
+        <fmt:param value="${sessionScope.filterEmployment}"/>
+    </fmt:message>
+    <fmt:message bundle="${loc}" key="message.emptyVacancies" var="emptyVacancies"/>
+    <fmt:message bundle="${loc}" key="message.emptyVacancies.continue" var="emptyVacanciesContinue"/>
 
     <c:if test="${requestScope.message ne null}">
         <fmt:message bundle="${loc}" key="${requestScope.message}" var="messageText"/>
@@ -87,13 +99,13 @@
                         <ul>
                             <li>
                                 <a href="Controller?command=ru_RU">
-                                    <img src="<c:url value="/resources/images/elements/flag_russia.png"/> " height="30"
+                                    <img src="<c:url value="/resources/images/elements/flag_russia.png"/>" height="30"
                                          width="40" alt="RU">
                                 </a>
                             </li>
                             <li>
                                 <a href="Controller?command=en_US">
-                                    <img src="<c:url value="/resources/images/elements/flag_usa.png"/> " height="30"
+                                    <img src="<c:url value="/resources/images/elements/flag_usa.png"/>" height="30"
                                          width="40" alt="EN">
                                 </a>
                             </li>
@@ -113,8 +125,7 @@
                                 </c:when>
                                 <c:when test="${userRole eq 2}">
                                     <li class="menu-btn">
-                                        <a href="Controller?command=go_to_user_profile_page"
-                                           class="login">${profile}</a>
+                                        <a href="Controller?command=go_to_profile_page" class="login">${profile}</a>
                                     </li>
                                     <li>
                                         <a href="Controller?command=logout" class="template-btn">${logout}</a>
@@ -135,16 +146,12 @@
                             <li class="active"><a href="Controller?command=go_to_home_page">${home}</a></li>
                             <c:choose>
                                 <c:when test="${userRole eq 0}">
-                                    <li><a href="Controller?command=go_to_users_page">${usersButton}</a></li>
                                     <li><a href="Controller?command=go_to_platforms_page">${platformsButton}</a></li>
+                                    <li><a href="Controller?command=go_to_users_page">${usersButton}</a></li>
                                 </c:when>
                                 <c:when test="${userRole eq 1}">
-                                    <li><a href="Controller?command=go_to_add_vacancy_page">${addVacancyButton}</a></li>
                                     <li><a href="Controller?command=go_to_platforms_page">${platformsButton}</a></li>
-                                </c:when>
-                                <c:when test="${userRole eq 2}">
-                                    <li><a href="Controller?command=go_to_add_interview_page">${addInterviewButton}</a>
-                                    </li>
+                                    <li><a href="Controller?command=go_to_add_vacancy_page">${addVacancyButton}</a></li>
                                 </c:when>
                             </c:choose>
                             <c:if test="${requestScope.message ne null}">
@@ -167,17 +174,21 @@
         <div class="row">
             <div class="col-md-6 offset-md-3">
                 <c:choose>
-                    <c:when test="${sessionScope.filterClothesType ne null}">
-                        <h2>${clothesTypeMessage}</h2>
+                    <c:when test="${sessionScope.filterByEmploymentList ne null}">
+                        <h2>${employmentMessage}</h2>
                     </c:when>
-                    <c:when test="${sessionScope.searchAd ne null}">
+                    <c:when test="${sessionScope.filterByScheduleList ne null}">
+                        <h2>${platformMessage}</h2>
+                    </c:when>
+                    <c:when test="${sessionScope.searchVacancy ne null}">
                         <h2>${searchResults}</h2>
                     </c:when>
-                    <c:when test="${empty sessionScope.adsList}">
-                        <h2>${emptyAds}</h2>
-                        <p>${emptyAdsContinue}</p>
+                    <c:when test="${empty sessionScope.vacanciesList}">
+                        <h2>${emptyVacancies}</h2>
+                        <p>${emptyVacanciesContinue}</p>
                         <c:if test="${sessionScope.user.role.value eq 1}">
-                            <a href="Controller?command=go_to_add_ad_page" class="template-btn">${addButton}</a>
+                            <a href="Controller?command=go_to_add_vacancy_page"
+                               class="template-btn">${addVacancyButton}</a>
                         </c:if>
                     </c:when>
                 </c:choose>
@@ -188,106 +199,445 @@
 <!-- Page Title End -->
 
 <!-- Job Single Content Starts -->
-<section class="job-single-content section-padding">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="jobs-tab tab-item">
-                    <ul>
-                        <c:forEach var="employment" items="${sessionScope.employmentList}">
-                            <li>
-                                <a class="nav-link"
-                                   href="Controller?command=filter_vacancies_by_employment&filterIdType=${employment.id}"><c:out
-                                        value="${employment.type}"/>
-                                </a>
-                            </li>
-                        </c:forEach>
-                    </ul>
+<c:choose>
+    <c:when test="${not empty sessionScope.vacanciesList}">
+        <section class="job-single-content section-padding">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="jobs-tab tab-item">
+                            <ul>
+                                <c:forEach var="employment" items="${sessionScope.employmentList}">
+                                    <li>
+                                        <a class="nav-link"
+                                           href="Controller?command=filter_vacancies_by_employment&filterIdType=${employment.id}"><c:out
+                                                value="${employment.type}"/>
+                                        </a>
+                                    </li>
+                                </c:forEach>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-8">
-                <div class="main-content">
-                    <div class="single-content1">
-                        <c:forEach var="vacancy" items="${sessionScope.vacanciesList}">
-                            <a href="Controller?command=go_to_vacancy_page&vacancyId=${vacancy.id}">
-                                <div class="single-job mb-4 d-lg-flex justify-content-between">
-                                    <div class="job-text">
-                                        <h4><c:out value="${vacancy.topic}"/></h4>
-                                        <ul class="mt-4">
-                                            <li class="mb-3"><h5><em class="fa fa-id-card-o"></em> ${employmentsLabel}:
-                                                <c:out value="${vacancy.experience}"/></h5></li>
-                                            <li class="mb-3"><h5><em
-                                                    class="fa fa-calendar"></em> ${scheduleLabel}: ${vacancy.schedule.timetable}
-                                            </h5>
-                                            </li>
-                                            <li><h5><em
-                                                    class="fa fa-pie-chart"></em> ${interviewCountLabel}: ${vacancy.interviewsCount}
-                                            </h5></li>
-                                        </ul>
-                                    </div>
-                                    <div class="job-btn align-self-center">
-                                        <c:choose>
-                                            <c:when test="${vacancy.employment.id eq 1}">
-                                                <a class="third-btn job-btn1"><c:out
-                                                        value="${vacancy.employment.type}"/></a>
-                                            </c:when>
-                                            <c:when test="${vacancy.employment.id eq 2}">
-                                                <a class="third-btn job-btn2"><c:out
-                                                        value="${vacancy.employment.type}"/></a>
-                                            </c:when>
-                                            <c:when test="${vacancy.employment.id eq 3}">
-                                                <a class="third-btn job-btn3"><c:out
-                                                        value="${vacancy.employment.type}"/></a>
-                                            </c:when>
-                                            <c:when test="${vacancy.employment.id eq 4}">
-                                                <a class="third-btn job-btn4"><c:out
-                                                        value="${vacancy.employment.type}"/></a>
-                                            </c:when>
-                                        </c:choose>
-                                        <a href="#" class="third-btn">${interviewsButton}</a>
-                                    </div>
-                                    <c:if test="${sessionScope.user.role.value eq 1}">
-                                        <div class="job-btn align-top">
-                                            <a href="Controller?command=go_to_edit_vacancy_page&editVacancyId=${vacancy.id}"
-                                               style="color: #0b2e13"><em class="fa fa-edit fa-2x"></em></a>
-                                            <a href="Controller?command=delete_vacancy&deleteVacancyId=${vacancy.id}"
-                                               style="color: #0b2e13"><em class="fa fa-close fa-2x"></em></a>
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="main-content">
+                            <div class="single-content1">
+                                <c:forEach var="vacancy" items="${sessionScope.vacanciesList}">
+                                    <a href="Controller?command=go_to_vacancy_page&vacancyId=${vacancy.id}">
+                                        <div class="single-job mb-4 d-lg-flex justify-content-between">
+                                            <div class="job-text">
+                                                <h4><c:out value="${vacancy.topic}"/></h4>
+                                                <ul class="mt-4">
+                                                    <li class="mb-3"><h5><em
+                                                            class="fa fa-vcard"></em> ${employmentsLabel}:
+                                                        <c:out value="${vacancy.experience}"/></h5></li>
+                                                    <li class="mb-3"><h5><em
+                                                            class="fa fa-calendar"></em> ${scheduleLabel}: ${vacancy.schedule.timetable}
+                                                    </h5>
+                                                    </li>
+                                                    <li><h5><em
+                                                            class="fa fa-pie-chart"></em> ${interviewCountLabel}: ${vacancy.interviewsCount}
+                                                    </h5></li>
+                                                </ul>
+                                            </div>
+                                            <div class="job-btn align-self-center">
+                                                <c:choose>
+                                                    <c:when test="${vacancy.employment.id eq 1}">
+                                                        <a class="third-btn job-btn1"><c:out
+                                                                value="${vacancy.employment.type}"/></a>
+                                                    </c:when>
+                                                    <c:when test="${vacancy.employment.id eq 2}">
+                                                        <a class="third-btn job-btn2"><c:out
+                                                                value="${vacancy.employment.type}"/></a>
+                                                    </c:when>
+                                                    <c:when test="${vacancy.employment.id eq 3}">
+                                                        <a class="third-btn job-btn3"><c:out
+                                                                value="${vacancy.employment.type}"/></a>
+                                                    </c:when>
+                                                    <c:when test="${vacancy.employment.id eq 4}">
+                                                        <a class="third-btn job-btn4"><c:out
+                                                                value="${vacancy.employment.type}"/></a>
+                                                    </c:when>
+                                                </c:choose>
+                                                <a href="Controller?command=go_to_interviews_page&vacancyId=${vacancy.id}"
+                                                   style="margin-bottom: 10px" class="third-btn">${interviewsButton}</a>
+                                                <c:if test="${userRole eq 2}">
+                                                    <a href="Controller?command=go_to_add_interview_page&vacancyId=${vacancy.id}"
+                                                       class="third-btn">${addInterviewButton}</a>
+                                                </c:if>
+                                            </div>
+                                            <c:if test="${userRole eq 1}">
+                                                <div class="job-btn align-top">
+                                                    <a href="Controller?command=go_to_edit_vacancy_page&editVacancyId=${vacancy.id}"
+                                                       style="color: #0b2e13"><em class="fa fa-edit fa-2x"></em></a>
+                                                    <a href="Controller?command=delete_vacancy&deleteVacancyId=${vacancy.id}"
+                                                       style="color: #0b2e13"><em class="fa fa-close fa-2x"></em></a>
+                                                </div>
+                                            </c:if>
                                         </div>
-                                    </c:if>
-                                </div>
-                            </a>
-                        </c:forEach>
+                                    </a>
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="sidebar mt-5 mt-lg-0">
+                            <div class="single-widget search-widget">
+                                <form class="example" action="Controller" method="post"
+                                      style="margin:auto;max-width:300px">
+                                    <input type="hidden" name="command" value="search_vacancies"/>
+                                    <input type="text" placeholder="${searchPlaceholder}" name="searchVacancies"
+                                           onfocus="this.placeholder = ''"
+                                           onblur="this.placeholder = '${searchPlaceholder}'" required/>
+                                    <button type="submit"><em class="fa fa-search"></em></button>
+                                </form>
+                            </div>
+                            <div class="single-item mb-4">
+                                <h4 class="mb-4">${scheduleLabel}</h4>
+                                <c:forEach var="schedule" items="${sessionScope.scheduleList}">
+                                    <a href="Controller?command=filter_vacancies_by_schedule&filterIdType=${schedule.id}"
+                                       class="sidebar-btn d-flex justify-content-between mb-3">
+                                        <span><c:out value="${schedule.timetable}"/></span>
+                                        <span class="text-right"><c:out value="${schedule.count}"/></span>
+                                    </a>
+                                </c:forEach>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4">
-                <div class="sidebar mt-5 mt-lg-0">
-                    <div class="single-widget search-widget">
-                        <form class="example" action="Controller" method="post" style="margin:auto;max-width:300px">
-                            <input type="hidden" name="command" value="search_vacancies"/>
-                            <input type="text" placeholder="${searchPlaceholder}" name="searchVacancies"
-                                   onfocus="this.placeholder = ''"
-                                   onblur="this.placeholder = '${searchPlaceholder}'" required>
-                            <button type="submit"><em class="fa fa-search"></em></button>
-                        </form>
+        </section>
+    </c:when>
+    <c:when test="${not empty sessionScope.filterByScheduleList}">
+        <section class="job-single-content section-padding">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="jobs-tab tab-item">
+                            <ul>
+                                <c:forEach var="employment" items="${sessionScope.employmentList}">
+                                    <li>
+                                        <a class="nav-link"
+                                           href="Controller?command=filter_vacancies_by_employment&filterIdType=${employment.id}"><c:out
+                                                value="${employment.type}"/>
+                                        </a>
+                                    </li>
+                                </c:forEach>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="single-item mb-4">
-                        <h4 class="mb-4">${scheduleLabel}</h4>
-                        <c:forEach var="schedule" items="${sessionScope.scheduleList}">
-                            <a href="Controller?command=filter_vacancies_by_schedule&filterIdType=${schedule.id}"
-                               class="sidebar-btn d-flex justify-content-between mb-3">
-                                <span><c:out value="${schedule.timetable}"/></span>
-                                <span class="text-right"><c:out value="${schedule.count}"/></span>
-                            </a>
-                        </c:forEach>
+                </div>
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="main-content">
+                            <div class="single-content1">
+                                <c:forEach var="vacancy" items="${sessionScope.filterByScheduleList}">
+                                    <a href="Controller?command=go_to_vacancy_page&vacancyId=${vacancy.id}">
+                                        <div class="single-job mb-4 d-lg-flex justify-content-between">
+                                            <div class="job-text">
+                                                <h4><c:out value="${vacancy.topic}"/></h4>
+                                                <ul class="mt-4">
+                                                    <li class="mb-3"><h5><em
+                                                            class="fa fa-address-card-o"></em> ${employmentsLabel}:
+                                                        <c:out value="${vacancy.experience}"/></h5></li>
+                                                    <li class="mb-3"><h5><em
+                                                            class="fa fa-calendar"></em> ${scheduleLabel}: ${vacancy.schedule.timetable}
+                                                    </h5>
+                                                    </li>
+                                                    <li><h5><em
+                                                            class="fa fa-pie-chart"></em> ${interviewCountLabel}: ${vacancy.interviewsCount}
+                                                    </h5></li>
+                                                </ul>
+                                            </div>
+                                            <div class="job-btn align-self-center">
+                                                <c:choose>
+                                                    <c:when test="${vacancy.employment.id eq 1}">
+                                                        <a class="third-btn job-btn1"><c:out
+                                                                value="${vacancy.employment.type}"/></a>
+                                                    </c:when>
+                                                    <c:when test="${vacancy.employment.id eq 2}">
+                                                        <a class="third-btn job-btn2"><c:out
+                                                                value="${vacancy.employment.type}"/></a>
+                                                    </c:when>
+                                                    <c:when test="${vacancy.employment.id eq 3}">
+                                                        <a class="third-btn job-btn3"><c:out
+                                                                value="${vacancy.employment.type}"/></a>
+                                                    </c:when>
+                                                    <c:when test="${vacancy.employment.id eq 4}">
+                                                        <a class="third-btn job-btn4"><c:out
+                                                                value="${vacancy.employment.type}"/></a>
+                                                    </c:when>
+                                                </c:choose>
+                                                <a href="Controller?command=go_to_interviews_page&interviewId=${vacancy.id}"
+                                                   class="third-btn">${interviewsButton}</a>
+                                                <c:if test="${userRole eq 2}">
+                                                    <a href="Controller?command=go_to_add_interview_page&vacancyId=${vacancy.id}"
+                                                       class="third-btn">${addInterviewButton}</a>
+                                                </c:if>
+                                            </div>
+                                            <c:if test="${userRole eq 1}">
+                                                <div class="job-btn align-top">
+                                                    <a href="Controller?command=go_to_edit_vacancy_page&editVacancyId=${vacancy.id}"
+                                                       style="color: #0b2e13"><em class="fa fa-edit fa-2x"></em></a>
+                                                    <a href="Controller?command=delete_vacancy&deleteVacancyId=${vacancy.id}"
+                                                       style="color: #0b2e13"><em class="fa fa-close fa-2x"></em></a>
+                                                </div>
+                                            </c:if>
+                                        </div>
+                                    </a>
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="sidebar mt-5 mt-lg-0">
+                            <div class="single-widget search-widget">
+                                <form class="example" action="Controller" method="post"
+                                      style="margin:auto;max-width:300px">
+                                    <input type="hidden" name="command" value="search_vacancies"/>
+                                    <input type="text" placeholder="${searchPlaceholder}" name="searchVacancies"
+                                           onfocus="this.placeholder = ''"
+                                           onblur="this.placeholder = '${searchPlaceholder}'" required/>
+                                    <button type="submit"><em class="fa fa-search"></em></button>
+                                </form>
+                            </div>
+                            <div class="single-item mb-4">
+                                <h4 class="mb-4">${scheduleLabel}</h4>
+                                <c:forEach var="schedule" items="${sessionScope.scheduleList}">
+                                    <a href="Controller?command=filter_vacancies_by_schedule&filterIdType=${schedule.id}"
+                                       class="sidebar-btn d-flex justify-content-between mb-3">
+                                        <span><c:out value="${schedule.timetable}"/></span>
+                                        <span class="text-right"><c:out value="${schedule.count}"/></span>
+                                    </a>
+                                </c:forEach>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</section>
+        </section>
+    </c:when>
+    <c:when test="${not empty sessionScope.filterByEmploymentList}">
+        <section class="job-single-content section-padding">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="jobs-tab tab-item">
+                            <ul>
+                                <c:forEach var="employment" items="${sessionScope.employmentList}">
+                                    <li>
+                                        <a class="nav-link"
+                                           href="Controller?command=filter_vacancies_by_employment&filterIdType=${employment.id}"><c:out
+                                                value="${employment.type}"/>
+                                        </a>
+                                    </li>
+                                </c:forEach>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="main-content">
+                            <div class="single-content1">
+                                <c:forEach var="vacancy" items="${sessionScope.filterByEmploymentList}">
+                                    <a href="Controller?command=go_to_vacancy_page&vacancyId=${vacancy.id}">
+                                        <div class="single-job mb-4 d-lg-flex justify-content-between">
+                                            <div class="job-text">
+                                                <h4><c:out value="${vacancy.topic}"/></h4>
+                                                <ul class="mt-4">
+                                                    <li class="mb-3"><h5><em
+                                                            class="fa fa-address-card-o"></em> ${employmentsLabel}:
+                                                        <c:out value="${vacancy.experience}"/></h5></li>
+                                                    <li class="mb-3"><h5><em
+                                                            class="fa fa-calendar"></em> ${scheduleLabel}: ${vacancy.schedule.timetable}
+                                                    </h5>
+                                                    </li>
+                                                    <li><h5><em
+                                                            class="fa fa-pie-chart"></em> ${interviewCountLabel}: ${vacancy.interviewsCount}
+                                                    </h5></li>
+                                                </ul>
+                                            </div>
+                                            <div class="job-btn align-self-center">
+                                                <c:choose>
+                                                    <c:when test="${vacancy.employment.id eq 1}">
+                                                        <a class="third-btn job-btn1"><c:out
+                                                                value="${vacancy.employment.type}"/></a>
+                                                    </c:when>
+                                                    <c:when test="${vacancy.employment.id eq 2}">
+                                                        <a class="third-btn job-btn2"><c:out
+                                                                value="${vacancy.employment.type}"/></a>
+                                                    </c:when>
+                                                    <c:when test="${vacancy.employment.id eq 3}">
+                                                        <a class="third-btn job-btn3"><c:out
+                                                                value="${vacancy.employment.type}"/></a>
+                                                    </c:when>
+                                                    <c:when test="${vacancy.employment.id eq 4}">
+                                                        <a class="third-btn job-btn4"><c:out
+                                                                value="${vacancy.employment.type}"/></a>
+                                                    </c:when>
+                                                </c:choose>
+                                                <a href="Controller?command=go_to_interviews_page&interviewId=${vacancy.id}"
+                                                   class="third-btn">${interviewsButton}</a>
+                                                <c:if test="${userRole eq 2}">
+                                                    <a href="Controller?command=go_to_add_interview_page&vacancyId=${vacancy.id}"
+                                                       class="third-btn">${addInterviewButton}</a>
+                                                </c:if>
+                                            </div>
+                                            <c:if test="${userRole eq 1}">
+                                                <div class="job-btn align-top">
+                                                    <a href="Controller?command=go_to_edit_vacancy_page&editVacancyId=${vacancy.id}"
+                                                       style="color: #0b2e13"><em class="fa fa-edit fa-2x"></em></a>
+                                                    <a href="Controller?command=delete_vacancy&deleteVacancyId=${vacancy.id}"
+                                                       style="color: #0b2e13"><em class="fa fa-close fa-2x"></em></a>
+                                                </div>
+                                            </c:if>
+                                        </div>
+                                    </a>
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="sidebar mt-5 mt-lg-0">
+                            <div class="single-widget search-widget">
+                                <form class="example" action="Controller" method="post"
+                                      style="margin:auto;max-width:300px">
+                                    <input type="hidden" name="command" value="search_vacancies"/>
+                                    <input type="text" placeholder="${searchPlaceholder}" name="searchVacancies"
+                                           onfocus="this.placeholder = ''"
+                                           onblur="this.placeholder = '${searchPlaceholder}'" required/>
+                                    <button type="submit"><em class="fa fa-search"></em></button>
+                                </form>
+                            </div>
+                            <div class="single-item mb-4">
+                                <h4 class="mb-4">${scheduleLabel}</h4>
+                                <c:forEach var="schedule" items="${sessionScope.scheduleList}">
+                                    <a href="Controller?command=filter_vacancies_by_schedule&filterIdType=${schedule.id}"
+                                       class="sidebar-btn d-flex justify-content-between mb-3">
+                                        <span><c:out value="${schedule.timetable}"/></span>
+                                        <span class="text-right"><c:out value="${schedule.count}"/></span>
+                                    </a>
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </c:when>
+    <c:when test="${not empty sessionScope.searchVacanciesList}">
+        <section class="job-single-content section-padding">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="jobs-tab tab-item">
+                            <ul>
+                                <c:forEach var="employment" items="${sessionScope.employmentList}">
+                                    <li>
+                                        <a class="nav-link"
+                                           href="Controller?command=filter_vacancies_by_employment&filterIdType=${employment.id}"><c:out
+                                                value="${employment.type}"/>
+                                        </a>
+                                    </li>
+                                </c:forEach>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="main-content">
+                            <div class="single-content1">
+                                <c:forEach var="vacancy" items="${sessionScope.searchVacanciesList}">
+                                    <a href="Controller?command=go_to_vacancy_page&vacancyId=${vacancy.id}">
+                                        <div class="single-job mb-4 d-lg-flex justify-content-between">
+                                            <div class="job-text">
+                                                <h4><c:out value="${vacancy.topic}"/></h4>
+                                                <ul class="mt-4">
+                                                    <li class="mb-3"><h5><em
+                                                            class="fa fa-address-card-o"></em> ${employmentsLabel}:
+                                                        <c:out value="${vacancy.experience}"/></h5></li>
+                                                    <li class="mb-3"><h5><em
+                                                            class="fa fa-calendar"></em> ${scheduleLabel}: ${vacancy.schedule.timetable}
+                                                    </h5>
+                                                    </li>
+                                                    <li><h5><em
+                                                            class="fa fa-pie-chart"></em> ${interviewCountLabel}: ${vacancy.interviewsCount}
+                                                    </h5></li>
+                                                </ul>
+                                            </div>
+                                            <div class="job-btn align-self-center">
+                                                <c:choose>
+                                                    <c:when test="${vacancy.employment.id eq 1}">
+                                                        <a class="third-btn job-btn1"><c:out
+                                                                value="${vacancy.employment.type}"/></a>
+                                                    </c:when>
+                                                    <c:when test="${vacancy.employment.id eq 2}">
+                                                        <a class="third-btn job-btn2"><c:out
+                                                                value="${vacancy.employment.type}"/></a>
+                                                    </c:when>
+                                                    <c:when test="${vacancy.employment.id eq 3}">
+                                                        <a class="third-btn job-btn3"><c:out
+                                                                value="${vacancy.employment.type}"/></a>
+                                                    </c:when>
+                                                    <c:when test="${vacancy.employment.id eq 4}">
+                                                        <a class="third-btn job-btn4"><c:out
+                                                                value="${vacancy.employment.type}"/></a>
+                                                    </c:when>
+                                                </c:choose>
+                                                <a href="Controller?command=go_to_interviews_page&interviewId=${vacancy.id}"
+                                                   class="third-btn">${interviewsButton}</a>
+                                                <c:if test="${userRole eq 2}">
+                                                    <a href="Controller?command=go_to_add_interview_page&vacancyId=${vacancy.id}"
+                                                       class="third-btn">${addInterviewButton}</a>
+                                                </c:if>
+                                            </div>
+                                            <c:if test="${userRole eq 1}">
+                                                <div class="job-btn align-top">
+                                                    <a href="Controller?command=go_to_edit_vacancy_page&editVacancyId=${vacancy.id}"
+                                                       style="color: #0b2e13"><em class="fa fa-edit fa-2x"></em></a>
+                                                    <a href="Controller?command=delete_vacancy&deleteVacancyId=${vacancy.id}"
+                                                       style="color: #0b2e13"><em class="fa fa-close fa-2x"></em></a>
+                                                </div>
+                                            </c:if>
+                                        </div>
+                                    </a>
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="sidebar mt-5 mt-lg-0">
+                            <div class="single-widget search-widget">
+                                <form class="example" action="Controller" method="post"
+                                      style="margin:auto;max-width:300px">
+                                    <input type="hidden" name="command" value="search_vacancies"/>
+                                    <input type="text" placeholder="${searchPlaceholder}" name="searchVacancies"
+                                           onfocus="this.placeholder = ''"
+                                           onblur="this.placeholder = '${searchPlaceholder}'" required/>
+                                    <button type="submit"><em class="fa fa-search"></em></button>
+                                </form>
+                            </div>
+                            <div class="single-item mb-4">
+                                <h4 class="mb-4">${scheduleLabel}</h4>
+                                <c:forEach var="schedule" items="${sessionScope.scheduleList}">
+                                    <a href="Controller?command=filter_vacancies_by_schedule&filterIdType=${schedule.id}"
+                                       class="sidebar-btn d-flex justify-content-between mb-3">
+                                        <span><c:out value="${schedule.timetable}"/></span>
+                                        <span class="text-right"><c:out value="${schedule.count}"/></span>
+                                    </a>
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </c:when>
+</c:choose>
+
 <!-- Job Single Content End -->
 
 <div id="wrapper"></div>

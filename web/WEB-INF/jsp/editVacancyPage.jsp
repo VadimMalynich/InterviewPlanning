@@ -23,6 +23,7 @@
     <fmt:message bundle="${loc}" key="label.platforms" var="platformsButton"/>
     <fmt:message bundle="${loc}" key="home.button" var="home"/>
     <fmt:message bundle="${loc}" key="edit.vacancy.button" var="editButton"/>
+    <fmt:message bundle="${loc}" key="add.vacancy.button" var="addVacancyButton"/>
 
 
     <fmt:message bundle="${loc}" key="label.experience" var="experienceLabel"/>
@@ -42,7 +43,7 @@
 
     <title>${sessionScope.vacancyPageInfo.topic}</title>
 
-    <title>Edit vacancy</title>
+    <title>${pageTitle}</title>
 </head>
 <body>
 <c:import url="parts/header.jsp"/>
@@ -75,6 +76,18 @@
                     </div>
                     <div class="main-menu main-menu-light">
                         <ul>
+                            <li>
+                                <a href="Controller?command=ru_RU">
+                                    <img src="<c:url value="/resources/images/elements/flag_russia.png"/>" height="30"
+                                         width="40" alt="RU">
+                                </a>
+                            </li>
+                            <li>
+                                <a href="Controller?command=en_US">
+                                    <img src="<c:url value="/resources/images/elements/flag_usa.png"/>" height="30"
+                                         width="40" alt="EN">
+                                </a>
+                            </li>
                             <li class="menu-btn">
                                 <a href="Controller?command=logout" class="template-btn">${logout}</a>
                             </li>
@@ -90,17 +103,29 @@
                             <ul>
                                 <li class="active"><a href="Controller?command=go_to_home_page">${home}</a></li>
                                 <li><a href="Controller?command=go_to_platforms_page">${platformsButton}</a></li>
+                                <li><a href="Controller?command=go_to_add_vacancy_page">${addVacancyButton}</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
+                <c:if test="${requestScope.message ne null}">
+                    <div class="col-lg-6">
+                        <div class="main-menu main-menu-light">
+                            <ul>
+                                <li style="color: #fff">
+                                    <c:out value="${messageText}"/>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </c:if>
             </div>
         </div>
         <div class="page-title text-center">
             <div class="container">
                 <div class="row">
                     <div class="col-md-6 offset-md-3">
-                        <h2>Добавление вакансии</h2>
+                        <h2>${pageTitle}</h2>
                     </div>
                 </div>
             </div>
@@ -165,17 +190,17 @@
                 </div>
                 <div class="col-lg-8">
                     <form action="Controller" method="post">
-                        <input type="hidden" name="command" value="add_vacancy"/>
+                        <input type="hidden" name="command" value="edit_vacancy"/>
                         <div class="mt-10">
                             <input type="text" name="editTopic" value="${vacancy.topic}" maxlength="50"
                                    placeholder="${vacancy.topic}" onfocus="this.placeholder = '${vacancy.topic}'"
                                    onblur="this.placeholder = '${vacancy.topic}'" required class="single-input">
                         </div>
                         <div class="mt-10">
-                            <input pattern="^\d{1,2}([-]\d{1,2})?$" class="single-input" value="${vacancy.topic}"
-                                   type="text" name="editExperience" placeholder="${vacancy.topic}"
-                                   onfocus="this.placeholder = '${vacancy.topic}'"
-                                   onblur="this.placeholder = '${vacancy.topic}'">
+                            <input pattern="^\d{1,2}([-]\d{1,2})?$" class="single-input" value="${vacancy.experience}"
+                                   type="text" name="editExperience" placeholder="${vacancy.experience}"
+                                   onfocus="this.placeholder = '${vacancy.experience}'"
+                                   onblur="this.placeholder = '${vacancy.experience}'">
                         </div>
                         <div class="input-group-icon mt-10">
                             <div class="icon"><i class="fa fa-gg" aria-hidden="true"></i></div>

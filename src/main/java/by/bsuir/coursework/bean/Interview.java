@@ -59,6 +59,17 @@ public class Interview extends Entity {
         this.platform = new Platforms(platformId);
     }
 
+    public Interview(Integer id, Integer vacancyId,  User user, String topic, Date date, Time startTime, Time endTime, Integer platformId) {
+        super(id);
+        this.vacancy = new Vacancy(vacancyId);
+        this.user = user;
+        this.topic = topic;
+        this.date = date;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.platform = new Platforms(platformId);
+    }
+
     public Vacancy getVacancy() {
         return vacancy;
     }

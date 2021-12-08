@@ -29,6 +29,9 @@ public class Feedback extends Entity {
     @Column(name = "mark", nullable = false)
     private Byte mark;
 
+    public Feedback() {
+    }
+
     public Interview getInterview() {
         return interview;
     }

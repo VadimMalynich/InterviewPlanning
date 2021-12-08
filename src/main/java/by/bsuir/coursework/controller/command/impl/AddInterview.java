@@ -27,13 +27,15 @@ public class AddInterview implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
+        Integer vacancyId = (Integer) session.getAttribute("vacancyId");
 
         String addTopic = request.getParameter("addTopic");
         Date addDate = Date.valueOf(request.getParameter("addDate"));
-        Time addStartTime = Time.valueOf(request.getParameter("addStartTime"));
-        Time addEndTime = Time.valueOf(request.getParameter("addEndTime"));
+        String tempTime = request.getParameter("addStartTime") + ":00";
+        Time addStartTime = Time.valueOf(tempTime);
+        tempTime = request.getParameter("addEndTime") + ":00";
+        Time addEndTime = Time.valueOf(tempTime);
         Integer addPlatform = Integer.valueOf(request.getParameter("addPlatform"));
-        Integer vacancyId = Integer.valueOf(request.getParameter("vacancyId"));
 
         Interview interview = new Interview(vacancyId, user, addTopic, addDate, addStartTime, addEndTime, addPlatform);
 
@@ -42,10 +44,11 @@ public class AddInterview implements Command {
         try {
             interviewService.add(interview);
             session.removeAttribute("platformsList");
+            session.removeAttribute("vacancyId");
             response.sendRedirect("Controller?command=go_to_home_page&message=message.addInterview.complete");
         } catch (ServiceException e) {
             userLogger.error(e);
-            response.sendRedirect("Controller?command=go_to_add_ad_page&message=message.add.unsuccessfully");
+            response.sendRedirect("Controller?command=go_to_add_interview_page&message=message.add.unsuccessfully");
         }
     }
 }

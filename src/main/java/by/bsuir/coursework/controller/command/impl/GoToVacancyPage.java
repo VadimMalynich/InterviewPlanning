@@ -21,7 +21,7 @@ public class GoToVacancyPage implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        session.setAttribute("page", "Controller?command=go_to_vacancy_page&adIdInfo=" + request.getParameter("adIdInfo"));
+        session.setAttribute("page", "Controller?command=go_to_vacancy_page&vacancyId=" + request.getParameter("vacancyId"));
         if (request.getParameter("message") != null) {
             request.setAttribute("message", request.getParameter("message"));
         }

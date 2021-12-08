@@ -22,11 +22,11 @@ public class GoToInterviewsPage implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        session.setAttribute("page", "Controller?command=go_to_ad_page&interviewId=" + request.getParameter("interviewId"));
+        session.setAttribute("page", "Controller?command=go_to_interviews_page&vacancyId=" + request.getParameter("vacancyId"));
         if (request.getParameter("message") != null) {
             request.setAttribute("message", request.getParameter("message"));
         }
-        Integer integer = Integer.valueOf(request.getParameter("interviewId"));
+        Integer integer = Integer.valueOf(request.getParameter("vacancyId"));
 
         InterviewService interviewService = ServiceProvider.getInstance().getInterviewService();
         PlatformService platformService = ServiceProvider.getInstance().getPlatformService();
@@ -39,6 +39,10 @@ public class GoToInterviewsPage implements Command {
             } else {
                 session.setAttribute("interviewsList", interviewList);
                 session.setAttribute("platformsList", platformsList);
+                session.removeAttribute("searchInterview");
+                session.removeAttribute("searchInterviewsList");
+                session.removeAttribute("filterInterviewsList");
+                session.removeAttribute("filterPlatform");
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/jsp/interviewsPage.jsp");
                 requestDispatcher.forward(request, response);
             }

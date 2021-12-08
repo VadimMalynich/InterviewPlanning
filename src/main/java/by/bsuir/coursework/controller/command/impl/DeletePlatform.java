@@ -17,7 +17,7 @@ public class DeletePlatform implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Integer id = Integer.valueOf(request.getParameter("deleteTypeId"));
+        Integer id = Integer.valueOf(request.getParameter("deletePlatformId"));
 
         PlatformService platformService = ServiceProvider.getInstance().getPlatformService();
 

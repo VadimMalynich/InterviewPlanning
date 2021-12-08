@@ -84,13 +84,13 @@
                         <ul>
                             <li>
                                 <a href="Controller?command=ru_RU">
-                                    <img src="<c:url value="/resources/images/elements/flag_russia.png"/> " height="30"
+                                    <img src="<c:url value="/resources/images/elements/flag_russia.png"/>" height="30"
                                          width="40" alt="RU">
                                 </a>
                             </li>
                             <li>
                                 <a href="Controller?command=en_US">
-                                    <img src="<c:url value="/resources/images/elements/flag_usa.png"/> " height="30"
+                                    <img src="<c:url value="/resources/images/elements/flag_usa.png"/>" height="30"
                                          width="40" alt="EN">
                                 </a>
                             </li>
@@ -100,8 +100,7 @@
                                 </c:when>
                                 <c:when test="${userRole eq 2}">
                                     <li class="menu-btn">
-                                        <a href="Controller?command=go_to_user_profile_page"
-                                           class="login">${profile}</a>
+                                        <a href="Controller?command=go_to_profile_page" class="login">${profile}</a>
                                     </li>
                                     <li>
                                         <a href="Controller?command=logout" class="template-btn">${logout}</a>

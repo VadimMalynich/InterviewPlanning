@@ -716,7 +716,7 @@ input:focus, textarea:focus {
 }
 
 .single-job {
-    padding: 40px 50px;
+    padding: 30px 20px;
     background: #f9f9f9;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
@@ -2788,7 +2788,7 @@ h6 {
     outline: none;
     background: #f9f9ff;
     padding: 20px 20px;
-    height: 200px;
+    height: 150px;
     resize: none;
     text-align: left;
 }

@@ -73,7 +73,20 @@
                     </div>
                     <div class="main-menu main-menu-light">
                         <ul>
+                            <li>
+                                <a href="Controller?command=ru_RU">
+                                    <img src="<c:url value="/resources/images/elements/flag_russia.png"/>" height="30"
+                                         width="40" alt="RU">
+                                </a>
+                            </li>
+                            <li>
+                                <a href="Controller?command=en_US">
+                                    <img src="<c:url value="/resources/images/elements/flag_usa.png"/>" height="30"
+                                         width="40" alt="EN">
+                                </a>
+                            </li>
                             <li class="menu-btn">
+                                <a href="Controller?command=go_to_profile_page" class="login">${profile}</a>
                                 <a href="Controller?command=logout" class="template-btn">${logout}</a>
                             </li>
                         </ul>
@@ -86,12 +99,23 @@
                         </div>
                         <div class="main-menu main-menu-light">
                             <ul>
-                                <li class="active"><a href="Controller?command=go_to_home_page">${home}</a></li>
-                                <li><a href="Controller?command=go_to_add_interview_page">${addInterviewButton}</a></li>
+                                <li class="active">
+                                    <a href="Controller?command=go_to_home_page">${home}</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
+                <c:if test="${requestScope.message ne null}">
+                    <div class="col-lg-6">
+                        <div class="main-menu main-menu-light">
+                            <ul>
+                                <li style="color: #fff">
+                                    <c:out value="${messageText}"/>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </c:if>
             </div>
         </div>
         <div class="page-title text-center">
@@ -163,19 +187,19 @@
                         </div>
                         <div class="input-group-icon mt-10">
                             <div class="icon"><i class="fa fa-hourglass-start" aria-hidden="true"></i></div>
-                            <input type="time" name="addStartTime" required
+                            <input type="time" name="addStartTime" required min="08:00" max="22:00"
                                    class="single-input">
                         </div>
                         <div class="input-group-icon mt-10">
                             <div class="icon"><i class="fa fa-hourglass-end" aria-hidden="true"></i></div>
-                            <input type="time" name="addEndTime" class="single-input">
+                            <input type="time" name="addEndTime" class="single-input" required min="08:30" max="23:00">
                         </div>
                         <div class="input-group-icon mt-10">
                             <div class="icon"><i class="fa fa-gg" aria-hidden="true"></i></div>
                             <div class="form-select" id="default-select2">
                                 <select name="addPlatform">
                                     <c:forEach var="platform" items="${sessionScope.platformsList}">
-                                        <option name="${platform.id}">${platform.name}</option>
+                                        <option value="${platform.id}">${platform.name}</option>
                                     </c:forEach>
                                 </select>
                             </div>

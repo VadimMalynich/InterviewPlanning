@@ -201,9 +201,12 @@ public class InterviewServiceImpl extends SessionUtil implements InterviewServic
     }
 
     @Override
-    public List<Interview> searchVacancies(String text) throws ServiceException {
+    public List<Interview> searchInterviews(String text, Integer userId) throws ServiceException {
         if (text == null || "".equals(text)) {
             throw new ServiceException("Wrong search text");
+        }
+        if (userId == null) {
+            throw new ServiceException(WRONG_ID);
         }
         List<Interview> list;
         text = "%" + text + "%";
@@ -211,7 +214,28 @@ public class InterviewServiceImpl extends SessionUtil implements InterviewServic
         try {
             openTransactionSession();
             interviewDao.setSession(getSession());
-            list = interviewDao.searchInterviews(text);
+            list = interviewDao.searchInterviews(text, userId);
+            commitTransactionSession();
+        } catch (DaoException e) {
+            rollbackTransactionSession();
+            throw new ServiceException(e);
+        } finally {
+            closeSession();
+        }
+        return list;
+    }
+
+    @Override
+    public List<Interview> filterInterviews(Integer platformId, Integer userId) throws ServiceException {
+        if (platformId == null || userId ==null) {
+            throw new ServiceException(WRONG_ID);
+        }
+        List<Interview> list;
+        InterviewDao interviewDao = DaoFactory.getInstance().getInterviewDao();
+        try {
+            openTransactionSession();
+            interviewDao.setSession(getSession());
+            list = interviewDao.filterInterviews(platformId, userId);
             commitTransactionSession();
         } catch (DaoException e) {
             rollbackTransactionSession();

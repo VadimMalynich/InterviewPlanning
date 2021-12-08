@@ -64,7 +64,7 @@ public class EditUser implements Command {
             } catch (ServiceException e) {
                 userLogger.error(e);
             }
-            response.sendRedirect("Controller?command=go_to_user_profile_page&message=message.editUser.complete");
+            response.sendRedirect("Controller?command=go_to_home_page&message=message.editUser.complete");
         }
     }
 }

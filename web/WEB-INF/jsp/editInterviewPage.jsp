@@ -75,7 +75,20 @@
                     </div>
                     <div class="main-menu main-menu-light">
                         <ul>
+                            <li>
+                                <a href="Controller?command=ru_RU">
+                                    <img src="<c:url value="/resources/images/elements/flag_russia.png"/>" height="30"
+                                         width="40" alt="RU">
+                                </a>
+                            </li>
+                            <li>
+                                <a href="Controller?command=en_US">
+                                    <img src="<c:url value="/resources/images/elements/flag_usa.png"/>" height="30"
+                                         width="40" alt="EN">
+                                </a>
+                            </li>
                             <li class="menu-btn">
+                                <a href="Controller?command=go_to_profile_page" class="login">${profile}</a>
                                 <a href="Controller?command=logout" class="template-btn">${logout}</a>
                             </li>
                         </ul>
@@ -89,11 +102,21 @@
                         <div class="main-menu main-menu-light">
                             <ul>
                                 <li class="active"><a href="Controller?command=go_to_home_page">${home}</a></li>
-                                <li><a href="Controller?command=go_to_add_interview_page">${addInterviewButton}</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
+                <c:if test="${requestScope.message ne null}">
+                    <div class="col-lg-6">
+                        <div class="main-menu main-menu-light">
+                            <ul>
+                                <li style="color: #fff">
+                                    <c:out value="${messageText}"/>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </c:if>
             </div>
         </div>
         <div class="page-title text-center">
@@ -153,10 +176,10 @@
                 </div>
                 <div class="col-lg-8">
                     <form action="Controller" method="post">
-                        <input type="hidden" name="command" value="add_interview"/>
+                        <input type="hidden" name="command" value="edit_interview"/>
                         <div class="mt-10">
                             <input type="text" name="editTopic" maxlength="50" placeholder="${interview.topic}"
-                                   onfocus="this.placeholder = '${interview.topic}'"
+                                   onfocus="this.placeholder = '${interview.topic}'" value="${interview.topic}"
                                    onblur="this.placeholder = '${interview.topic}'" required class="single-input">
                         </div>
                         <div class="mt-10">
@@ -165,12 +188,13 @@
                         </div>
                         <div class="input-group-icon mt-10">
                             <div class="icon"><i class="fa fa-hourglass-start" aria-hidden="true"></i></div>
-                            <input type="time" name="editStartTime" value="${interview.startTime}" required
-                                   class="single-input">
+                            <input type="time" name="editStartTime" value="${interview.startTime}" required min="08:00"
+                                   max="22:00" class="single-input">
                         </div>
                         <div class="input-group-icon mt-10">
                             <div class="icon"><i class="fa fa-hourglass-end" aria-hidden="true"></i></div>
-                            <input type="time" name="editEndTime" value="${interview.endTime}" class="single-input">
+                            <input type="time" name="editEndTime" value="${interview.endTime}" required min="08:30"
+                                   max="23:00" class="single-input">
                         </div>
                         <div class="input-group-icon mt-10">
                             <div class="icon"><i class="fa fa-gg" aria-hidden="true"></i></div>

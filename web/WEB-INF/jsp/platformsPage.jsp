@@ -22,6 +22,7 @@
     <fmt:message bundle="${loc}" key="label.platforms" var="platformsButton"/>
     <fmt:message bundle="${loc}" key="home.button" var="home"/>
     <fmt:message bundle="${loc}" key="users.button" var="usersButton"/>
+    <fmt:message bundle="${loc}" key="add.vacancy.button" var="addVacancyButton"/>
 
     <fmt:message bundle="${loc}" key="label.platforms" var="platformsLabel"/>
     <fmt:message bundle="${loc}" key="label.platform" var="platformLabel"/>
@@ -33,7 +34,7 @@
     </c:if>
 
 
-    <title>${assortment}</title>
+    <title>${platformsLabel}</title>
 </head>
 <body>
 <c:import url="parts/header.jsp"/>
@@ -65,13 +66,13 @@
                         <ul>
                             <li>
                                 <a href="Controller?command=ru_RU">
-                                    <img src="<c:url value="/resources/images/elements/flag_russia.png"/> " height="30"
+                                    <img src="<c:url value="/resources/images/elements/flag_russia.png"/>" height="30"
                                          width="40" alt="RU">
                                 </a>
                             </li>
                             <li>
                                 <a href="Controller?command=en_US">
-                                    <img src="<c:url value="/resources/images/elements/flag_usa.png"/> " height="30"
+                                    <img src="<c:url value="/resources/images/elements/flag_usa.png"/>" height="30"
                                          width="40" alt="EN">
                                 </a>
                             </li>
@@ -90,9 +91,14 @@
                             <ul>
                                 <li class="active"><a href="Controller?command=go_to_home_page">${home}</a></li>
                                 <li><a href="Controller?command=go_to_platforms_page">${platformsButton}</a></li>
-                                <c:if test="${sessionScope.user.role.value eq 0}">
-                                    <li><a href="Controller?command=go_to_users_page">${usersButton}</a></li>
-                                </c:if>
+                                <c:choose>
+                                    <c:when test="${sessionScope.user.role.value eq 0}">
+                                        <li><a href="Controller?command=go_to_users_page">${usersButton}</a></li>
+                                    </c:when>
+                                    <c:when test="${sessionScope.user.role.value eq 1}">
+                                        <li><a href="Controller?command=go_to_add_vacancy_page">${addVacancyButton}</a></li>
+                                    </c:when>
+                                </c:choose>
                             </ul>
                         </div>
                     </div>

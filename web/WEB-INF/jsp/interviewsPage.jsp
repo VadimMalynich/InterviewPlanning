@@ -35,15 +35,22 @@
     <fmt:message bundle="${loc}" key="label.endTime" var="endLabel"/>
     <fmt:message bundle="${loc}" key="label.platform" var="platformLabel"/>
     <fmt:message bundle="${loc}" key="label.interviewer" var="interviewerLabel"/>
-    <fmt:message bundle="${loc}" key="label.platforms" var="platformsLabel"/>
 
-    <fmt:message bundle="${loc}" key="search.input.placeholder" var="searchPlaceholder"/>
+    <fmt:message bundle="${loc}" key="searchInterview.input.placeholder" var="searchPlaceholder"/>
 
     <fmt:message bundle="${loc}" key="page.home" var="pageTitle"/>
 
+    <fmt:message bundle="${loc}" key="message.searchResults" var="searchResults">
+        <fmt:param value="${sessionScope.searchInterview}"/>
+    </fmt:message>
+    <fmt:message bundle="${loc}" key="message.platform" var="platformMessage">
+        <fmt:param value="${sessionScope.filterPlatform}"/>
+    </fmt:message>
     <c:if test="${requestScope.message ne null}">
         <fmt:message bundle="${loc}" key="${requestScope.message}" var="messageText"/>
     </c:if>
+    <fmt:message bundle="${loc}" key="message.emptyInterviews" var="emptyInterviews"/>
+    <fmt:message bundle="${loc}" key="message.emptyInterviews.continue" var="emptyInterviewsContinue"/>
 
     <!-- Page Title -->
     <title>${pageTitle}</title>
@@ -80,13 +87,13 @@
                         <ul>
                             <li>
                                 <a href="Controller?command=ru_RU">
-                                    <img src="<c:url value="/resources/images/elements/flag_russia.png"/> " height="30"
+                                    <img src="<c:url value="/resources/images/elements/flag_russia.png"/>" height="30"
                                          width="40" alt="RU">
                                 </a>
                             </li>
                             <li>
                                 <a href="Controller?command=en_US">
-                                    <img src="<c:url value="/resources/images/elements/flag_usa.png"/> " height="30"
+                                    <img src="<c:url value="/resources/images/elements/flag_usa.png"/>" height="30"
                                          width="40" alt="EN">
                                 </a>
                             </li>
@@ -106,8 +113,7 @@
                                 </c:when>
                                 <c:when test="${userRole eq 2}">
                                     <li class="menu-btn">
-                                        <a href="Controller?command=go_to_user_profile_page"
-                                           class="login">${profile}</a>
+                                        <a href="Controller?command=go_to_profile_page" class="login">${profile}</a>
                                     </li>
                                     <li>
                                         <a href="Controller?command=logout" class="template-btn">${logout}</a>
@@ -128,16 +134,12 @@
                             <li class="active"><a href="Controller?command=go_to_home_page">${home}</a></li>
                             <c:choose>
                                 <c:when test="${userRole eq 0}">
-                                    <li><a href="Controller?command=go_to_users_page">${usersButton}</a></li>
                                     <li><a href="Controller?command=go_to_platforms_page">${platformsButton}</a></li>
+                                    <li><a href="Controller?command=go_to_users_page">${usersButton}</a></li>
                                 </c:when>
                                 <c:when test="${userRole eq 1}">
-                                    <li><a href="Controller?command=go_to_add_vacancy_page">${addVacancyButton}</a></li>
                                     <li><a href="Controller?command=go_to_platforms_page">${platformsButton}</a></li>
-                                </c:when>
-                                <c:when test="${userRole eq 2}">
-                                    <li><a href="Controller?command=go_to_add_interview_page">${addInterviewButton}</a>
-                                    </li>
+                                    <li><a href="Controller?command=go_to_add_vacancy_page">${addVacancyButton}</a></li>
                                 </c:when>
                             </c:choose>
                             <c:if test="${requestScope.message ne null}">
@@ -158,7 +160,7 @@
 <section class="job-single-content section-padding">
     <div class="container">
         <div class="row">
-            <div class="col-lg-8">
+            <div class="col-lg-12">
                 <div class="main-content">
                     <div class="single-content1">
                         <c:forEach var="interview" items="${sessionScope.interviewsList}">
@@ -166,7 +168,8 @@
                                 <div class="job-text">
                                     <h4>${interview.topic}</h4>
                                     <ul class="mt-4">
-                                        <li class="mb-3"><h5><em class="fa fa-user"></em> ${interview.vacancy.topic}
+                                        <li class="mb-3"><h5><em
+                                                class="fa fa-user"></em> ${interview.vacancy.topic}
                                         </h5></li>
                                         <li class="mb-3"><h5><em
                                                 class="fa fa-user-secret"></em> ${interviewerLabel}: ${interview.user.name}
@@ -177,7 +180,8 @@
                                                 class="fa fa-hourglass-start"></em> ${startLabel}: ${interview.startTime}
                                         </h5></li>
                                         <li class="mb-3"><h5><em
-                                                class="fa fa-hourglass-end"></em> ${endLabel}: ${interview.endTime}</h5>
+                                                class="fa fa-hourglass-end"></em> ${endLabel}: ${interview.endTime}
+                                        </h5>
                                         </li>
                                         <li><h5><em
                                                 class="fa fa-video-camera"></em> ${platformLabel}: ${interview.platform.name}
@@ -188,29 +192,6 @@
                                     <button type="button" class="third-btn">${bookButton}</button>
                                 </div>
                             </div>
-                        </c:forEach>
-                    </div
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="sidebar mt-5 mt-lg-0">
-                    <div class="single-widget search-widget">
-                        <form class="example" action="Controller" method="post" style="margin:auto;max-width:300px">
-                            <input type="hidden" name="command" value="search_ads"/>
-                            <input type="text" placeholder="${searchPlaceholder}" name="searchAd"
-                                   onfocus="this.placeholder = ''"
-                                   onblur="this.placeholder = '${searchPlaceholder}'" required>
-                            <button type="submit"><em class="fa fa-search"></em></button>
-                        </form>
-                    </div>
-                    <div class="single-item mb-4">
-                        <h4 class="mb-4">${platformsLabel}</h4>
-                        <c:forEach var="platform" items="${sessionScope.platformsList}">
-                            <a href="Controller?command=filter_interviews&filterIdType=${platform.id}"
-                               class="sidebar-btn d-flex justify-content-between mb-3">
-                                <span><c:out value="${platform.name}"/></span>
-                                <span class="text-right"><c:out value="${platform.count}"/></span>
-                            </a>
                         </c:forEach>
                     </div>
                 </div>

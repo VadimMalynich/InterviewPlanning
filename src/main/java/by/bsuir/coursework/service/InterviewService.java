@@ -24,7 +24,7 @@ public interface InterviewService {
     /**
      * Method for checking interview info which interview entered, and if data will be correct add interview into database
      *
-     * @param interview            all info that user entered about interview
+     * @param interview all info that user entered about interview
      * @throws ServiceException when the error occurred on the dao layer or when validate data
      */
     void add(Interview interview) throws ServiceException;
@@ -32,7 +32,7 @@ public interface InterviewService {
     /**
      * Method for validating data before edit interview in database
      *
-     * @param interview       new info about interview
+     * @param interview new info about interview
      * @throws ServiceException when the error occurred on the dao layer or when validate data
      */
     void edit(Interview interview) throws ServiceException;
@@ -81,9 +81,20 @@ public interface InterviewService {
     /**
      * Method for search interviews by interview topic
      *
-     * @param text the text that the user entered for the search
+     * @param text   the text that the user entered for the search
+     * @param userId id of user
      * @return {@code List<Interview>} with vacancies that satisfy the condition
      * @throws ServiceException when the error occurred on the dao layer
      */
-    List<Interview> searchVacancies(String text) throws ServiceException;
+    List<Interview> searchInterviews(String text, Integer userId) throws ServiceException;
+
+    /**
+     * Method for filter interviews by interview platform
+     *
+     * @param platformId id of platform
+     * @param userId     id of user
+     * @return {@code List<Interview>} with vacancies that satisfy the condition
+     * @throws ServiceException when the error occurred on the dao layer
+     */
+    List<Interview> filterInterviews(Integer platformId, Integer userId) throws ServiceException;
 }

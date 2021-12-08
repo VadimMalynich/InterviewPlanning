@@ -26,10 +26,10 @@ public class EditPlatform implements Command {
 
         try {
             platformService.edit(platforms);
-            response.sendRedirect("Controller?command=go_to_types_page&message=message.editPlatform.complete");
+            response.sendRedirect("Controller?command=go_to_platforms_page&message=message.editPlatform.complete");
         } catch (ServiceException e) {
             userLogger.info(e);
-            response.sendRedirect("Controller?command=go_to_types_page&message=message.edit.unsuccessfully");
+            response.sendRedirect("Controller?command=go_to_platforms_page&message=message.edit.unsuccessfully");
         }
     }
 }
