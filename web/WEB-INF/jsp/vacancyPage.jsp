@@ -134,7 +134,9 @@
                                     <li><a href="Controller?command=go_to_feedbacks_page">${feedbackButton}</a></li>
                                 </c:when>
                                 <c:when test="${userRole eq 2}">
-                                    <li><a href="Controller?command=go_to_interviewer_feedbacks_page">${feedbackButton}</a></li>
+                                    <li>
+                                        <a href="Controller?command=go_to_interviewer_feedbacks_page">${feedbackButton}</a>
+                                    </li>
                                 </c:when>
                             </c:choose>
                             <c:if test="${requestScope.message ne null}">
@@ -190,7 +192,8 @@
                                                 value="${vacancy.employment.type}"/></a>
                                     </c:when>
                                 </c:choose>
-                                <a href="#" class="third-btn">${interviewButton}</a>
+                                <a href="Controller?command=go_to_interviews_page&vacancyId=${vacancy.id}"
+                                   class="third-btn">${interviewButton}</a>
                             </div>
                         </div>
                     </div>
