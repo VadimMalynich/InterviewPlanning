@@ -39,7 +39,7 @@ public class EditUser implements Command {
             } catch (ServiceException e) {
                 userLogger.info(e);
                 if ("Entered wrong old password".equals(e.getMessage())) {
-                    response.sendRedirect("Controller?command=go_to_edit_user_page&message.editUser.unsuccessfully");
+                    response.sendRedirect("Controller?command=go_to_edit_user_page&message=message.editUser.unsuccessfully");
                 } else {
                     response.sendRedirect("Controller?command=go_to_edit_user_page&message=message.edit.unsuccessfully");
                 }

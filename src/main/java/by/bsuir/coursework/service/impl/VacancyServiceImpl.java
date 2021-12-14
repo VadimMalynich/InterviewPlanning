@@ -101,10 +101,13 @@ public class VacancyServiceImpl extends SessionUtil implements VacancyService {
         }
         Vacancy vacancy;
         VacancyDao vacancyDao = DaoFactory.getInstance().getVacancyDao();
+        InterviewDao interviewDao = DaoFactory.getInstance().getInterviewDao();
         try {
             openTransactionSession();
             vacancyDao.setSession(getSession());
+            interviewDao.setSession(getSession());
             vacancy = vacancyDao.getVacancy(id);
+            vacancy.setInterviewsCount(interviewDao.getInterviewsVacancyCount(vacancy.getId()));
             commitTransactionSession();
         } catch (DaoException | IllegalArgumentException e) {
             rollbackTransactionSession();
