@@ -91,7 +91,7 @@ public interface InterviewService {
      *
      * @param text   the text that the user entered for the search
      * @param userId id of user
-     * @return {@code List<Interview>} with vacancies that satisfy the condition
+     * @return {@code List<Interview>} with interviews that satisfy the condition
      * @throws ServiceException when the error occurred on the dao layer
      */
     List<Interview> searchInterviews(String text, Integer userId) throws ServiceException;
@@ -101,7 +101,7 @@ public interface InterviewService {
      *
      * @param platformId id of platform
      * @param userId     id of user
-     * @return {@code List<Interview>} with vacancies that satisfy the condition
+     * @return {@code List<Interview>} with interviews that satisfy the condition
      * @throws ServiceException when the error occurred on the dao layer
      */
     List<Interview> filterInterviews(Integer platformId, Integer userId) throws ServiceException;
