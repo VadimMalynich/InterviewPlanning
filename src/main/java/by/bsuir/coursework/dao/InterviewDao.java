@@ -147,7 +147,7 @@ public class InterviewDao extends AbstractDao<Integer, Interview> {
 
     public List<Interview> filterInterviews(Integer platformId, Integer userId) throws DaoException {
         try {
-            Query query = session.createNativeQuery(FILTER_INTERVIEWS);
+            Query query = session.createNativeQuery(FILTER_INTERVIEWS).addEntity(Interview.class);
             query.setParameter("id", platformId);
             query.setParameter("user_id", userId);
             return query.list();
