@@ -101,7 +101,7 @@
                                 <c:when test="${userRole eq 0 or userRole eq 1}">
                                     <a href="Controller?command=logout" class="template-btn">${logout}</a>
                                 </c:when>
-                                <c:when test="${userRole eq 2}">
+                                <c:when test="${userRole eq 2 or userRole eq 3}">
                                     <li class="menu-btn">
                                         <a href="Controller?command=go_to_profile_page"
                                            class="login">${profile}</a>

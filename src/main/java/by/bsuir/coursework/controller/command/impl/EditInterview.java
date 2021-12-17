@@ -39,7 +39,7 @@ public class EditInterview implements Command {
         Interview prevInterview = (Interview) session.getAttribute("editInterview");
 
         Interview interview = new Interview(prevInterview.getId(), prevInterview.getVacancy().getId(),
-                prevInterview.getUser(), editTopic, editDate, editStartTime, editEndTime, editPlatform);
+                prevInterview.getInterviewer(), editTopic, editDate, editStartTime, editEndTime, editPlatform);
 
         InterviewService interviewService = ServiceProvider.getInstance().getInterviewService();
 

@@ -53,6 +53,8 @@ public class CommandProvider {
         commands.put(CommandName.ADD_FEEDBACK, new AddFeedback());
         commands.put(CommandName.GO_TO_EDIT_FEEDBACK_PAGE, new GoToEditFeedbackPage());
         commands.put(CommandName.EDIT_FEEDBACK, new EditFeedback());
+        commands.put(CommandName.BOOKING_INTERVIEW, new BookingInterview());
+        commands.put(CommandName.CANCEL_BOOKING, new CancelBooking());
         commands.put(CommandName.WRONG_REQUEST, new WrongRequest());
     }
 

@@ -1,5 +1,8 @@
 package by.bsuir.coursework.bean;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -20,6 +23,11 @@ public class User extends Entity {
     @Column(name = "role", nullable = false)
     private UserRole role;
 
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    @JoinColumn(name = "vacancy_id", nullable = true, foreignKey = @ForeignKey(name = "user_vacancy_id_fk"))
+    private Vacancy vacancy;
+
     public User() {
     }
 
@@ -37,6 +45,13 @@ public class User extends Entity {
         this.login = login;
         this.password = password;
         this.name = name;
+    }
+
+    public User(String login, String password, String name, Integer vacancy) {
+        this.login = login;
+        this.password = password;
+        this.name = name;
+        this.vacancy = new Vacancy(vacancy);
     }
 
     public String getLogin() {
@@ -71,18 +86,26 @@ public class User extends Entity {
         this.role = role;
     }
 
+    public Vacancy getVacancy() {
+        return vacancy;
+    }
+
+    public void setVacancy(Vacancy vacancy) {
+        this.vacancy = vacancy;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         User user = (User) o;
-        return Objects.equals(login, user.login) && Objects.equals(password, user.password) && Objects.equals(name, user.name) && role == user.role;
+        return Objects.equals(login, user.login) && Objects.equals(password, user.password) && Objects.equals(name, user.name) && role == user.role && Objects.equals(vacancy, user.vacancy);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), login, password, name, role);
+        return Objects.hash(super.hashCode(), login, password, name, role, vacancy);
     }
 
     @Override
@@ -93,6 +116,7 @@ public class User extends Entity {
                 ", password='" + password + '\'' +
                 ", name='" + name + '\'' +
                 ", role=" + role +
+                ", vacancyId=" + vacancy +
                 '}';
     }
 }

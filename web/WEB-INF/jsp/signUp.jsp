@@ -25,6 +25,7 @@
     <fmt:message bundle="${loc}" key="confirmPassword.input.placeholder" var="confirmPasswordPlaceholder"/>
 
     <fmt:message bundle="${loc}" key="label.name" var="name"/>
+    <fmt:message bundle="${loc}" key="label.vacancy" var="vacancyLabel"/>
     <fmt:message bundle="${loc}" key="name.input.title" var="nameTitle"/>
     <fmt:message bundle="${loc}" key="name.input.placeholder" var="namePlaceholder"/>
 
@@ -129,6 +130,12 @@
                             <h4>${name}</h4>
                         </div>
                     </div>
+                    <br>
+                    <div class="d-flex">
+                        <div class="info-text">
+                            <h4>${vacancyLabel}</h4>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-lg-5">
                     <form action="Controller" method="post">
@@ -167,6 +174,16 @@
                                    placeholder="${namePlaceholder}" name="signUpName"
                                    onfocus="this.placeholder = 'Vasya'"
                                    onblur="this.placeholder = '${namePlaceholder}'" required class="single-input">
+                        </div>
+                        <div class="input-group-icon mt-10">
+                            <div class="icon"><i class="fa fa-info" aria-hidden="true"></i></div>
+                            <div class="form-select" id="default-select1">
+                                <select name="signUpVacancy">
+                                    <c:forEach var="vacancy" items="${sessionScope.vacanciesList}">
+                                        <option value="${vacancy.id}">${vacancy.topic}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
                         </div>
                         <br>
                         <div id="divCheckPasswordsMatch">${match}</div>

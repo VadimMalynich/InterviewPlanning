@@ -68,7 +68,7 @@ public interface InterviewService {
      * @return {@code List<Interview>} with info that lies in database
      * @throws ServiceException when the error occurred on the dao layer
      */
-    List<Interview> getUserInterviews(Integer id) throws ServiceException;
+    List<Interview> getInterviewerInterviews(Integer id) throws ServiceException;
 
     /**
      * Method for getting all user vacancy interviews
@@ -105,4 +105,16 @@ public interface InterviewService {
      * @throws ServiceException when the error occurred on the dao layer
      */
     List<Interview> filterInterviews(Integer platformId, Integer userId) throws ServiceException;
+
+    void bookingInterview(Integer interviewId, Integer userId) throws ServiceException;
+
+    void cancelBooking(Integer interviewId) throws ServiceException;
+
+    /**
+     * Method for getting all user interviews
+     *
+     * @return {@code List<Interview>} with info that lies in database
+     * @throws ServiceException when the error occurred on the dao layer
+     */
+    List<Interview> getUserInterviews(Integer id) throws ServiceException;
 }

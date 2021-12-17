@@ -1,6 +1,7 @@
 package by.bsuir.coursework.service.impl;
 
 import by.bsuir.coursework.bean.Interview;
+import by.bsuir.coursework.bean.User;
 import by.bsuir.coursework.dao.*;
 import by.bsuir.coursework.dao.utilities.SessionUtil;
 import by.bsuir.coursework.service.InterviewService;
@@ -161,7 +162,7 @@ public class InterviewServiceImpl extends SessionUtil implements InterviewServic
     }
 
     @Override
-    public List<Interview> getUserInterviews(Integer id) throws ServiceException {
+    public List<Interview> getInterviewerInterviews(Integer id) throws ServiceException {
         if (id == null) {
             throw new ServiceException(WRONG_ID);
         }
@@ -170,7 +171,7 @@ public class InterviewServiceImpl extends SessionUtil implements InterviewServic
         try {
             openTransactionSession();
             interviewDao.setSession(getSession());
-            list = interviewDao.getUserInterviews(id);
+            list = interviewDao.getInterviewerInterviews(id);
             commitTransactionSession();
         } catch (DaoException e) {
             rollbackTransactionSession();
@@ -248,7 +249,7 @@ public class InterviewServiceImpl extends SessionUtil implements InterviewServic
 
     @Override
     public List<Interview> filterInterviews(Integer platformId, Integer userId) throws ServiceException {
-        if (platformId == null || userId ==null) {
+        if (platformId == null || userId == null) {
             throw new ServiceException(WRONG_ID);
         }
         List<Interview> list;
@@ -257,6 +258,71 @@ public class InterviewServiceImpl extends SessionUtil implements InterviewServic
             openTransactionSession();
             interviewDao.setSession(getSession());
             list = interviewDao.filterInterviews(platformId, userId);
+            commitTransactionSession();
+        } catch (DaoException e) {
+            rollbackTransactionSession();
+            throw new ServiceException(e);
+        } finally {
+            closeSession();
+        }
+        return list;
+    }
+
+    @Override
+    public void bookingInterview(Integer interviewId, Integer userId) throws ServiceException {
+        if (interviewId == null || userId == null) {
+            throw new ServiceException(WRONG_ID);
+        }
+        InterviewDao interviewDao = DaoFactory.getInstance().getInterviewDao();
+        try {
+            openTransactionSession();
+            interviewDao.setSession(getSession());
+            Interview interview = interviewDao.getInterview(interviewId);
+            interview.setUser(new User(userId));
+            interviewDao.edit(interview);
+//            interviewDao.deleteSimultaneous(interview);
+            commitTransactionSession();
+        } catch (DaoException e) {
+            rollbackTransactionSession();
+            throw new ServiceException(e);
+        } finally {
+            closeSession();
+        }
+    }
+
+    @Override
+    public void cancelBooking(Integer interviewId) throws ServiceException {
+        if (interviewId == null) {
+            throw new ServiceException(WRONG_ID);
+        }
+        InterviewDao interviewDao = DaoFactory.getInstance().getInterviewDao();
+        try {
+            openTransactionSession();
+            interviewDao.setSession(getSession());
+            Interview interview = interviewDao.getInterview(interviewId);
+            interview.setUser(null);
+            interviewDao.edit(interview);
+//            interviewDao.deleteSimultaneous(interview);
+            commitTransactionSession();
+        } catch (DaoException e) {
+            rollbackTransactionSession();
+            throw new ServiceException(e);
+        } finally {
+            closeSession();
+        }
+    }
+
+    @Override
+    public List<Interview> getUserInterviews(Integer id) throws ServiceException {
+        if (id == null) {
+            throw new ServiceException(WRONG_ID);
+        }
+        List<Interview> list;
+        InterviewDao interviewDao = DaoFactory.getInstance().getInterviewDao();
+        try {
+            openTransactionSession();
+            interviewDao.setSession(getSession());
+            list = interviewDao.getUserInterviews(id);
             commitTransactionSession();
         } catch (DaoException e) {
             rollbackTransactionSession();

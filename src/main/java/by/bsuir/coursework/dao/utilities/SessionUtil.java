@@ -36,6 +36,14 @@ public class SessionUtil {
         }
     }
 
+    public void commitTransaction() throws DaoException {
+        try {
+            transaction.commit();
+        } catch (Exception e) {
+            throw new DaoException(e);
+        }
+    }
+
     public void commitTransactionSession() throws DaoException {
         try {
             transaction.commit();

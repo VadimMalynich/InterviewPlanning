@@ -7,16 +7,18 @@ import java.util.List;
 
 public class InterviewDao extends AbstractDao<Integer, Interview> {
     private static final String GET_FUTURE_INTERVIEWS = "SELECT * FROM interview WHERE (date = current_date() AND start_time >= current_time()) OR date > current_date() ORDER BY date, start_time ASC";
-    private static final String GET_PAST_USER_INTERVIEWS = "SELECT * FROM interview WHERE user_id=:id AND ((date = current_date() AND start_time < current_time()) OR date < current_date()) ORDER BY date, start_time ASC";
+    private static final String GET_PAST_USER_INTERVIEWS = "SELECT * FROM interview WHERE interviewer_id=:id AND ((date = current_date() AND start_time < current_time()) OR date < current_date()) ORDER BY date, start_time ASC";
     private static final String GET_INTERVIEW = "SELECT * FROM interview WHERE id=:id";
     private static final String GET_HAPPENED = "SELECT * FROM interview WHERE happen=1 ORDER BY date, start_time ASC";
-    private static final String GET_VACANCY_INTERVIEWS = "SELECT * FROM interview WHERE vacancy_id=:id AND ((date = current_date() AND start_time >= current_time()) OR date > current_date()) ORDER BY date, start_time ASC";
+    private static final String GET_VACANCY_INTERVIEWS = "SELECT * FROM interview WHERE vacancy_id=:id AND user_id IS NULL AND ((date = current_date() AND start_time >= current_time()) OR date > current_date()) ORDER BY date, start_time ASC";
+    private static final String GET_INTERVIEWER_INTERVIEWS = "SELECT * FROM interview WHERE interviewer_id=:id AND ((date = current_date() AND start_time >= current_time()) OR date > current_date()) ORDER BY date, start_time ASC";
     private static final String GET_USER_INTERVIEWS = "SELECT * FROM interview WHERE user_id=:id AND ((date = current_date() AND start_time >= current_time()) OR date > current_date()) ORDER BY date, start_time ASC";
-    private static final String GET_USER_VACANCY_INTERVIEWS = "SELECT * FROM interview WHERE user_id=:user_id AND  vacancy_id=:vacancy_id ORDER BY date, start_time ASC";
-    private static final String GET_INTERVIEWS_VACANCY_COUNT = "SELECT * FROM interview WHERE vacancy_id=:id AND ((date = current_date() AND start_time >= current_time()) OR date > current_date())";
-    private static final String GET_INTERVIEWS_PLATFORM_COUNT = "SELECT * FROM interview WHERE platform_id=:id AND ((date = current_date() AND start_time >= current_time()) OR date > current_date())";
-    private static final String SEARCH_INTERVIEWS = "SELECT * FROM interview WHERE topic LIKE :text AND user_id=:user_id AND ((date = current_date() AND start_time >= current_time()) OR date > current_date())";
-    private static final String FILTER_INTERVIEWS = "SELECT * FROM interview WHERE platform_id=:id AND user_id=:user_id AND ((date = current_date() AND start_time >= current_time()) OR date > current_date())";
+    private static final String GET_USER_VACANCY_INTERVIEWS = "SELECT * FROM interview WHERE interviewer_id=:user_id AND  vacancy_id=:vacancy_id ORDER BY date, start_time ASC";
+    private static final String GET_INTERVIEWS_VACANCY_COUNT = "SELECT * FROM interview WHERE user_id IS NULL AND vacancy_id=:id AND ((date = current_date() AND start_time >= current_time()) OR date > current_date())";
+    private static final String GET_INTERVIEWS_PLATFORM_COUNT = "SELECT * FROM interview WHERE user_id IS NULL AND platform_id=:id AND ((date = current_date() AND start_time >= current_time()) OR date > current_date())";
+    private static final String SEARCH_INTERVIEWS = "SELECT * FROM interview WHERE topic LIKE :text AND interviewer_id=:user_id AND ((date = current_date() AND start_time >= current_time()) OR date > current_date())";
+    private static final String FILTER_INTERVIEWS = "SELECT * FROM interview WHERE platform_id=:id AND interviewer_id=:user_id AND ((date = current_date() AND start_time >= current_time()) OR date > current_date())";
+//    private static final String DELETE_SIMULTANEOUS = "DELETE FROM interview WHERE interviewer_id=:id AND user_id IS NULL AND date=:date AND ((start_time OR end_time) BETWEEN ':start_time' AND ':end_time')";
 
     @Override
     public List<Interview> getAll() throws DaoException {
@@ -55,6 +57,19 @@ public class InterviewDao extends AbstractDao<Integer, Interview> {
         }
     }
 
+//    public void deleteSimultaneous(Interview interview) throws DaoException {
+//        try {
+//            Query query = session.createNativeQuery(DELETE_SIMULTANEOUS).addEntity(Interview.class);
+//            query.setParameter("id", interview.getInterviewer().getId());
+//            query.setParameter("start_time", interview.getStartTime());
+//            query.setParameter("end_time", interview.getEndTime());
+//            query.setParameter("date", interview.getDate());
+//            query.executeUpdate();
+//        } catch (Exception ex) {
+//            throw new DaoException(ex);
+//        }
+//    }
+
     public Interview getInterview(Integer id) throws DaoException {
         try {
             Query query = session.createNativeQuery(GET_INTERVIEW).addEntity(Interview.class);
@@ -86,6 +101,16 @@ public class InterviewDao extends AbstractDao<Integer, Interview> {
     public List<Interview> getVacancyInterviews(Integer id) throws DaoException {
         try {
             Query query = session.createNativeQuery(GET_VACANCY_INTERVIEWS).addEntity(Interview.class);
+            query.setParameter("id", id);
+            return query.list();
+        } catch (Exception ex) {
+            throw new DaoException(ex);
+        }
+    }
+
+    public List<Interview> getInterviewerInterviews(Integer id) throws DaoException {
+        try {
+            Query query = session.createNativeQuery(GET_INTERVIEWER_INTERVIEWS).addEntity(Interview.class);
             query.setParameter("id", id);
             return query.list();
         } catch (Exception ex) {

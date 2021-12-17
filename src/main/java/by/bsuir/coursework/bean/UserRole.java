@@ -3,7 +3,7 @@ package by.bsuir.coursework.bean;
 import java.io.Serializable;
 
 public enum UserRole implements Serializable {
-    ADMINISTRATOR(0), DIRECTOR(1), INTERVIEWER(2);
+    ADMINISTRATOR(0), DIRECTOR(1), INTERVIEWER(2), USER(3);
     private final Integer value;
 
     UserRole(Integer value) {

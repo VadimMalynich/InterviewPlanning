@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 
 public class GoToHomePage implements Command {
@@ -37,6 +39,8 @@ public class GoToHomePage implements Command {
             List<Vacancy> vacancies = vacancyService.getAll();
             List<Schedule> scheduleList = vacancyService.getSchedules();
             List<Employment> employmentList = vacancyService.getEmployments();
+            Date date = new Date(Calendar.getInstance().getTimeInMillis());
+            session.setAttribute("currentDate", date);
             session.setAttribute("vacanciesList", vacancies);
             session.setAttribute("scheduleList", scheduleList);
             session.setAttribute("employmentList", employmentList);

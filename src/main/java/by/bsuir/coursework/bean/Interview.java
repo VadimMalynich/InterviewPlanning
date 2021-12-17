@@ -19,8 +19,8 @@ public class Interview extends Entity {
 
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.NO_ACTION)
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name = "interviewer_id_fk"))
-    private User user;
+    @JoinColumn(name = "interviewer_id", referencedColumnName = "id", nullable = false, foreignKey = @ForeignKey(name = "interviewer_id_fk"))
+    private User interviewer;
 
     @Column(name = "topic", nullable = false, length = 50)
     private String topic;
@@ -42,6 +42,11 @@ public class Interview extends Entity {
     @Column(name = "happen", nullable = true)
     private Boolean happen;
 
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = true, foreignKey = @ForeignKey(name = "user_id_fk"))
+    private User user;
+
     public Interview() {
     }
 
@@ -49,9 +54,9 @@ public class Interview extends Entity {
         super(id);
     }
 
-    public Interview(Integer vacancyId, User user, String topic, Date date, Time startTime, Time endTime, Integer platformId) {
+    public Interview(Integer vacancyId, User interviewer, String topic, Date date, Time startTime, Time endTime, Integer platformId) {
         this.vacancy = new Vacancy(vacancyId);
-        this.user = user;
+        this.interviewer = interviewer;
         this.topic = topic;
         this.date = date;
         this.startTime = startTime;
@@ -59,10 +64,10 @@ public class Interview extends Entity {
         this.platform = new Platforms(platformId);
     }
 
-    public Interview(Integer id, Integer vacancyId,  User user, String topic, Date date, Time startTime, Time endTime, Integer platformId) {
+    public Interview(Integer id, Integer vacancyId, User interviewer, String topic, Date date, Time startTime, Time endTime, Integer platformId) {
         super(id);
         this.vacancy = new Vacancy(vacancyId);
-        this.user = user;
+        this.interviewer = interviewer;
         this.topic = topic;
         this.date = date;
         this.startTime = startTime;
@@ -78,12 +83,12 @@ public class Interview extends Entity {
         this.vacancy = vacancyByVacancyId;
     }
 
-    public User getUser() {
-        return user;
+    public User getInterviewer() {
+        return interviewer;
     }
 
-    public void setUser(User usersByUserId) {
-        this.user = usersByUserId;
+    public void setInterviewer(User usersByUserId) {
+        this.interviewer = usersByUserId;
     }
 
     public String getTopic() {
@@ -134,19 +139,26 @@ public class Interview extends Entity {
         this.happen = happen;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public boolean equals(Object o) {
-
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Interview interview = (Interview) o;
-        return Objects.equals(vacancy, interview.vacancy) && Objects.equals(user, interview.user) && Objects.equals(topic, interview.topic) && Objects.equals(date, interview.date) && Objects.equals(startTime, interview.startTime) && Objects.equals(endTime, interview.endTime) && Objects.equals(platform, interview.platform) && Objects.equals(happen, interview.happen);
+        return Objects.equals(vacancy, interview.vacancy) && Objects.equals(interviewer, interview.interviewer) && Objects.equals(topic, interview.topic) && Objects.equals(date, interview.date) && Objects.equals(startTime, interview.startTime) && Objects.equals(endTime, interview.endTime) && Objects.equals(platform, interview.platform) && Objects.equals(happen, interview.happen) && Objects.equals(user, interview.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), vacancy, user, topic, date, startTime, endTime, platform, happen);
+        return Objects.hash(super.hashCode(), vacancy, interviewer, topic, date, startTime, endTime, platform, happen, user);
     }
 
     @Override
@@ -154,13 +166,14 @@ public class Interview extends Entity {
         return "Interview{" +
                 "id=" + getId() +
                 ", vacancyId=" + vacancy.getId() +
-                ", userId=" + user.getId() +
+                ", interviewerId=" + interviewer.getId() +
                 ", topic='" + topic + '\'' +
                 ", date=" + date +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
                 ", platform=" + platform +
                 ", happen=" + happen +
+                ", userId=" + user +
                 '}';
     }
 }

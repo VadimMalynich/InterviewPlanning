@@ -134,7 +134,7 @@
                         <h2>${emptyInterviews}</h2>
                         <p>${emptyInterviewsContinue}</p>
                     </c:when>
-                    <c:when test="${sessionScope.interviewsList ne null}">
+                    <c:when test="${not empty sessionScope.interviewsList}">
                         <h2>${userInterviews}</h2>
                     </c:when>
                 </c:choose>
@@ -160,7 +160,7 @@
                                                 class="fa fa-user"></em> ${vacancyLabel}: ${interview.vacancy.topic}
                                         </h5></li>
                                         <li class="mb-3"><h5><em
-                                                class="fa fa-user-secret"></em> ${interviewerLabel}: ${interview.user.name}
+                                                class="fa fa-user-secret"></em> ${interviewerLabel}: ${interview.interviewer.name}
                                         </h5></li>
                                         <li class="mb-3"><h5><em class="fa fa-calendar"></em> ${dateLabel}:
                                             <fmt:formatDate value="${interview.date}" type="date"/></h5></li>

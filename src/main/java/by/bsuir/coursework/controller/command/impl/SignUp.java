@@ -25,14 +25,16 @@ public class SignUp implements Command {
         String password = request.getParameter("signUpPassword");
         String confirmPassword = request.getParameter("signUpConfirmPassword");
         String name = request.getParameter("signUpName");
+        Integer vacancyId = Integer.valueOf(request.getParameter("signUpVacancy"));
 
-        User user = new User(login, password, name);
+        User user = new User(login, password, name, vacancyId);
 
         UserService userService = ServiceProvider.getInstance().getUserService();
 
         try {
             userService.registration(user, confirmPassword);
             session.removeAttribute("citiesList");
+            session.removeAttribute("vacanciesList");
             response.sendRedirect("Controller?command=go_to_home_page&message=message.signUp.complete");
         } catch (ServiceException e) {
             userLogger.info(e);

@@ -36,9 +36,14 @@ public class GoToProfilePage implements Command {
         InterviewService interviewService = ServiceProvider.getInstance().getInterviewService();
         PlatformService platformService = ServiceProvider.getInstance().getPlatformService();
         try {
-            List<Interview> interviewList = interviewService.getUserInterviews(user.getId());
+            if(user.getRole().getValue() == 2){
+                List<Interview> interviewList = interviewService.getInterviewerInterviews(user.getId());
+                session.setAttribute("interviewsList", interviewList);
+            } else if(user.getRole().getValue() == 3){
+                List<Interview> interviewList = interviewService.getUserInterviews(user.getId());
+                session.setAttribute("interviewsList", interviewList);
+            }
             List<Platforms> platformsList = platformService.getAll();
-            session.setAttribute("interviewsList", interviewList);
             session.setAttribute("platformsList", platformsList);
             session.removeAttribute("searchInterview");
             session.removeAttribute("searchInterviewsList");

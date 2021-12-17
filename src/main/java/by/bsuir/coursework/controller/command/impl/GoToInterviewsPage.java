@@ -1,7 +1,6 @@
 package by.bsuir.coursework.controller.command.impl;
 
 import by.bsuir.coursework.bean.Interview;
-import by.bsuir.coursework.bean.Platforms;
 import by.bsuir.coursework.controller.command.Command;
 import by.bsuir.coursework.service.*;
 import org.apache.logging.log4j.LogManager;
@@ -21,23 +20,24 @@ public class GoToInterviewsPage implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        session.setAttribute("page", "Controller?command=go_to_interviews_page&vacancyId=" + request.getParameter("vacancyId"));
+        if (request.getParameter("vacancyId") != null) {
+            session.setAttribute("vacancyId", Integer.valueOf(request.getParameter("vacancyId")));
+        }
+
+        session.setAttribute("page", "Controller?command=go_to_interviews_page");
         if (request.getParameter("message") != null) {
             request.setAttribute("message", request.getParameter("message"));
         }
-        Integer integer = Integer.valueOf(request.getParameter("vacancyId"));
+        Integer integer = (Integer) session.getAttribute("vacancyId");
 
         InterviewService interviewService = ServiceProvider.getInstance().getInterviewService();
-        PlatformService platformService = ServiceProvider.getInstance().getPlatformService();
 
         try {
             List<Interview> interviewList = interviewService.getVacancyInterviews(integer);
-            List<Platforms> platformsList = platformService.getAll();
             if (interviewList.isEmpty()) {
                 response.sendRedirect("Controller?command=go_to_home_page&message=message.error.openInterviews");
             } else {
                 session.setAttribute("interviewsList", interviewList);
-                session.setAttribute("platformsList", platformsList);
                 session.removeAttribute("searchInterview");
                 session.removeAttribute("searchInterviewsList");
                 session.removeAttribute("filterInterviewsList");

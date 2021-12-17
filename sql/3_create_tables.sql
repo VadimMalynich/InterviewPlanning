@@ -36,22 +36,29 @@ CREATE TABLE IF NOT EXISTS `employment`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `users`
 (
-    `id`       INT          NOT NULL AUTO_INCREMENT,
-    `login`    VARCHAR(254) NOT NULL,
-    `password` VARCHAR(50)  NOT NULL,
+    `id`         INT          NOT NULL AUTO_INCREMENT,
+    `login`      VARCHAR(254) NOT NULL,
+    `password`   VARCHAR(50)  NOT NULL,
     /**
      * 0 - администратор (Role.ADMINISTRATOR)
 	 * 1 - директор (Role.DIRECTOR)
      * 2 - интервьюер (Role.INTERVIEWER)
+     * 3 - пользователь (Role.USER)
      */
-    `role`     TINYINT      NOT NULL CHECK (`role` IN (0, 1, 2)) DEFAULT 2,
-    `name`     VARCHAR(23)  NOT NULL,
+    `role`       TINYINT      NOT NULL CHECK (`role` IN (0, 1, 2, 3)) DEFAULT 3,
+    `name`       VARCHAR(23)  NOT NULL,
+    `vacancy_id` INT          NULL,
     PRIMARY KEY (`id`),
-    UNIQUE INDEX `login_UNIQUE` (`login` ASC) VISIBLE
+    UNIQUE INDEX `login_UNIQUE` (`login` ASC) VISIBLE,
+    INDEX `user_vacancy_id_fk_idx` (`vacancy_id` ASC) VISIBLE,
+    CONSTRAINT `user_vacancy_id_fk`
+        FOREIGN KEY (`vacancy_id`)
+            REFERENCES `interview_db`.`vacancy` (`id`)
+            ON DELETE NO ACTION
+            ON UPDATE NO ACTION
 )
     ENGINE = InnoDB
     AUTO_INCREMENT = 1;
-
 
 -- -----------------------------------------------------
 -- Table `interview_db`.`platforms`
@@ -87,7 +94,7 @@ CREATE TABLE IF NOT EXISTS `vacancy`
 (
     `id`                      INT          NOT NULL AUTO_INCREMENT,
     `topic`                   VARCHAR(50)  NOT NULL,
-    `experience`              VARCHAR(5)  NULL     DEFAULT NULL,
+    `experience`              VARCHAR(5)   NULL     DEFAULT NULL,
     `employment_id`           INT          NOT NULL DEFAULT '1',
     `schedule_id`             INT          NOT NULL DEFAULT '1',
     `description`             VARCHAR(300) NOT NULL,
@@ -116,17 +123,19 @@ CREATE TABLE IF NOT EXISTS `interview`
 (
     `id`          INT         NOT NULL AUTO_INCREMENT,
     `vacancy_id`  INT         NOT NULL,
-    `user_id`     INT         NOT NULL,
+    `interviewer_id`     INT         NOT NULL,
     `topic`       VARCHAR(50) NOT NULL,
     `date`        DATE        NOT NULL,
     `start_time`  TIME        NOT NULL,
     `end_time`    TIME        NOT NULL,
     `platform_id` INT         NOT NULL,
     `happen`      BIT(1)      NULL DEFAULT NULL,
+    `user_id` INT NULL,
     PRIMARY KEY (`id`),
     INDEX `platform_id_fk_idx` (`platform_id` ASC) VISIBLE,
     INDEX `interviewer_id_fk_idx` (`user_id` ASC) VISIBLE,
     INDEX `vacancy_id_fk_idx` (`vacancy_id` ASC) VISIBLE,
+    INDEX `user_id_fk_idx` (`user_id` ASC) VISIBLE,
     CONSTRAINT `interviewer_id_fk`
         FOREIGN KEY (`user_id`)
             REFERENCES `users` (`id`)
@@ -140,11 +149,15 @@ CREATE TABLE IF NOT EXISTS `interview`
         FOREIGN KEY (`vacancy_id`)
             REFERENCES `interview_db`.`vacancy` (`id`)
             ON DELETE CASCADE
-            ON UPDATE CASCADE
+            ON UPDATE CASCADE,
+    CONSTRAINT `user_id_fk`
+        FOREIGN KEY (`user_id`)
+            REFERENCES `interview_db`.`users` (`id`)
+            ON DELETE NO ACTION
+            ON UPDATE NO ACTION
 )
     ENGINE = InnoDB
     AUTO_INCREMENT = 1;
-
 
 -- -----------------------------------------------------
 -- Table `interview_db`.`feedback`
@@ -164,7 +177,7 @@ CREATE TABLE IF NOT EXISTS `feedback`
     CONSTRAINT `interview_id_fk`
         FOREIGN KEY (`interview_id`)
             REFERENCES `interview` (`id`),
-    CONSTRAINT `user_id_fk`
+    CONSTRAINT `interviewer_feedback_fk`
         FOREIGN KEY (`user_id`)
             REFERENCES `users` (`id`)
             ON DELETE CASCADE

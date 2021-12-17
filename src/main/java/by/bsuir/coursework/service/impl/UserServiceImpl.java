@@ -43,7 +43,7 @@ public class UserServiceImpl extends SessionUtil implements UserService {
             throw new ServiceException("Passwords don't match");
         }
         validateUserData(user);
-        user.setRole(UserRole.INTERVIEWER);
+        user.setRole(UserRole.USER);
         UserDao userDao = DaoFactory.getInstance().getUserDao();
         try {
             openTransactionSession();
