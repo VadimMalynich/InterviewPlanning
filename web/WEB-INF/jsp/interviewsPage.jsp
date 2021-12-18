@@ -28,6 +28,7 @@
     <fmt:message bundle="${loc}" key="users.button" var="usersButton"/>
     <fmt:message bundle="${loc}" key="add.vacancy.button" var="addVacancyButton"/>
     <fmt:message bundle="${loc}" key="feedback.button" var="feedbackButton"/>
+    <fmt:message bundle="${loc}" key="edit.user.button" var="editUser"/>
 
     <fmt:message bundle="${loc}" key="label.platforms" var="platformsButton"/>
     <fmt:message bundle="${loc}" key="label.date" var="dateLabel"/>
@@ -137,6 +138,11 @@
                                 <c:when test="${userRole eq 2}">
                                     <li>
                                         <a href="Controller?command=go_to_interviewer_feedbacks_page">${feedbackButton}</a>
+                                    </li>
+                                </c:when>
+                                <c:when test="${userRole eq 3}">
+                                    <li>
+                                        <a href="Controller?command=go_to_edit_user_page">${editUser}</a>
                                     </li>
                                 </c:when>
                             </c:choose>

@@ -25,8 +25,9 @@
     <fmt:message bundle="${loc}" key="users.button" var="usersButton"/>
     <fmt:message bundle="${loc}" key="add.interview.button" var="addInterviewButton"/>
     <fmt:message bundle="${loc}" key="add.vacancy.button" var="addVacancyButton"/>
-    <fmt:message bundle="${loc}" key="label.platforms" var="platformsButton"/>
+    <fmt:message bundle="${loc}" key="edit.user.button" var="editUser"/>
 
+    <fmt:message bundle="${loc}" key="label.platforms" var="platformsButton"/>
     <fmt:message bundle="${loc}" key="label.login" var="login"/>
     <fmt:message bundle="${loc}" key="label.newPassword" var="newPassword"/>
     <fmt:message bundle="${loc}" key="label.oldPassword" var="oldPassword"/>
@@ -36,6 +37,7 @@
 
     <fmt:message bundle="${loc}" key="label.name" var="name"/>
     <fmt:message bundle="${loc}" key="name.input.title" var="nameTitle"/>
+    <fmt:message bundle="${loc}" key="label.vacancy" var="vacancyLabel"/>
 
     <fmt:message bundle="${loc}" key="label.role" var="role"/>
     <fmt:message bundle="${loc}" key="label.admin" var="adminLabel"/>
@@ -130,6 +132,11 @@
                                     <li><a href="Controller?command=go_to_add_interview_page">${addInterviewButton}</a>
                                     </li>
                                 </c:when>
+                                <c:when test="${userRole eq 3}">
+                                    <li>
+                                        <a href="Controller?command=go_to_edit_user_page">${editUser}</a>
+                                    </li>
+                                </c:when>
                             </c:choose>
                             <c:if test="${requestScope.message ne null}">
                                 <li>
@@ -180,6 +187,13 @@
                         <div class="d-flex">
                             <div class="info-text">
                                 <h4>${role}</h4>
+                            </div>
+                        </div>
+                    </c:if>
+                    <c:if test="${sessionScope.user.role.value eq 3}">
+                        <div class="d-flex">
+                            <div class="info-text">
+                                <h4>${vacancyLabel}</h4>
                             </div>
                         </div>
                     </c:if>
@@ -258,6 +272,18 @@
                                     </div>
                                 </c:when>
                             </c:choose>
+                        </c:if>
+                        <c:if test="${userRole eq 0}">
+                            <div class="input-group-icon mt-10">
+                                <div class="icon"><i class="fa fa-info" aria-hidden="true"></i></div>
+                                <div class="form-select" id="default-select1">
+                                    <select name="editVacancy">
+                                        <c:forEach var="vacancy" items="${sessionScope.vacanciesList}">
+                                            <option value="${vacancy.id}">${vacancy.topic}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                            </div>
                         </c:if>
                         <br>
                         <button type="submit" class="template-btn">${editButton}</button>

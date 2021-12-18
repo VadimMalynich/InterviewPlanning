@@ -2,6 +2,7 @@ package by.bsuir.coursework.controller.command.impl;
 
 import by.bsuir.coursework.bean.User;
 import by.bsuir.coursework.bean.UserRole;
+import by.bsuir.coursework.bean.Vacancy;
 import by.bsuir.coursework.controller.command.Command;
 import by.bsuir.coursework.service.ServiceException;
 import by.bsuir.coursework.service.ServiceProvider;
@@ -29,6 +30,9 @@ public class EditUser implements Command {
             previousUser.setRole(UserRole.getByCode(Integer.valueOf(request.getParameter("editRole"))));
         }
 
+        if (request.getParameter("editVacancy") != null) {
+            previousUser.setVacancy(new Vacancy(Integer.valueOf(request.getParameter("editVacancy"))));
+        }
         UserService userService = ServiceProvider.getInstance().getUserService();
 
         if (!"".equals(request.getParameter("editOldPassword")) && !"".equals(request.getParameter("editNewPassword"))) {
