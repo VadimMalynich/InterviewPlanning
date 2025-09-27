@@ -1,10 +1,11 @@
-/out/
-/logs/
 .idea
-/target/
 /lib/
+/logs/
 /META-INF/
+/out/
+/src/main/java/by/bsuir/coursework/bean/diagram.uml
 /src/main/java/main/
-/.jpb/
+/target/
 /web/META-INF/
 /InterviewPlanning.iml
+/.jpb/
