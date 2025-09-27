@@ -273,7 +273,7 @@
                                 </c:when>
                             </c:choose>
                         </c:if>
-                        <c:if test="${userRole eq 0}">
+                        <c:if test="${userRole eq 3}">
                             <div class="input-group-icon mt-10">
                                 <div class="icon"><i class="fa fa-info" aria-hidden="true"></i></div>
                                 <div class="form-select" id="default-select1">

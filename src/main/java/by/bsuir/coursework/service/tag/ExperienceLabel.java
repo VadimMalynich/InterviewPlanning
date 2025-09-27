@@ -28,7 +28,7 @@ public class ExperienceLabel extends TagSupport {
         StringBuilder str = new StringBuilder();
         str.append("<li class=\"mb-3\"><h5><em class=\"fa fa-vcard\"></em> ").
                 append(manager.getString("label.experience")).append(":");
-        if (experience == null || "".equals(experience)) {
+        if (experience == null || experience.isEmpty()) {
             str.append(manager.getString("label.emptyExperience"));
         } else if (!experience.contains("-")) {
             int exp = Integer.parseInt(experience);

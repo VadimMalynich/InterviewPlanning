@@ -48,7 +48,6 @@
         <filter-class>by.bsuir.coursework.controller.filter.SecurityFilter</filter-class>
     </filter>-->
 
-
     <filter-mapping>
         <filter-name>EncodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
@@ -58,7 +57,6 @@
 <!--        <filter-name>SecurityFilter</filter-name>-->
 <!--        <url-pattern>/Controller</url-pattern>-->
 <!--    </filter-mapping>-->
-
 
     <listener>
         <listener-class>by.bsuir.coursework.controller.listener.ContextListener</listener-class>
@@ -70,7 +68,7 @@
     <jsp-config>
         <taglib>
             <taglib-uri>customtags</taglib-uri>
-            <taglib-location>WEB-INF/tld/custom.tld</taglib-location>
+            <taglib-location>/WEB-INF/tld/custom.tld</taglib-location>
         </taglib>
     </jsp-config>
 

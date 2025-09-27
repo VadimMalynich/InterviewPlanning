@@ -40,9 +40,14 @@ public class GoToEditUserPage implements Command {
         VacancyService vacancyService = ServiceProvider.getInstance().getVacancyService();
 
         try {
-            User editUser = userService.getUser(userId);
+            User editUser;
+            if (userId == null) {
+                editUser = userService.getUser(user.getId());
+            } else {
+                editUser = userService.getUser(userId);
+            }
             session.setAttribute("editUser", editUser);
-            if(user.getRole().getValue() == 3){
+            if (user.getRole().getValue() == 3) {
                 List<Vacancy> list = vacancyService.getAll();
                 session.setAttribute("vacanciesList", list);
             }
@@ -50,7 +55,11 @@ public class GoToEditUserPage implements Command {
             requestDispatcher.forward(request, response);
         } catch (ServiceException e) {
             userLogger.error(e);
-            response.sendRedirect("Controller?command=go_to_users_page&message=message.error.server");
+            if (user.getRole().getValue() == 0) {
+                response.sendRedirect("Controller?command=go_to_users_page&message=message.error.server");
+            } else {
+                response.sendRedirect("Controller?command=go_to_home_page&message=message.error.server");
+            }
         }
     }
 }

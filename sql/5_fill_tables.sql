@@ -24,7 +24,7 @@ VALUES ('Инженер по качеству', '1-3', 1, 3, 'ООО «Вейс�
 
 
 -- Filling interview table
-INSERT INTO `interview` (vacancy_id, user_id, topic, date, start_time, end_time, platform_id, happen)
+INSERT INTO `interview` (vacancy_id, interviewer_id, topic, date, start_time, end_time, platform_id, happen)
 VALUES (3, 2, 'Пробное собеседование', '2021-12-18', '15:30:00', '16:00:00', 5, 0),
        (1, 2, 'Пробное собеседование', '2021-11-30', '12:00:00', '12:20:00', 2, 1),
        (3, 3, 'Пробное собеседование', '2021-12-16', '11:45:00', '12:15:00', 2, 0),

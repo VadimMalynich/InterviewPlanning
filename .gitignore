@@ -4,5 +4,7 @@
 /target/
 /lib/
 /META-INF/
+/src/main/java/main/
 /.jpb/
+/web/META-INF/
 /InterviewPlanning.iml
